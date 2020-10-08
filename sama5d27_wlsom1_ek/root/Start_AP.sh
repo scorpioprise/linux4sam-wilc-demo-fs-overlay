@@ -62,10 +62,16 @@ fi
 
 echo "4. Configuring the AP IP Address to 192.168.1.1"
 ifconfig wlan0 192.168.1.1 
-echo "5. Starting the DHCP server"
+echo "5. Configuring the NGINX Webserver"
+if cat /run/nginx/nginx.pid; then
+kill /run/nginx/nginx.pid
+fi
+nginx -p /usr/share/nginx/html &
+ 
+echo "6. Starting the DHCP server"
 #/etc/init.d/dhcp-server start &
 dhcpd -cf /etc/dhcp/dhcpd.conf 
-echo "6. Starting the WEB scoket deamon"
+echo "7. Starting the WEB scoket deamon"
 cd /root
 ./websocket & 
 echo "Now, The device comes up as an Access Point(AP) and host a webpage to provision"
