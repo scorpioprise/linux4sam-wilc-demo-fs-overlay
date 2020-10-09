@@ -64,7 +64,7 @@ echo "4. Configuring the AP IP Address to 192.168.1.1"
 ifconfig wlan0 192.168.1.1 
 echo "5. Configuring the NGINX Webserver"
 killall nginx
-sed -i "s/^\broot\b.*/root \/usr\/share\/nginx\/html;/g" /etc/nginx/sites-available/default_server
+sed -i "s/\broot\b.*/root \/usr\/share\/nginx\/html;/g" /etc/nginx/sites-available/default_server
 nginx &
  
 echo "6. Starting the DHCP server"
