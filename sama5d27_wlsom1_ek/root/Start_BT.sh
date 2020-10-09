@@ -1,8 +1,5 @@
 #!/bin/sh
-result=`grep "Start_STA" /etc/init.d/S85start_wlan`
-res_len=${#result}
-if [ $res_len -eq 0 ]
-then
+if ifconfig | grep -q "mon.wlan0"; then
         echo "Device is not in STA mode.Place DUT in STA mode"
         exit 0
 fi
@@ -28,7 +25,6 @@ cd /usr/sbin
 if [ $1 -eq 1 ]
 then
         echo "Heart rate application started"
-        cd /usr/bin
 	./btgatt-server -i hci0 -s low -t public -r -v
 elif [ $1 -eq 2 ]
 then
