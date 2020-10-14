@@ -17,9 +17,13 @@ echo "---------------------------------------------------"
 echo "---------------------------------------------------"                                 
 
 echo "1.############## Checking the mode of Interface ##############"
-if ifconfig | grep -q "mon.wlan0"; then
-        echo "Device is not in STA mode.Place DUT in STA mode"
-        exit 0
+if ifconfig | grep -q "wlan0"; then
+	if ifconfig | grep -q "mon.wlan0"; then
+        	echo "Device is not in STA mode.Place DUT in STA mode"
+        	exit 0
+	fi
+else
+	modprobe wilc-sdio
 fi
 
 echo "2.############## Initializing Bluetooth on WILC module ##############"
@@ -68,7 +72,7 @@ echo "6.############## Starting Bluetooth Low Energy Advertisement #############
 hciconfig hci0 leadv &
 sleep 2
 
-cd /usr/sbin
+cd /usr/bin
 if [ $1 -eq 1 ]
 then
         echo "7.############## Heart rate application started ##############"
