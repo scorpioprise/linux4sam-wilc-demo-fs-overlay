@@ -31,29 +31,39 @@ else
         fi
 fi
 
-if test -f /etc/wpa_supplicant.conf; then
-	if grep -q "ssid" /etc/wpa_supplicant.conf; then
-		echo "Connecting to router:-" 
-		sed -n "/ssid/p" /etc/wpa_supplicant.conf
-		sleep 2
-	else
-		echo "Input the SSID of the router/AP"
-		read newSsid
-		echo "New SSID " $newSsid
-		echo "Input the passphrase(if non-secured, enter 'NONE'"
-		read passPhrase
-		echo "New Passphrase " $passPhrase
-		sed -i "s/{.*/& \n\tssid=\"$newSsid\"/gI" /etc/wpa_supplicant.conf
-		if $passPhrase | grep -q "NONE"; then
-			sed -i "s/\bkey_mgmt\b.*/\tkey_mgmt=\"NONE\"/gI" /etc/wpa_supplicant.conf
-		else
-			sed -i "s/ssid.*/& \n\tpsk=\"$passPhrase\"/gI" /etc/wpa_supplicant.conf
-			sed -i "/key_mgmt/d" /etc/wpa_supplicant.conf
-		fi
+if ! test -f /etc/wpa_supplicant.conf; then
+cat << 'EOT' > /etc/wpa_supplicant.conf
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+update config=1
 
-	fi
+network={
+	key_mgmt=NONE
+}	
+EOT
 fi
 
+if grep -q "ssid" /etc/wpa_supplicant.conf; then
+	echo "Connecting to router:-" 
+	sed -n "/ssid/p" /etc/wpa_supplicant.conf
+	sleep 2
+else
+	echo "Input the SSID of the router/AP"
+	read newSsid
+	echo "New SSID " $newSsid
+	sed -i "s/{.*/& \n\tssid=\"$newSsid\"/gI" /etc/wpa_supplicant.conf
+	echo "Input the passphrase(if non-secured, press Carriage Return(Enter)"
+	read passPhrase
+	if [ "$passPhrase" = "" ];then
+		echo "Connecting to Non-Secured AP"
+		sed -i "s/\bkey_mgmt\b.*/\tkey_mgmt=\"NONE\"/gI" /etc/wpa_supplicant.conf
+	else
+		echo "New Passphrase " $passPhrase
+		sed -i "s/ssid.*/& \n\tpsk=\"$passPhrase\"/gI" /etc/wpa_supplicant.conf
+		sed -i "/key_mgmt/d" /etc/wpa_supplicant.conf
+	fi
+
+fi
 
 echo "2.############## Connecting to configured AP ##############"
 ifdown wlan0
