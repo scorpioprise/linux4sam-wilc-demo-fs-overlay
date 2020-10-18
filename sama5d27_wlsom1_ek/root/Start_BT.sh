@@ -76,7 +76,7 @@ cd /usr/bin
 if [ $1 -eq 1 ]
 then
         echo "7.############## Heart rate application started ##############"
-	./btgatt-server -i hci0 -s low -t public -r -v
+	./bluez-gatt-server -i hci0 -s low -t public -r -v
 elif [ $1 -eq 2 ]
 then
         echo "7.############## Transparent service application started ##############"
