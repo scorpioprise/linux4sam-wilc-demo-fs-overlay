@@ -43,6 +43,7 @@ else
 fi
 ln -svf /usr/libexec/bluetooth/bluetoothd /usr/sbin
 echo "4.############## Initializing the Bluetooth Deamon ##############"
+killall bluetoothd
 bluetoothd -n &
 sleep 2
 if ps | grep -q "bluetoothd"; then
