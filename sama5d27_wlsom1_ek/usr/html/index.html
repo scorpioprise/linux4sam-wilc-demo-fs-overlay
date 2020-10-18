@@ -12,18 +12,12 @@
 <br /><br />
 <p>Connect to Network</p>
 </div>
+
 <div id="scroll">
 <div id="form-container">
 <div id="form-holder">
 <p>Network Name<p>
-<select name="ssids" id="ssid">
-<option>Select a SSID</option>
-</select>
-<p>
-<label> Join other network </label>
-<input type="checkbox" id="OtherNwCb"/>
-<p>
-<input disabled type="text" id="login" maxlength="32">
+<input type="text" id="login" maxlength="32">
 <p>Pass phrase</p>
 <input type="password" id="pass" maxlength="64">
 <p>Device Name<p>
@@ -42,13 +36,7 @@ var elemId = d.getElementById.bind(d);
 var create = d.createElement.bind(d);
 var exampleSocket = null;
 
-elemId('OtherNwCb').onchange = function(){
-	console.log('Checkbox press')
-	document.getElementById('login').disabled = !this.checked;
-};
-
 elemId('connect').onclick = function(){
-	console.log('Connect press')
         var webSocketURL = null;
         var login = encodeURIComponent(elemId('login').value);
         var pass = encodeURIComponent(elemId('pass').value);
@@ -77,16 +65,8 @@ elemId('connect').onclick = function(){
         }catch (exception) {
                 console.error(exception);
         }
-};
-
-elemId('ssid').onclick = function(){
-	console.log("Listing SSIDs")
-	$.get("/scan.list", function(data){
-		console.log(data);
-	});
 
 };
-
 })();
 </script>
 </body>
