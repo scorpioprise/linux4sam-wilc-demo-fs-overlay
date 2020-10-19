@@ -22,8 +22,6 @@ if ifconfig | grep -q "wlan0"; then
         	echo "Device is not in STA mode.Place DUT in STA mode"
         	exit 0
 	fi
-else
-	modprobe wilc-sdio
 fi
 
 echo "2.############## Initializing Bluetooth on WILC module ##############"
@@ -89,5 +87,8 @@ then
 else
         echo "select correct option: 1- heart rate service, 2-transparent service and 3-Wifi provision service"
 fi
+echo "8.############## Trying to connect to the configured AP ##############"
+cd /home/root
+./Start_STA.sh
 echo "---------------------------------------------------"
 echo "---------------------------------------------------"
