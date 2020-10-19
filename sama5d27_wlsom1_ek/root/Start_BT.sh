@@ -22,6 +22,7 @@ if ifconfig | grep -q "wlan0"; then
         	echo "Device is not in STA mode.Place DUT in STA mode"
         	exit 0
 	fi
+	modprobe wilc-sdio
 fi
 
 echo "2.############## Initializing Bluetooth on WILC module ##############"
