@@ -22,6 +22,7 @@ if ifconfig | grep -q "wlan0"; then
         	echo "Device is not in STA mode.Place DUT in STA mode"
         	exit 0
 	fi
+else
 	modprobe wilc-sdio
 fi
 
