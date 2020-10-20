@@ -86,11 +86,11 @@ elif [ $1 -eq 3 ]
 then
         echo "7.############## WiFi provisioning service application started ##############"
                 ./wifi_prov_service -i hci0 -s low -t public -r -m 512
+		echo "8.############## Trying to connect to the configured AP ##############"
 		cd /home/root
 		./Start_STA.sh
 else
         echo "select correct option: 1- heart rate service, 2-transparent service and 3-Wifi provision service"
 fi
-echo "8.############## Trying to connect to the configured AP ##############"
 echo "---------------------------------------------------"
 echo "---------------------------------------------------"
