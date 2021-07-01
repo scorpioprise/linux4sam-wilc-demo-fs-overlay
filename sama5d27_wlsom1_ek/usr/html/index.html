@@ -1,73 +1,126 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Log In</title>
-<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
 
-<div id="log-in-form-container">
-<div id="logo-container">
-<br /><br />
-<p>Connect to Network</p>
-</div>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Log In</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
 
-<div id="scroll">
-<div id="form-container">
-<div id="form-holder">
-<p>Network Name<p>
-<input type="text" id="login" maxlength="32">
-<p>Pass phrase</p>
-<input type="password" id="pass" maxlength="64">
-<p>Device Name<p>
-<input type="text" id="devname" maxlength="48">
-<input type="button" id="connect" value="Connect" />
-</div>
-</div>
+  <body>
 
-</div>
-</div>
+    <div id="log-in-form-container" style="display:none2">
+      <div id="logo-container">
+        <br /><br />
+        <p>Wi-Fi Network</p>
+      </div>
 
-<script>
-(function() {
-var d = document;
-var elemId = d.getElementById.bind(d);
-var create = d.createElement.bind(d);
-var exampleSocket = null;
+      <div id="scroll">
+        <div id="form-container">
+          <div id="form-holder">
+            <p>SSID: Network Name</p>
+            <input type="text" id="ssid" maxlength="32">
+            <p>Pass phrase</p>
+            <input type="password" id="pass" maxlength="64">
+            <!-- <p>Device Name</p>
+              <input type="text" id="devname" maxlength="48">
+            -->
+          </div>
+        </div>
 
-elemId('connect').onclick = function(){
-        var webSocketURL = null;
-        var login = encodeURIComponent(elemId('login').value);
-        var pass = encodeURIComponent(elemId('pass').value);
-        var devName = encodeURIComponent(elemId('devname').value);
-        var params = 'connect=connect&login=' + login + '&password=' + pass + '&device-name=' + devName;
-        webSocketURL = "ws://" + document.location.host +":8088/echo";
-        try {
-                exampleSocket = new WebSocket(webSocketURL);
+      </div>
+    </div>
 
-                exampleSocket.onopen = function(openEvent) {
-                        console.log("on open MESSAGE: " + openEvent);
-                        exampleSocket.send(params);
-                };
-                exampleSocket.onclose = function (closeEvent) {
-                        console.log("on close MESSAGE: " + closeEvent);
-                };
-                exampleSocket.onerror = function (errorEvent) {
-                        console.log("on error MESSAGE: " + errorEvent);
-                };
-                exampleSocket.onmessage = function (messageEvent) {
-                        var wsMsg = messageEvent.data;
-                        console.log("WebSocket MESSAGE: " + wsMsg);
-                };
+    <br class="clear" />
 
+    <div id="log-in-form-container">
+      <div id="logo-container">
+        <br /><br />
+        <p>Wired Network</p>
+      </div>
 
-        }catch (exception) {
-                console.error(exception);
+      <div id="scroll">
+        <div id="form-container">
+          <div id="form-holder">
+            <p>DHCP</p>
+            <input type="checkbox" id="dhcp" class="dhcp" maxlength="64" onchange="dhcp_checked()">
+          </div>
+          <div id="form-holder" class=static_ip>
+            <p>Static IP</p>
+            <input type="text" id="ipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$">
+            <p>Netmask</p>
+            <input type="text" id="netmask" maxlength="64">
+            <p>Gateway</p>
+            <input type="text" id="gateway" maxlength="64">
+            <!-- <p>Device Name</p>
+                <input type="text" id="devname" maxlength="48">
+                -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br class="clear" />
+
+    <div id="form-holder">
+      <input type="button" id="connect" value="Apply" />
+    </div>
+
+    <br class="clear" />
+
+    <script>
+      function dhcp_checked() {
+        if ($('.dhcp').is(":checked")) {
+          $(".static_ip").hide();
+        } else {
+          $(".static_ip").show();
         }
+      }
 
-};
-})();
-</script>
-</body>
+      (function() {
+        var d = document;
+        var elemId = d.getElementById.bind(d);
+        var create = d.createElement.bind(d);
+        var exampleSocket = null;
+
+        elemId('connect').onclick = function() {
+          var webSocketURL = null;
+          var ssid = encodeURIComponent(elemId('ssid').value);
+          var pass = encodeURIComponent(elemId('pass').value);
+          var dhcp = encodeURIComponent(elemId('dhcp').value);
+          var ipaddress = encodeURIComponent(elemId('ipaddress').value);
+          var netmask = encodeURIComponent(elemId('netmask').value);
+          var gateway = encodeURIComponent(elemId('gateway').value);
+
+					var params = 'connect=connect&ssid=' + ssid + '&password=' + pass + '&dhcp=' + dhcp + '&dhcp=' + dhcp + '&ipaddress=' + ipaddress + '&netmask=' + netmask + '&gateway=' + gateway ;
+          webSocketURL = "ws://" + document.location.host + ":8088/echo";
+          try {
+            exampleSocket = new WebSocket(webSocketURL);
+
+            exampleSocket.onopen = function(openEvent) {
+              console.log("on open MESSAGE: " + openEvent);
+              exampleSocket.send(params);
+            };
+            exampleSocket.onclose = function(closeEvent) {
+              console.log("on close MESSAGE: " + closeEvent);
+            };
+            exampleSocket.onerror = function(errorEvent) {
+              console.log("on error MESSAGE: " + errorEvent);
+            };
+            exampleSocket.onmessage = function(messageEvent) {
+              var wsMsg = messageEvent.data;
+              console.log("WebSocket MESSAGE: " + wsMsg);
+            };
+
+
+          } catch (exception) {
+            console.error(exception);
+          }
+
+        };
+      })();
+
+    </script>
+  </body>
+
 </html>
