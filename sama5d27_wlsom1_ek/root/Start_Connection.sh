@@ -1,1 +1,0 @@
-/home/root/Start_STA.sh
