@@ -1,0 +1,289 @@
+<!--
+-->
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>test wallbox</title>
+      <meta charset="utf-8" />
+      <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+      <meta content="width=device-width, initial-scale=1" name="viewport" />
+      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+      <link href="favicon.ico" rel="icon" type="image/x-icon" />
+      <link href="favicon.png" rel="icon" type="image/png" />
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
+	 <img src="img/dkc.png" width="54" height="30" class="ms-2">
+	 <div class="navbar-brand ms-3" href="#">wallbox webserver - v1.0</div>
+	 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	 </button>
+	 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav ms-auto">
+	       <li class="nav-item me-2">
+		  <a class="nav-link active" href="#">sign out</a>
+	       </li>
+	    </ul>
+	 </div>
+      </nav>
+      <div class="container-fluid mt-1">
+	 <ul class="nav nav-tabs" id="myTab" role="tablist">
+	    <li class="nav-item" role="presentation">
+	       <a href="#info" class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true"><b>INFO</b></a>
+	    </li>
+	    <li class="nav-item" role="presentation">
+	       <a href="#comandi" class="nav-link" id="comandi-tab" data-bs-toggle="tab" data-bs-target="#comandi" type="button" role="tab" aria-controls="comandi" aria-selected="false"><b>COMANDI</b></a>
+	    </li>
+	    <li class="nav-item" role="presentation">
+	       <a href="#letture" class="nav-link" id="letture-tab" data-bs-toggle="tab" data-bs-target="#letture" type="button" role="tab" aria-controls="letture" aria-selected="false"><b>LETTURE</b></a>
+	    </li>
+	    <li class="nav-item" role="presentation">
+	       <a href="#utenti" class="nav-link" id="utenti-tab" data-bs-toggle="tab" data-bs-target="#utenti" type="button" role="tab" aria-controls="utenti" aria-selected="false"><b>UTENTI</b></a>
+	    </li>
+	 </ul>
+	 <div class="tab-content" id="myTabContent">
+	    <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
+	    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+	       <div class="col mt-1">
+		  <div class="alert alert-primary" role="alert">
+		     <b>SYSTEM</b>
+		  </div>
+		  <table class="table table-dark table-sm table-responsive table-striped table-hover border-primary">
+		     <thead class="thead-dark">
+			<tr>
+			   <th>event</th>
+			   <th>record</th>
+			</tr>
+		     </thead>
+		     <tbody>
+			<tr><td>TEMPO SERVER</td><td><!--#  echo var="timestamp" --></td></tr>
+			<tr><td>TEMPO WALLBOX</td><td><!--#  echo var="timewallbox" --></td></tr>
+			<tr><td>MAC ADDRESS</td><td><!--#  echo var="macaddress" --></td></tr>
+			<tr><td>ID IMPIANTO</td><td><!--#  echo var="idimpianto" --></td></tr>
+			<tr><td>COSTRUTTORE</td><td><!--#  echo var="costruttore" --></td></tr>
+			<tr><td>CONFIGURAZIONE MACCHINA</td><td><!--#  echo var="configurazione" --></td></tr>
+			<tr><td>POTENZA NOMINALE CONTATORE</td><td><!--#  echo var="potenzanominalecontatore" --></td></tr>
+			<tr><td>INDIRIZZO DEVICE MODBUS</td><td><!--#  echo var="indirizzomodbus" --></td></tr>
+			<tr><td>INDIRIZZO IP LOCALE LAN</td><td><!--#  echo var="indirizzoiplocale" --></td></tr>
+			<tr><td>INDIRIZZO IP WLAN</td><td><!--#  echo var="indirizzoipwlan" --></td></tr>
+			<tr><td>DATA/ORA</td><td><!--#  echo var="dataora" --></td></tr>
+			<tr><td>LINGUA</td><td><!--#  echo var="lingua" --></td></tr>
+			<tr><td>FREQUENZA INVIO VALORI REALTIME</td><td><!--#  echo var="frequenzainviorealtime" --></td></tr>
+			<tr><td>FREQUENZA INVIO STORICO DATI</td><td><!--#  echo var="frequenzainviostorico" --></td></tr>
+			<tr><td>FREQUENZA INVIO LOG/EVENTI</td><td><!--#  echo var="frequenzainviolog" --></td></tr>
+			<tr><td>FREQUENZA CHECK COMANDI</td><td><!--#  echo var="frequenzacheckcomandi" --></td></tr>
+			<tr><td>FREQUENZA CHECK CONFIGURAZIONE</td><td><!--#  echo var="frequenzacheckconfigurazione" --></td></tr>
+			<tr><td>TIPOLOGIA WALLBOX</td><td><!--#  echo var="tipologiawallbox" --></td></tr>
+			<tr><td>ID WALLBOX</td><td><!--#  echo var="idwallbox" --></td></tr>
+			<tr><td>NUMERO SERIE</td><td><!--#  echo var="numeroserie" --></td></tr>
+			<tr><td>VERSIONE FW</td><td><!--#  echo var="versionefw" --></td></tr>
+			<tr><td>VERSIONE SW</td><td><!--#  echo var="versionesw" --></td></tr>
+			<tr><td>POTENZA DI TARGA</td><td><!--#  echo var="potenzatarga" --></td></tr>
+		     </tbody>
+		  </table>
+	       </div>
+	    </div>
+	    <!-- /////////////////////////////////////// COMANDI ////////////////////////////////////////////////////////// -->
+	    <div class="tab-pane fade" id="comandi" role="tabpanel" aria-labelledby="comandi-tab">
+	       <div class="col mt-1">
+		  <div class="alert alert-warning" role="alert">
+		     <b>COMMAND</b>
+		  </div>
+		  <form action="#" method="post">
+		     <div class="row g-3">
+			<div class="col">
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3000</span>
+			      <span class="input-group-text">AZIONA WALLBOX</span>
+			      <input type="text" class="form-control" name="3000">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3001</span>
+			      <span class="input-group-text">PRENOTA WALLBOX</span>
+			      <input type="text" class="form-control" name="3001">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3002</span>
+			      <span class="input-group-text">ANNULLA PRENOTAZIONE</span>
+			      <input type="text" class="form-control" name="3002">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3003</span>
+			      <span class="input-group-text">IMPOSTA POTENZA MASSIMA</span>
+			      <input type="text" class="form-control" name="3003">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3004</span>
+			      <span class="input-group-text">AGGIUNGI UTENTE AUTORIZZATO</span>
+			      <input type="text" class="form-control" name="3004">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3005</span>
+			      <span class="input-group-text">RIMUOVI UTENTE AUTORIZZATO</span>
+			      <input type="text" class="form-control" name="3005">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3006</span>
+			      <span class="input-group-text">FUNZIONAMENTO POTENZA FISSA</span>
+			      <input type="text" class="form-control" name="3006">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3007</span>
+			      <span class="input-group-text">EN/DIS CONTROLLO RFID</span>
+			      <input type="text" class="form-control" name="3007">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3008</span>
+			      <span class="input-group-text">EN/DIS FUNZIONE LOAD BALANCING</span>
+			      <input type="text" class="form-control" name="3008">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3009</span>
+			      <span class="input-group-text">EN/DIS OCPP 1.6</span>
+			      <input type="text" class="form-control" name="3009">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3010</span>
+			      <span class="input-group-text">EN/DIS MODBUS</span>
+			      <input type="text" class="form-control" name="3010">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3011</span>
+			      <span class="input-group-text">AGGIORNA FW</span>
+			      <input type="text" class="form-control" name="3011">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3012</span>
+			      <span class="input-group-text">AGGIORNA SW</span>
+			      <input type="text" class="form-control" name="3012">
+			   </div>
+			   <div class="input-group input-group-sm mb-1">
+			      <span class="input-group-text">3013</span>
+			      <span class="input-group-text">RICHIEDI INFO</span>
+			      <input type="text" class="form-control" name="3013">
+			   </div>
+			</div>
+		     </div>
+		     <div class="row g-3">
+			<div class="col">
+			   <button class="w-100 btn btn-lg btn-warning mt-2" type="submit">SEND</button>
+			   <hr class="my-2">
+			</div>
+		     </div>
+		  </form>
+	       </div>
+	    </div>
+	    <!-- /////////////////////////////////////// LETTURE ////////////////////////////////////////////////////////// -->
+	    <div class="tab-pane fade" id="letture" role="tabpanel" aria-labelledby="letture-tab">
+	       <div class="col mt-1">
+		  <div class="alert alert-success" role="alert">
+		     <b>TELEMETRY</b>
+		  </div>
+		  <table class="table table-dark table-sm table-responsive table-striped table-hover border-success">
+		     <thead class="thead-dark">
+			<tr>
+			   <th>event</th>
+			   <th>record</th>
+			</tr>
+		     </thead>
+		     <tbody>
+			<tr><td>TEMPO SERVER</td><td id="temposerver">--- waiting for data ---</td></tr>
+			<tr><td>TEMPO WALLBOX</td><td id="tempowallbox">--- waiting for data ---</td></tr>
+			<tr><td>POTENZA CARICHI DOMESTICI</td><td id="potenzacarichidomestici">--- waiting for data ---</td></tr>
+			<tr><td>POTENZA WALLBOX</td><td id="potenzawallbox">--- waiting for data ---</td></tr>
+			<tr><td>CORRENTE WALLBOX</td><td id="corrente">--- waiting for data ---</td></tr>
+			<tr><td>TENSIONE WALLBOX</td><td id="tensione">--- waiting for data ---</td></tr>
+			<tr><td>UTENTE ATTIVO</td><td id="utenteattivo">--- waiting for data ---</td></tr>
+			<tr><td>WORK TIME</td><td id="worktime">--- waiting for data ---</td></tr>
+			<tr><td>ENERGIA CICLO DI RICARICA</td><td id="energiacicloricarica">--- waiting for data ---</td></tr>
+			<tr><td>TEMPERATURA</td><td id="temperatura">--- waiting for data ---</td></tr>
+			<tr><td>STATO WALLBOX</td><td id="statowallbox">--- waiting for data ---</td></tr>
+		     </tbody>
+		  </table>
+	       </div>
+	    </div>
+	    <!-- /////////////////////////////////////// UTENTI ////////////////////////////////////////////////////////// -->
+	    <div class="tab-pane fade" id="utenti" role="tabpanel" aria-labelledby="utenti-tab">
+	       <div class="col mt-1">
+		  <div class="alert alert-info" role="alert">
+		     <b>USERS</b>
+		  </div>
+<!-- /////////////////////////////////////// AGGIUNGI UTENTE ////////////////////////////////////////////////////////// -->
+						<div class="row g-3">
+							<div class="col">
+								<form action="insert.php">
+									<button class="btn btn-primary mt-2" type="submit">ADD A NEW RFID CARD</button>
+									<hr class="my-2">
+								</form>
+							</div>
+						</div>
+						<table class="table table-dark table-sm table-responsive table-striped table-hover border-success">
+						  <thead class="thead-dark">
+						    <tr>
+	                <th>id</th>
+						      <th>RFID card number</th>
+									<th>RFID card name</th>
+									<th>function</th>
+						    </tr>
+						  </thead>
+							<tbody>
+<?php
+$db = new SQLite3('access.sqlite');
+$results = $db->query('SELECT * FROM cards');
+$nrows = 0;
+	while ($row = $results->fetchArray()) {
+	  $nrows++;
+		echo "<tr><td>".$row['id']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td><form action='delete.php'><button type='submit' class='btn btn-primary btn-sm' name='id' value='".$row['card_no']."'>delete</button></form></td></tr>";
+	}
+	if ($nrows == 0) {
+		echo "<tr><td>no RFID card found</td><td></td><td></td><td></td></tr>";
+	}
+?>
+							</tbody>
+						</table>
+	       </div>
+	    </div>
+	 </div>
+      </div>
+      <script>window.jQuery || document.write('<script src="js/jquery.slim.min.js"><\/script>')</script>
+      <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+      <script type="text/javascript" language="javascript" charset="utf-8">
+         // <![CDATA[
+	 function messageReceived(text, id, channel) {
+	    console.log(channel + " -> " + id + ", " + text)
+	    if (channel == 'map1') {
+	       const obj = JSON.parse(text);
+	       for (var key of Object.keys(obj)) {
+		  console.log(key + " -> " + obj[key])
+		  var el = document.getElementById(key); // .innerHTML = obj[key];
+		  if (el) {
+		     el.innerHTML = obj[key];
+		     // el.value = obj[key];
+		  }
+	       }
+	    }
+	 };
+         var pushstream = new PushStream({
+            host: window.location.hostname,
+            port: window.location.port,
+            modes: "eventsource"
+         });
+         pushstream.onmessage = messageReceived;
+         pushstream.addChannel('map1');
+         pushstream.connect();
+         // ]]>
+      </script>
+			<script>
+			$(function() {
+		    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+		        localStorage.setItem('lastTab', $(this).attr('href'));
+		    });
+		    var lastTab = localStorage.getItem('lastTab');
+		    if (lastTab) {
+		        $('[href="' + lastTab + '"]').tab('show');
+		    }
+			});
+			</script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+   </body>
+</html>

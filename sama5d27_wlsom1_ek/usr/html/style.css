@@ -25,14 +25,14 @@ body {
 
 #logo-container {
   width: 256px;
-  height: 58px;
-  background: url('logo.png') no-repeat left center;
+  height: 50px;
+  /* background: url('logo.png') no-repeat left center; */
   color: White;
   font-family: "Segoe UI", Candara, Calibri, Segoe, Optima, Arial, sans-serif;
   font-size: 28px;
   line-height: 70%;
   margin-left: 38px;
-  padding-top: 30px;
+  padding-top: 0px;
 }
 
 #form-container {

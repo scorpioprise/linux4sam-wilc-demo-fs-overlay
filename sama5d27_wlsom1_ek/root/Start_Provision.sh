@@ -4,5 +4,5 @@ if ps | grep -q "wpa_supplicant"; then
 fi
 
 ifconfig wlan0 down
-./Start_AP.sh
+/home/root/Start_AP.sh
 

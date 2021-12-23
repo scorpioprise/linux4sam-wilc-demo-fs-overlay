@@ -73,7 +73,7 @@ echo "6.############## Starting the DHCP server ##############"
 dhcpd -cf /etc/dhcp/dhcpd.conf 
 echo "7.############## Starting the WEB scoket deamon ##############"
 cd ${HOME}
-./websocket & 
+### ./websocket & 
 echo "Now, The device comes up as an Access Point(AP) and host a webpage to provision"
 echo "WiFi station interface"
 echo "\n"
