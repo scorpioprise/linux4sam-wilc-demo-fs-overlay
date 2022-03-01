@@ -1,0 +1,3 @@
+www-data ALL = NOPASSWD:SETENV: /var/www/localhost/html/cgi-bin/store_wifi_parameters.sh
+nobody ALL = NOPASSWD:SETENV: /var/www/localhost/html/cgi-bin/store_wifi_parameters.sh
+
