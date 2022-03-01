@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS cards (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, card_no TEXT(50), name TEXT, tempo DATETIME, status TEXT(50) DEFAULT 'checked', UNIQUE KEY (card_no (50)));
 
-CREATE TABLE IF NOT EXISTS users (id INT(20) PRIMARY KEY NOT NULL, username TEXT(50), password TEXT, tempo DATETIME, auth INT, UNIQUE KEY (username (50)));
+CREATE TABLE IF NOT EXISTS users (id INT(20) NOT NULL, username VARCHAR(50) PRIMARY KEY, password TEXT, tempo DATETIME, auth INT, UNIQUE KEY (username (50)));
+
+CREATE TABLE IF NOT EXISTS transactions (user_id VARCHAR(20), wallbox_status VARCHAR(20), start_time DATETIME, end_time DATETIME, duration VARCHAR(20), delivered_kwh VARCHAR(20), error VARCHAR(20), FOREIGN KEY(user_id) REFERENCES users(username));
 
 CREATE TABLE IF NOT EXISTS configuration (id INT NOT NULL PRIMARY KEY, name VARCHAR(50) NOT NULL, tipo VARCHAR(50), value VARCHAR(50), unit VARCHAR(50), owner VARCHAR(50), UNIQUE (id), UNIQUE (name) );
 
