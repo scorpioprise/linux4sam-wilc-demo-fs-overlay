@@ -5,6 +5,18 @@ session_start();
 	    exit;
 	}
 	$id = $_SESSION["id"];
+	$auth = $_SESSION["auth"];
+	require_once "inc/config.php";
+	// 0=admin 1=installer 2=user
+	if ($auth == 0) {
+		$configuration_menu = "<li class='nav-item' role='presentation'><a href='#configurazioni' class='nav-link' id='configurazioni-tab' data-bs-toggle='tab' data-bs-target='#configurazioni' type='button' role='tab' aria-controls='configurazioni' aria-selected='false'><b>CONFIGURATION</b></a></li>";
+		$configuration_tmpl = "admin_configuration.tmpl";
+	} elseif ($auth == 1) {
+		$configuration_menu = "<li class='nav-item' role='presentation'><a href='#configurazioni' class='nav-link' id='configurazioni-tab' data-bs-toggle='tab' data-bs-target='#configurazioni' type='button' role='tab' aria-controls='configurazioni' aria-selected='false'><b>CONFIGURATION</b></a></li>";
+		$configuration_tmpl = "installer_configuration.tmpl";
+	} else {
+		$configuration_menu = "";
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +39,8 @@ session_start();
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
 					<li class="nav-item">
-						<a class="nav-link disabled" href="reset-password.php">reset password</a>
+						<a class="nav-link" href="reset-password.php">reset password</a>
 					</li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="add-user.php">add user</a>
-          </li>
 					<li class="nav-item me-2">
             <a class="nav-link active" href="logout.php">sign out</a>
           </li>
@@ -52,6 +61,10 @@ session_start();
 				<li class="nav-item" role="presentation">
 			    <a href="#utenti" class="nav-link" id="utenti-tab" data-bs-toggle="tab" data-bs-target="#utenti" type="button" role="tab" aria-controls="utenti" aria-selected="false"><b>USERS</b></a>
 			  </li>
+				<li class="nav-item" role="presentation">
+					<a href="#transazioni" class="nav-link" id="transazioni-tab" data-bs-toggle="tab" data-bs-target="#transazioni" type="button" role="tab" aria-controls="transazioni" aria-selected="false"><b>TRANSACTIONS</b></a>
+				</li>
+<?php echo $configuration_menu; ?>
 			</ul>
 			<div class="tab-content" id="myTabContent">
 <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
@@ -173,27 +186,87 @@ session_start();
 						    <tr>
 	                <th>id</th>
 						      <th>RFID card number</th>
-									<th>RFID card name</th>
+									<th>cardholder name</th>
+									<th>tempo</th>
 									<th>function</th>
 						    </tr>
 						  </thead>
 							<tbody>
 <?php
-$db = new SQLite3('access.sqlite');
-$results = $db->query('SELECT * FROM cards');
-$nrows = 0;
-	while ($row = $results->fetchArray()) {
-	  $nrows++;
-		echo "<tr><td>".$row['id']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td><form action='delete.php'><button type='submit' class='btn btn-primary btn-sm' name='id' value='".$row['card_no']."'>delete card</button></form></td></tr>";
-	}
-	if ($nrows == 0) {
-		echo "<tr><td>no RFID card found</td><td></td><td></td><td></td></tr>";
-	}
+##################### QUERY SQL UTENTI #####################
+$sql = "SELECT * FROM cards ORDER BY id DESC";
+if($stmt = mysqli_prepare($link, $sql)){
+		mysqli_stmt_bind_param($stmt, "sssss", $card_id, $card_no, $card_name, $card_tempo, $card_status);
+		if(mysqli_stmt_execute($stmt)){
+			$result = $stmt->get_result();
+			$nrows = 0;
+			while ($row = $result->fetch_assoc()) {
+				$nrows++;
+				echo "<tr><td>".$row['id']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td>".$row['tempo']."</td><td><form action='delete.php'><button type='submit' class='btn btn-primary btn-sm' name='id' value='".$row['card_no']."'>delete card</button></form></td></tr>";
+			}
+			if ($nrows == 0) {
+				echo "<tr><td>no RFID card found</td><td></td><td></td><td></td></tr>";
+			}
+		} else{
+			echo "Something went wrong. Please try again later. ";
+		}
+		mysqli_stmt_close($stmt);
+}
 ?>
 							</tbody>
 						</table>
 					</div>
 				</div>
+<!-- /////////////////////////////////////// TRANSAZIONI ////////////////////////////////////////////////////////// -->
+			  <div class="tab-pane fade" id="transazioni" role="tabpanel" aria-labelledby="transazioni-tab">
+					<div class="col mt-1">
+						<div class="alert alert-info" role="alert">
+	          <b>TRANSACTIONS</b>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-dark table-sm table-responsive table-striped table-hover border-success">
+							  <thead class="thead-dark">
+							    <tr>
+		                <th>id</th>
+							      <th>date</th>
+										<th>RFID card number</th>
+										<th>cardholder name</th>
+										<th>wallbox status</th>
+										<th>start time</th>
+										<th>end time</th>
+										<th>duration</th>
+										<th>delivered kWh</th>
+										<th>error</th>
+							    </tr>
+							  </thead>
+								<tbody>
+<?php
+##################### QUERY SQL TRANSAZIONI #####################
+$sql = "SELECT transactions.id, transactions.tempo, transactions.card_no, cards.name, transactions.wallbox_status, transactions.start_time, transactions.end_time, transactions.duration, transactions.delivered_kwh, transactions.error FROM transactions JOIN cards ON transactions.card_no=cards.card_no ORDER BY id DESC";
+if($stmt = mysqli_prepare($link, $sql)){
+		mysqli_stmt_bind_param($stmt, "ssssssss", $id, $tempo, $card_no, $wallbox_status, $start_time, $end_tiome, $transaction_duration, $delivered_kwh, $transaction_error);
+		if(mysqli_stmt_execute($stmt)){
+			$result = $stmt->get_result();
+			$nrows = 0;
+			while ($row = $result->fetch_assoc()) {
+				$nrows++;
+				echo "<tr><td>".$row['id']."</td><td>".$row['tempo']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td>".$row['wallbox_status']."</td><td>".$row['start_time']."</td><td>".$row['end_time']."</td><td>".$row['duration']."</td><td>".$row['delivered_kwh']."</td><td>".$row['error']."</td></tr>";
+			}
+			if ($nrows == 0) {
+				echo "<tr><td>no TRANSACTIONS found</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+			}
+		} else{
+			echo "Something went wrong. Please try again later. ";
+		}
+		mysqli_stmt_close($stmt);
+}
+?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+<?php include $configuration_tmpl; ?>
 			</div>
     </div>
     <script>window.jQuery || document.write('<script src="js/jquery.slim.min.js"><\/script>')</script>

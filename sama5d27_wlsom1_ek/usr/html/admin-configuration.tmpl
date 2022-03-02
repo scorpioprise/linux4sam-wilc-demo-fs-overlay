@@ -1,0 +1,82 @@
+<!-- /////////////////////////////////////// CONFIGURAZIONI ////////////////////////////////////////////////////////// -->
+<div class="tab-pane fade" id="configurazioni" role="tabpanel" aria-labelledby="configurazioni-tab">
+	<div class="col mt-1">
+		<div class="alert alert-danger" role="alert">
+		<b>CONFIGURATION</b>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-dark table-sm table-responsive table-striped table-hover border-success">
+				<thead class="thead-dark">
+					<tr>
+						<th>id</th>
+						<th>name</th>
+						<th>type</th>
+						<th>value</th>
+						<th>unit</th>
+						<th>change / update</th>
+					</tr>
+				</thead>
+				<tbody>
+<?php
+##################### QUERY SQL TRANSAZIONI #####################
+$sql = "SELECT * FROM configuration ORDER BY id ASC";
+if($stmt = mysqli_prepare($link, $sql)){
+mysqli_stmt_bind_param($stmt, "sssss", $id, $name, $tipo, $value, $unit);
+if(mysqli_stmt_execute($stmt)){
+$result = $stmt->get_result();
+$nrows = 0;
+while ($row = $result->fetch_assoc()) {
+$nrows++;
+if ($row['tipo'] == 'bool') {
+	$formtipo = "<select style='min-width:185px;' class='form-select form-select-sm' name='valore' required><option selected disabled value=''>select</option><option value='true' >true</option><option value='false'>false</option></select>";
+}
+elseif ($row['tipo'] == 'float') {
+	$formtipo = "<input style='min-width:185px;' class='form-control form-control-sm' type='number' step= '0.1' min= '0' placeholder='' name='valore' required>";
+}
+elseif ($row['tipo'] == 'int') {
+	$formtipo = "<input style='min-width:185px;' class='form-control form-control-sm' type='number' step= '1' min= '0' placeholder='' name='valore' required>";
+}
+elseif ($row['tipo'] == 'string') {
+	$formtipo = "<input style='min-width:185px;' class='form-control form-control-sm' type='text' maxlength='50' placeholder='' name='valore' required>";
+}
+elseif ($row['tipo'] == 'uint8_t') {
+	$formtipo = "<input style='min-width:185px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '255' placeholder='' name='valore' required>";
+}
+elseif ($row['tipo'] == 'uint16_t') {
+	$formtipo = "<input style='min-width:185px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '65535' placeholder='' name='valore' required>";
+}
+elseif ($row['tipo'] == 'uint32_t') {
+	$formtipo = "<input style='min-width:185px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '4294967295' placeholder='' name='valore' required>";
+}
+else {
+	$formtipo = "missing";
+}
+
+echo "<tr><td>".$row['id'].
+"</td><td>".$row['name'].
+"</td><td>".$row['tipo'].
+"</td><td>".$row['value'].
+"</td><td>".$row['unit'].
+"</td><td>".
+"<form class='row me-1' action='insert-configuration.php' method='post'>
+<div class='col-auto'>
+<input type='hidden' name= 'parameter' value='".$row['id']."'>".
+$formtipo.
+"</div>
+<div class='col-auto'><button type='submit' class='btn btn-primary btn-sm'>update</button></div></form>".
+"</td></tr>";
+}
+if ($nrows == 0) {
+echo "<tr><td>no CONFIGURATION found</td><td></td><td></td><td></td><td></td><td></td></tr>";
+}
+} else{
+echo "Something went wrong. Please try again later.";
+}
+mysqli_stmt_close($stmt);
+}
+?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
