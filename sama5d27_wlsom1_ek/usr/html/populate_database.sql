@@ -1,3 +1,5 @@
+GRANT ALL PRIVILEGES ON *.* TO 'www-data'@'localhost' IDENTIFIED VIA unix_socket;
+
 DROP DATABASE IF EXISTS wallbox;
 CREATE DATABASE wallbox;
 use wallbox;
