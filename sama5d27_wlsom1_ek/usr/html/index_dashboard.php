@@ -196,7 +196,6 @@ session_start();
 ##################### QUERY SQL UTENTI #####################
 $sql = "SELECT * FROM cards ORDER BY id DESC";
 if($stmt = mysqli_prepare($link, $sql)){
-		mysqli_stmt_bind_param($stmt, "sssss", $card_id, $card_no, $card_name, $card_tempo, $card_status);
 		if(mysqli_stmt_execute($stmt)){
 			$result = $stmt->get_result();
 			$nrows = 0;
@@ -244,7 +243,6 @@ if($stmt = mysqli_prepare($link, $sql)){
 ##################### QUERY SQL TRANSAZIONI #####################
 $sql = "SELECT transactions.id, transactions.tempo, transactions.card_no, cards.name, transactions.wallbox_status, transactions.start_time, transactions.end_time, transactions.duration, transactions.delivered_kwh, transactions.error FROM transactions JOIN cards ON transactions.card_no=cards.card_no ORDER BY id DESC";
 if($stmt = mysqli_prepare($link, $sql)){
-		mysqli_stmt_bind_param($stmt, "ssssssss", $id, $tempo, $card_no, $wallbox_status, $start_time, $end_tiome, $transaction_duration, $delivered_kwh, $transaction_error);
 		if(mysqli_stmt_execute($stmt)){
 			$result = $stmt->get_result();
 			$nrows = 0;
@@ -266,7 +264,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 						</div>
 					</div>
 				</div>
-<?php include $configuration_tmpl; ?>
+<?php if(isset($configuration_tmpl)){include($configuration_tmpl);} ?>
 			</div>
     </div>
     <script>window.jQuery || document.write('<script src="js/jquery.slim.min.js"><\/script>')</script>
