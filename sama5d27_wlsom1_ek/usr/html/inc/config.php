@@ -1,6 +1,6 @@
 <?php
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
+define('DB_USERNAME', 'www-data');
 define('DB_PASSWORD', '');
 define('DB_NAME', 'wallbox');
 define('DB_PORT', '3306');
