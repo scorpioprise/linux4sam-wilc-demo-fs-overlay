@@ -204,7 +204,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 				echo "<tr><td>".$row['id']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td>".$row['tempo']."</td><td><form action='delete.php'><button type='submit' class='btn btn-primary btn-sm' name='id' value='".$row['card_no']."'>delete card</button></form></td></tr>";
 			}
 			if ($nrows == 0) {
-				echo "<tr><td>no RFID card found</td><td></td><td></td><td></td></tr>";
+				echo "<tr><td>no RFID card found</td><td></td><td></td><td></td><td></td></tr>";
 			}
 		} else{
 			echo "Something went wrong. Please try again later. ";
