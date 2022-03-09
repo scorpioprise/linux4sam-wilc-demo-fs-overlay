@@ -7,6 +7,7 @@ session_start();
 	$id = $_SESSION["id"];
 	$auth = $_SESSION["auth"];
 	require_once "inc/config.php";
+	include "loader.php";
 	// 0=admin 1=installer 2=user
 	if ($auth == 0) {
 		$configuration_menu = "<li class='nav-item' role='presentation'><a href='#configurazioni' class='nav-link' id='configurazioni-tab' data-bs-toggle='tab' data-bs-target='#configurazioni' type='button' role='tab' aria-controls='configurazioni' aria-selected='false'><b>CONFIGURATION</b></a></li>";
