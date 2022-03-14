@@ -1,3 +1,3 @@
 <?php
-echo "sto caricando...";
+exec('issue_command 9007');
 ?>

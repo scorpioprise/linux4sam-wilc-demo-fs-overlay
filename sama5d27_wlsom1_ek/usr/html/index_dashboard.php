@@ -154,15 +154,15 @@ session_start();
 						    </tr>
 						  </thead>
 							<tbody>
-								<tr><td>DOMESTIC LOADS CONSUMPTION</td><td id="potenzacarichidomestici">--- waiting for data ---</td></tr>
-								<tr><td>WALLBOX POWER</td><td id="potenzawallbox">--- waiting for data ---</td></tr>
-								<tr><td>WALLBOX CURRENT</td><td id="corrente">--- waiting for data ---</td></tr>
-								<tr><td>WALLBOX VOLTAGE</td><td id="tensione">--- waiting for data ---</td></tr>
-								<tr><td>ACTIVE USER</td><td id="utenteattivo">--- waiting for data ---</td></tr>
-								<tr><td>WORK TIME</td><td id="worktime">--- waiting for data ---</td></tr>
-								<tr><td>CHARGING CYCLE ENERGY</td><td id="energiacicloricarica">--- waiting for data ---</td></tr>
-								<tr><td>TEMPERATURE</td><td id="temperatura">--- waiting for data ---</td></tr>
-								<tr><td>WALLBOX STATUS</td><td id="statowallbox">--- waiting for data ---</td></tr>
+								<tr><td>DOMESTIC LOADS CONSUMPTION</td><td id="potenzacarichidomestici"><!--#  echo var="potenzacarichidomestici" --></td></tr>
+								<tr><td>WALLBOX POWER</td><td id="potenzawallbox"><!--#  echo var="potenzawallbox" --></td></tr>
+								<tr><td>WALLBOX CURRENT</td><td id="corrente"><!--#  echo var="corrente" --></td></tr>
+								<tr><td>WALLBOX VOLTAGE</td><td id="tensione"><!--#  echo var="tensione" --></td></tr>
+								<tr><td>ACTIVE USER</td><td id="utenteattivo"><!--#  echo var="utenteattivo" --></td></tr>
+								<tr><td>WORK TIME</td><td id="worktime"><!--#  echo var="worktime" --></td></tr>
+								<tr><td>CHARGING CYCLE ENERGY</td><td id="energiacicloricarica"><!--#  echo var="energiacicloricarica" --></td></tr>
+								<tr><td>TEMPERATURE</td><td id="temperatura"><!--#  echo var="temperatura" --></td></tr>
+								<tr><td>WALLBOX STATUS</td><td id="statowallbox"><!--#  echo var="statowallbox" --></td></tr>
 							</tbody>
 						</table>
 					</div>
