@@ -10,7 +10,8 @@ session_start();
 	include "loader.php";
 	// 0=admin 1=installer 2=user
 	if ($auth == 0) {
-		$configuration_menu = "<li class='nav-item' role='presentation'><a href='#configurazioni' class='nav-link' id='configurazioni-tab' data-bs-toggle='tab' data-bs-target='#configurazioni' type='button' role='tab' aria-controls='configurazioni' aria-selected='false'><b>CONFIGURATION</b></a></li>";
+		$configuration_menu = "<li class='nav-item' role='presentation'><a href='#configurazioni' class='nav-link' id='configurazioni-tab' data-bs-toggle='tab' data-bs-target='#configurazioni' type='button' role='tab' aria-controls='configurazioni' aria-selected='false'><b>CONFIGURATION</b></a></li>
+		<li class='nav-item' role='presentation'><a href='#errori' class='nav-link' id='errori-tab' data-bs-toggle='tab' data-bs-target='#errori' type='button' role='tab' aria-controls='errori' aria-selected='false'><b>ERRORS</b></a></li>";
 		$configuration_tmpl = "admin_configuration.tmpl";
 	} elseif ($auth == 1) {
 		$configuration_menu = "<li class='nav-item' role='presentation'><a href='#configurazioni' class='nav-link' id='configurazioni-tab' data-bs-toggle='tab' data-bs-target='#configurazioni' type='button' role='tab' aria-controls='configurazioni' aria-selected='false'><b>CONFIGURATION</b></a></li>";
