@@ -131,6 +131,7 @@ session_start();
 											<option value="3011">3011 - FIRMWARE UPDATE</option>
 											<option value="3012">3012 - SOFTWARE UPDATE</option>
 											<option value="3013">3013 - DEVICE INFO</option>
+											<option value="3014">3014 - RESET ERROR</option>
 									  </select>
 										<input type="text" class="form-control" name="valore" placeholder="please insert a value" aria-label="please insert a value" required>
 									  <button class="btn btn-outline-secondary" type='submit'>APPLY</button>
