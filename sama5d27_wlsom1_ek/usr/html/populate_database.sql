@@ -60,4 +60,12 @@ describe users;
 describe cards;
 describe transactions;
 
-
+##################### TABLE ERRORS ####################
+CREATE TABLE IF NOT EXISTS `errors` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `date` datetime NOT NULL DEFAULT current_timestamp(),
+ `value` varchar(100) NOT NULL,
+ `severity` varchar(50) NOT NULL,
+ `parameter` int(10) NOT NULL,
+ PRIMARY KEY (`id`)
+)
