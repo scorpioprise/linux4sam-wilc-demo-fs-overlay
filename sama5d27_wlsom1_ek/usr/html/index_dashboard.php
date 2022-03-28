@@ -279,7 +279,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 		    for (var key of Object.keys(obj)) {
 					var el = document.getElementById(key).innerHTML = obj[key];
 					if (el) {
-					    el.value = obj[key];
+					    el.innerHTML = obj[key];
 					}
 		    }
 			}
