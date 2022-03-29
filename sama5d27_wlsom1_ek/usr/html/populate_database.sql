@@ -33,15 +33,16 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `tempo` datetime DEFAULT current_timestamp(),
   `card_no` varchar(20) DEFAULT NULL,
-  `wallbox_status` varchar(20) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
-  `duration` varchar(20) DEFAULT NULL,
-  `delivered_kwh` varchar(20) DEFAULT NULL,
+  `duration` int(10) DEFAULT NULL,
+  `delivered_kwh` int(10) DEFAULT NULL,
   `error` varchar(20) DEFAULT NULL,
   UNIQUE KEY `id` (`id`),
   KEY `card_no` (`card_no`),
-  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`card_no`) REFERENCES `cards` (`card_no`) );
+  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`card_no`) REFERENCES `cards` (`card_no`)
+);
 
 ##################### TABLE CONFIGURATION ####################
 CREATE TABLE IF NOT EXISTS `configuration` (
@@ -56,10 +57,6 @@ CREATE TABLE IF NOT EXISTS `configuration` (
   UNIQUE KEY `name` (`name`)
 );
 
-describe users;
-describe cards;
-describe transactions;
-
 ##################### TABLE ERRORS ####################
 CREATE TABLE IF NOT EXISTS `errors` (
  `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -68,4 +65,13 @@ CREATE TABLE IF NOT EXISTS `errors` (
  `severity` varchar(50) NOT NULL,
  `parameter` int(10) NOT NULL,
  PRIMARY KEY (`id`)
-)
+);
+
+system echo "================ table USERS ================";
+describe users;
+system echo "================ table CARDS ================";
+describe cards;
+system echo "================ table TRANSACTIONS ================";
+describe transactions;
+system echo "================ table ERRORS ================";
+describe errors;
