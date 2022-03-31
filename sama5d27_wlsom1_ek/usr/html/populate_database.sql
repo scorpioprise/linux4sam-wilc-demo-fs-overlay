@@ -32,7 +32,7 @@ INSERT INTO `users`(`username`, `password`, `auth`) VALUES ('admin', '$2y$10$dW0
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `tempo` datetime DEFAULT current_timestamp(),
-  `card_no` varchar(20) DEFAULT NULL,
+  `card_no` int(10) NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `error` varchar(20) DEFAULT NULL,
   UNIQUE KEY `id` (`id`),
   KEY `card_no` (`card_no`),
-  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`card_no`) REFERENCES `cards` (`card_no`)
+  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`card_no`) REFERENCES `cards` (`card_no`) 
 );
 
 ##################### TABLE CONFIGURATION ####################
@@ -75,3 +75,4 @@ system echo "================ table TRANSACTIONS ================";
 describe transactions;
 system echo "================ table ERRORS ================";
 describe errors;
+
