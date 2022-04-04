@@ -37,5 +37,7 @@ INSERT IGNORE INTO configuration VALUES(33,'wallbox_modbus_address','int','','',
 INSERT IGNORE INTO configuration VALUES(34,'wallbox_ocpp_server_ip_address','uint32_t','','IP','microchip');
 INSERT IGNORE INTO configuration VALUES(35,'wallbox_ocpp_ip_server_port','int','','IP','microchip');
 INSERT IGNORE INTO configuration VALUES(36,'wallbox_ocpp_url_server','string','','url','microchip');
+INSERT IGNORE INTO configuration VALUES(37,'powermeter_vehicle_baudrate','uint16_t','0','baud','dsp');
+INSERT IGNORE INTO configuration VALUES(38,'powermeter_domestic_baudrate','uint16_t','0','baud','dsp');
 
 describe configuration;
