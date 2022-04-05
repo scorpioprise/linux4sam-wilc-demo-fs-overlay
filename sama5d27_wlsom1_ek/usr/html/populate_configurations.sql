@@ -17,7 +17,7 @@ INSERT IGNORE INTO configuration VALUES(13,'customer_username','string','','','m
 INSERT IGNORE INTO configuration VALUES(14,'customer_password','string','','','microchip');
 INSERT IGNORE INTO configuration VALUES(15,'facility_configuration_id','int','1','','dsp');
 INSERT IGNORE INTO configuration VALUES(16,'builder_name','string','','','microchip');
-INSERT IGNORE INTO configuration VALUES(17,'facility_configuration','uint16_t','0x40','facility_configuration','dsp');
+INSERT IGNORE INTO configuration VALUES(17,'facility_configuration','uint16_t','0x00','facility_configuration','dsp');
 INSERT IGNORE INTO configuration VALUES(18,'unused_1','uint16_t','0x00','','microchip');
 INSERT IGNORE INTO configuration VALUES(19,'meter_power_rating','uint32_t','14000','Watt','dsp');
 INSERT IGNORE INTO configuration VALUES(20,'modbus_address','int','','','microchip');
