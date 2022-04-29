@@ -40,10 +40,11 @@ INSERT IGNORE INTO configuration VALUES(38,'powermeter_domestic_baudrate','uint1
 INSERT IGNORE INTO configuration VALUES(39,'phase_is_triphase','bool','False','','dsp');
 INSERT IGNORE INTO configuration VALUES(40,'force_phase','bool','False','','dsp');
 INSERT IGNORE INTO configuration VALUES(41,'has_plug_lockengine','bool','True','','dsp');
-INSERT IGNORE INTO configuration VALUES(42,'has_rfid_reader','bool','True','','dsp');
-INSERT IGNORE INTO configuration VALUES(43,'has_car_powermeter_mid','bool','True','','dsp');
-INSERT IGNORE INTO configuration VALUES(44,'has_domestic_powermeter','bool','False','','dsp');
-INSERT IGNORE INTO configuration VALUES(45,'enable_fixed_power_inhibit_mid','bool','False','','dsp');
-INSERT IGNORE INTO configuration VALUES(46,'inverter_presence','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(42,'force_plug_lockengine','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(43,'has_rfid_reader','bool','True','','dsp');
+INSERT IGNORE INTO configuration VALUES(44,'has_car_powermeter_mid','bool','True','','dsp');
+INSERT IGNORE INTO configuration VALUES(45,'has_domestic_powermeter','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(46,'enable_fixed_power_inhibit_mid','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(47,'inverter_presence','bool','False','','dsp');
 
 describe configuration;
