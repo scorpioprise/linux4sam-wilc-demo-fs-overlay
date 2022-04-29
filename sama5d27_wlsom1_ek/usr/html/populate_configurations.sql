@@ -1,5 +1,6 @@
 use wallbox;
 
+
 INSERT IGNORE INTO configuration VALUES(0,'minimum_current_available_vehicle','float','1.0','Ampere','dsp');
 INSERT IGNORE INTO configuration VALUES(1,'minimum_available_power','float','300.0','Watt','dsp');
 INSERT IGNORE INTO configuration VALUES(2,'rfid_validity_timeout','uint32_t','60000','msec','dsp');
@@ -12,19 +13,16 @@ INSERT IGNORE INTO configuration VALUES(8,'led_light_off_time','uint16_t','1000'
 INSERT IGNORE INTO configuration VALUES(9,'led_light_on_time_fast','uint16_t','150','msec','dsp');
 INSERT IGNORE INTO configuration VALUES(10,'led_light_off_time_fast','uint16_t','150','msec','dsp');
 INSERT IGNORE INTO configuration VALUES(11,'short_circuit_current','float','100','Ampere','dsp');
-INSERT IGNORE INTO configuration VALUES(12,'enable_fixed_power_inhibit_mid','bool','false','','dsp');
 INSERT IGNORE INTO configuration VALUES(13,'customer_username','string','','','microchip');
 INSERT IGNORE INTO configuration VALUES(14,'customer_password','string','','','microchip');
 INSERT IGNORE INTO configuration VALUES(15,'facility_configuration_id','int','1','','dsp');
 INSERT IGNORE INTO configuration VALUES(16,'builder_name','string','','','microchip');
-INSERT IGNORE INTO configuration VALUES(17,'facility_configuration','uint16_t','0x00','facility_configuration','dsp');
 INSERT IGNORE INTO configuration VALUES(18,'unused_1','uint16_t','0x00','','microchip');
 INSERT IGNORE INTO configuration VALUES(19,'meter_power_rating','uint32_t','14000','Watt','dsp');
 INSERT IGNORE INTO configuration VALUES(20,'modbus_address','int','','','microchip');
 INSERT IGNORE INTO configuration VALUES(21,'activation_timestamp','uint32_t','','sec','dsp');
 INSERT IGNORE INTO configuration VALUES(22,'language','string','it-IT','','microchip');
 INSERT IGNORE INTO configuration VALUES(23,'polling_period_realtime_mqtt_data','int','5','sec','dsp');
-INSERT IGNORE INTO configuration VALUES(24,'wallbox_type','uint8_t','0x80','tipologia_wallbox','dsp');
 INSERT IGNORE INTO configuration VALUES(25,'wallbox_id','string','','','microchip');
 INSERT IGNORE INTO configuration VALUES(26,'wallbox_serial_number','string','','','microchip');
 INSERT IGNORE INTO configuration VALUES(27,'wallbox_rated_power','uint32_t','14000','Watt','dsp');
@@ -39,5 +37,12 @@ INSERT IGNORE INTO configuration VALUES(35,'wallbox_ocpp_ip_server_port','int','
 INSERT IGNORE INTO configuration VALUES(36,'wallbox_ocpp_url_server','string','','url','microchip');
 INSERT IGNORE INTO configuration VALUES(37,'powermeter_vehicle_baudrate','uint16_t','0','baud','dsp');
 INSERT IGNORE INTO configuration VALUES(38,'powermeter_domestic_baudrate','uint16_t','0','baud','dsp');
+INSERT IGNORE INTO configuration VALUES(39,'phase_is_triphase','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(40,'force_phase','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(41,'has_plug_lockengine','bool','True','','dsp');
+INSERT IGNORE INTO configuration VALUES(42,'has_rfid_reader','bool','True','','dsp');
+INSERT IGNORE INTO configuration VALUES(43,'has_car_powermeter_mid','bool','True','','dsp');
+INSERT IGNORE INTO configuration VALUES(44,'has_domestic_powermeter','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(45,'enable_fixed_power_inhibit_mid','bool','False','','dsp');
 
 describe configuration;
