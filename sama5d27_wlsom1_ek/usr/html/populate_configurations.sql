@@ -44,5 +44,6 @@ INSERT IGNORE INTO configuration VALUES(42,'has_rfid_reader','bool','True','','d
 INSERT IGNORE INTO configuration VALUES(43,'has_car_powermeter_mid','bool','True','','dsp');
 INSERT IGNORE INTO configuration VALUES(44,'has_domestic_powermeter','bool','False','','dsp');
 INSERT IGNORE INTO configuration VALUES(45,'enable_fixed_power_inhibit_mid','bool','False','','dsp');
+INSERT IGNORE INTO configuration VALUES(46,'inverter_presence','bool','False','','dsp');
 
 describe configuration;
