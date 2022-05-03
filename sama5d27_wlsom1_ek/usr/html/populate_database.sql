@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `configuration` (
   `value` varchar(50) DEFAULT NULL,
   `unit` varchar(50) DEFAULT NULL,
   `owner` varchar(50) DEFAULT NULL,
-  `description` varchar(600) DEFAULT NULL,
+  `description` varchar(600) CHARACTER SET 'utf8',
   `visibility` int DEFAULT 2,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
