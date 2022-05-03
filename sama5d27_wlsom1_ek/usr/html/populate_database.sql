@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS `configuration` (
   `value` varchar(50) DEFAULT NULL,
   `unit` varchar(50) DEFAULT NULL,
   `owner` varchar(50) DEFAULT NULL,
+  `description` varchar(600) DEFAULT NULL,
+  `visibility` int(11) DEFAULT 2,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `name` (`name`)
