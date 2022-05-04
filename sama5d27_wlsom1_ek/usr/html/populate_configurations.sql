@@ -46,5 +46,6 @@ INSERT IGNORE INTO configuration VALUES(44,'has_car_powermeter_mid','bool','True
 INSERT IGNORE INTO configuration VALUES(45,'has_domestic_powermeter','bool','False','','dsp', "presenza powermeter connesso al contatore domestico, se false la colonnina non usa i dati di consumo domestico", 2);
 INSERT IGNORE INTO configuration VALUES(46,'enable_fixed_power_inhibit_mid','bool','False','','dsp', "set modalita' funzionamento a potenza fissa (viene esclusa la lettura del powermeter domestico", 2);
 INSERT IGNORE INTO configuration VALUES(47,'inverter_presence','bool','False','','dsp', "presenza di sistema di accumulo/inverter nell'impianto", 2);
+INSERT IGNORE INTO configuration VALUES(70,'led_intensity_factor','int','37','factor','dsp', "intensita' dei led in percentuale, default 37% (bene al chiuso, da alzare in presenza di forte luce)", 2);
 
 describe configuration;
