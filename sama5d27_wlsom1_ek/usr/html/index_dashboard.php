@@ -270,7 +270,7 @@ if($stmt = mysqli_prepare($link, $sql)){
 <?php if(isset($configuration_tmpl)){include($configuration_tmpl);} ?>
 			</div>
     </div>
-    <script>window.jQuery || document.write('<script src="js/jquery.slim.min.js"><\/script>')</script>
+    <script src="js/jquery.slim.min.js"></script>
 		<script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
 		<script type="text/javascript" language="javascript" charset="utf-8">
     function messageReceived(text, id, channel) {
@@ -302,6 +302,14 @@ if($stmt = mysqli_prepare($link, $sql)){
 	    if (lastTab) {
 	        $('[href="' + lastTab + '"]').tab('show');
 	    }
+		});
+		</script>
+		<script>
+		$(document).ready(function(){
+			var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+				return new bootstrap.Tooltip(tooltipTriggerEl)
+			})
 		});
 		</script>
     <script src="js/bootstrap.bundle.min.js"></script>

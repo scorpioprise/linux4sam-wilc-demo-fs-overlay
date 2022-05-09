@@ -14,6 +14,7 @@
 						<th>value</th>
 						<th>unit</th>
 						<th>change / update</th>
+						<th>help</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,10 +64,10 @@ echo "<tr><td>".$row['id'].
 $formtipo.
 "</div>
 <div class='col-auto'><button type='submit' class='btn btn-primary btn-sm'>update</button></div></form>".
-"</td></tr>";
+"</td><td><button type='button' class='btn btn-warning btn-sm' data-bs-toggle='tooltip' data-bs-placement='left' title='".$row['description']."'>help</button></td></tr>";
 }
 if ($nrows == 0) {
-echo "<tr><td>no CONFIGURATION found</td><td></td><td></td><td></td><td></td><td></td></tr>";
+echo "<tr><td>no CONFIGURATION found</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
 } else{
 echo "Something went wrong. Please try again later.";
