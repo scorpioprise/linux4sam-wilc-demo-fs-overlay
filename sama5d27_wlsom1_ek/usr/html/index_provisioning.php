@@ -110,7 +110,7 @@
     	      </div>
 						<hr class="my-2">
 			    	<div>
-							<button class="w-100 btn btn-lg btn-primary my-2" type="submit" name="apply" value="apply" onClick="submitButton('cgi-bin/store_wifi_parameters.sh')">apply</button>
+							<button class="w-100 btn btn-lg btn-primary my-2" type="submit" name="apply" value="apply" onClick="submitButton('reload_index.php')">apply</button>
 			    	</div>
 <!-- ############################################## CONTINUE WITHOUT NETWORKl ############################################## -->
             <hr class="my-2">
