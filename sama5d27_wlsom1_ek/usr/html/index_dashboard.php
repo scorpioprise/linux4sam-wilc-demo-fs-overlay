@@ -190,12 +190,29 @@ session_start();
 	                <th>id</th>
 						      <th>RFID card number</th>
 									<th>cardholder name</th>
-									<th>tempo</th>
-									<th>function</th>
+									<th>date</th>
+									<th colspan="2">functions</th>
 						    </tr>
 						  </thead>
 							<tbody>
 <?php
+##################### UPDATE SQL CARTE UTENTI #####################
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+$nuovonome = $_POST['newname'];
+$numerocarta = $_POST['cardnumber'];
+	$sql2 = "UPDATE cards SET name='$nuovonome' WHERE card_no='$numerocarta'";
+	if($stmt = mysqli_prepare($link, $sql2)){
+			if(mysqli_stmt_execute($stmt)){
+				$result = $stmt->get_result();
+				$nrows = 0;
+				if ($nrows == 0) {
+				}
+			} else{
+				echo "Something went wrong. Please try again later. ";
+			}
+			mysqli_stmt_close($stmt);
+	}
+}
 ##################### QUERY SQL UTENTI #####################
 $sql = "SELECT * FROM cards ORDER BY id DESC";
 if($stmt = mysqli_prepare($link, $sql)){
@@ -204,10 +221,12 @@ if($stmt = mysqli_prepare($link, $sql)){
 			$nrows = 0;
 			while ($row = $result->fetch_assoc()) {
 				$nrows++;
-				echo "<tr><td>".$row['id']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td>".$row['tempo']."</td><td><form action='delete.php'><button type='submit' class='btn btn-primary btn-sm' name='id' value='".$row['card_no']."'>delete card</button></form></td></tr>";
+				echo "<tr><td>".$row['id']."</td><td>".$row['card_no']."</td><td>".$row['name']."</td><td>".$row['tempo']."</td>
+				<td><button type='submit' class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#changeModal' data-bs-change='".$row['name']."' name='change' data-bs-value='".$row['card_no']."'>change cardholder name</button></td>
+				<td><form action='delete.php'><button type='submit' class='btn btn-warning btn-sm' name='id' value='".$row['card_no']."'>delete card</button></form></td></tr>";
 			}
 			if ($nrows == 0) {
-				echo "<tr><td>no RFID card found</td><td></td><td></td><td></td><td></td></tr>";
+				echo "<tr><td>no RFID card found</td><td></td><td></td><td></td><td></td><td></td></tr>";
 			}
 		} else{
 			echo "Something went wrong. Please try again later. ";
@@ -215,10 +234,54 @@ if($stmt = mysqli_prepare($link, $sql)){
 		mysqli_stmt_close($stmt);
 }
 ?>
+
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<div class="modal fade" id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered">
+				    <div class="modal-content">
+				      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="changeModalLabel">change cardholder name</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+								<div class="modal-prebody">
+									<input type="hidden" id="cardnumber" name="cardnumber" value="">
+								</div>
+					      <div class="modal-body">
+				          <div class="mb-3">
+				            <label for="cardholdername-name" class="col-form-label">old name:</label>
+				            <input type="text" class="form-control" id="cardholdername-name" name="oldname" readonly>
+				          </div>
+				          <div class="mb-3">
+				            <label for="newname" class="col-form-label">new name:</label>
+				            <input type="text" class="form-control" id="newname" name="newname" required>
+				          </div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+					        <button type="submit" class="btn btn-primary">OK</button>
+					      </div>
+			        </form>
+				    </div>
+				  </div>
+				</div>
+				<script>
+				var changeModal = document.getElementById('changeModal')
+				changeModal.addEventListener('show.bs.modal', function (event) {
+					var button = event.relatedTarget
+					var cardholdername = button.getAttribute('data-bs-change')
+					var cardnumber = button.getAttribute('data-bs-value')
+					var modalTitle = changeModal.querySelector('.modal-title')
+					var modalBody = changeModal.querySelector('.modal-prebody input')
+					var modalBodyInput = changeModal.querySelector('.modal-body input')
+					modalTitle.textContent = 'change cardholder name for ' + cardnumber
+					modalBody.value = cardnumber
+					modalBodyInput.value = cardholdername
+				})
+				</script>
 <!-- /////////////////////////////////////// TRANSAZIONI ////////////////////////////////////////////////////////// -->
 			  <div class="tab-pane fade" id="transazioni" role="tabpanel" aria-labelledby="transazioni-tab">
 					<div class="col mt-1">
