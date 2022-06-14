@@ -14,21 +14,21 @@
 		<link href="favicon.png" rel="icon" type="image/png" />
   </head>
 <!-- ############################################## JS PER SUBMIT ##############################################-->
-<script type="text/javascript">
-  function submitButton(act) {
-    document.network.action = act;
-    document.network.submit();
-  }
-</script>
+	<script type="text/javascript">
+	  function submitButton(act) {
+	    document.network.action = act;
+	    document.network.submit();
+	  }
+	</script>
 <!-- ############################################## JS PER DIV ##############################################-->
-<script type="text/javascript">
-  function scanDiv() {
-    var x = document.getElementById("scanresult");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    }
-  };
-</script>
+	<script type="text/javascript">
+	  function scanDiv() {
+	    var x = document.getElementById("scanresult");
+	    if (x.style.display === "none") {
+	      x.style.display = "block";
+	    }
+	  };
+	</script>
   <body>
 		<nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
 			<img src="img/dkc.png" width="54" height="30" class="ms-2">
@@ -72,15 +72,15 @@
 							</div>
     	      </div>
 <!-- ############################################## SCAN RESULT ##############################################-->
-            <div id="scanresult" class="mb-3" style="display:none;">
-              <div class="list-group">
-                <div class="list-group-item list-group-item-action text-info bg-dark">CHOOSE A WIRELESS NETWORK</div>
-                <input type="button" class="list-group-item list-group-item-action" onclick="fillwifi('<!--#  echo var='wifi-ssid1' -->', 123456)" value="<!--#  echo var='wifi-ssid1' -->">
-                <input type="button" class="list-group-item list-group-item-action" onclick="fillwifi('<!--#  echo var='wifi-ssid2' -->', 123456)" value="<!--#  echo var='wifi-ssid2' -->">
-                <input type="button" class="list-group-item list-group-item-action" onclick="fillwifi('<!--#  echo var='wifi-ssid3' -->', 123456)" value="<!--#  echo var='wifi-ssid3' -->">
-                <input type="button" class="list-group-item list-group-item-action" onclick="fillwifi('<!--#  echo var='wifi-ssid4' -->', 123456)" value="<!--#  echo var='wifi-ssid4' -->">
-              </div>
-            </div>
+						<div id="scanresult" class="mb-3" style="display:none;">
+							<div class="list-group">
+								<div class="list-group-item list-group-item-action text-info bg-dark">CHOOSE A WIRELESS NETWORK</div>
+								<input id="wifi1" type="button" class="list-group-item list-group-item-action" onclick="" value="">
+								<input id="wifi2" type="button" class="list-group-item list-group-item-action" onclick="" value="">
+								<input id="wifi3" type="button" class="list-group-item list-group-item-action" onclick="" value="">
+								<input id="wifi4" type="button" class="list-group-item list-group-item-action" onclick="" value="">
+							</div>
+						</div>
 						<div>
 							<input type="button" class="w-100 btn btn-lg btn-info my-2" name="scan" value="scan for wifi networks" onClick="scanDiv()">
 			    	</div>
@@ -139,35 +139,19 @@
     <script src="js/bootstrap.bundle.min.js"></script>
 		<script src="js/jquery.slim.min.js"></script>
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
-    <script type="text/javascript" language="javascript" charset="utf-8">
-			function wifidhcp_checked() {
-        if ($('.wifidhcp').is(":checked")) {
-          $(".wifistatic_ip").hide();
-        } else {
-          $(".wifistatic_ip").show();
-        }
-      };
-      function dhcp_checked() {
-        if ($('.dhcp').is(":checked")) {
-          $(".static_ip").hide();
-        } else {
-          $(".static_ip").show();
-        }
-      };
-      window.onload = function() {
-        wifidhcp_checked();
-        dhcp_checked();
-      };
-      function fillwifi(wifissid, wifipassword) {
-        var wifissid = wifissid;
-        var wifipassword = wifipassword;
-        document.getElementById("ssid").value = wifissid;
-//        document.getElementById("password").value = wifipassword;
-      };
-      // <![CDATA[
-      function messageReceived(text, id, channel) {
-        document.getElementById('messages').innerHTML += id + ': ' + text + '<br>';
-      };
+		<script type="text/javascript" language="javascript" charset="utf-8">
+			function messageReceived(text, id, channel) {
+				if (channel == 'ch1') {
+			    const obj = JSON.parse(text);
+			    for (var key of Object.keys(obj)) {
+						var el = document.getElementById(key).value = obj[key];
+						var el = document.getElementById(key).setAttribute('onClick', "fillwifi('"+obj[key]+"')");
+						if (el) {
+						    el.value = obj[key];
+						}
+			    }
+				}
+	    };
       var pushstream = new PushStream({
         host: window.location.hostname,
         port: window.location.port,
@@ -178,6 +162,34 @@
       pushstream.connect();
       // ]]>
     </script>
+		<script>
+		function wifidhcp_checked() {
+			if ($('.wifidhcp').is(":checked")) {
+				$(".wifistatic_ip").hide();
+			} else {
+				$(".wifistatic_ip").show();
+			}
+		};
+		function dhcp_checked() {
+			if ($('.dhcp').is(":checked")) {
+				$(".static_ip").hide();
+			} else {
+				$(".static_ip").show();
+			}
+		};
+		window.onload = function() {
+			wifidhcp_checked();
+			dhcp_checked();
+		};
+		function fillwifi(wifissid, wifipassword) {
+			var wifissid = wifissid;
+			var wifipassword = wifipassword;
+			document.getElementById("ssid").value = wifissid;
+		};
+		function messageReceived(text, id, channel) {
+			document.getElementById('messages').innerHTML += id + ': ' + text + '<br>';
+		};
+		</script>
   </body>
 </html>
 <!--# endif -->
