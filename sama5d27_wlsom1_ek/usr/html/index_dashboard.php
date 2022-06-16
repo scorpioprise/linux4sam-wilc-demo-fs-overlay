@@ -1,3 +1,7 @@
+<!--# if expr="$internetenabled=false" -->
+  <!--# include file="session.php" -->
+  <!--# include file="index_provisioning.php" -->
+<!--# else -->
 <?php
 session_start();
 	if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
@@ -378,3 +382,4 @@ if($stmt = mysqli_prepare($link, $sql)){
     <script src="js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+<!--# endif -->
