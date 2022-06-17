@@ -1,7 +1,3 @@
-<!--# if expr="$internetenabled=false" -->
-  <!--# include file="session.php" -->
-  <!--# include file="index_provisioning.php" -->
-<!--# else -->
 <?php
 session_start();
 	if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
@@ -24,6 +20,10 @@ session_start();
 		$configuration_menu = "";
 	}
 ?>
+<!--# if expr="$internetenabled=false" -->
+  <!--# include file="session.php" -->
+  <!--# include file="index_provisioning.php" -->
+<!--# else -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
