@@ -56,11 +56,11 @@
     	      <div class="wifistatic_ip mb-3">
 							<div class="mb-3">
 								<label for="wifiipaddress" class="form-label">WiFi network static IP</label>
-	    	        <input type="text" class="form-control" name="wifiipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifiipaddress" --> >
+	    	        <input type="text" class="form-control" name="wifiipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifiipaddress" default="" --> >
 							</div>
 							<div class="mb-3">
 								<label for="wifinetmask" class="form-label">WiFi network netmask</label>
-	    	        <input type="text" class="form-control" name="wifinetmask" maxlength="64" value=<!--# echo var="wifinetmask" default="255.255.0.0" --> >
+	    	        <input type="text" class="form-control" name="wifinetmask" maxlength="64" value=<!--# echo var="wifinetmask" default="" --> >
 							</div>
 							<div class="mb-3">
 								<label for="wifigateway" class="form-label">WiFi network gateway</label>
@@ -93,11 +93,11 @@
     	      <div class="static_ip mb-3">
 							<div class="mb-3">
 								<label for="ipaddress" class="form-label">static IP</label>
-	    	        <input type="text" class="form-control" name="ipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="ipaddress" --> >
+	    	        <input type="text" class="form-control" name="ipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="ipaddress" default="" --> >
 							</div>
 							<div class="mb-3">
 								<label for="netmask" class="form-label">netmask</label>
-	    	        <input type="text" class="form-control" name="netmask" maxlength="64" value=<!--# echo var="netmask" default="255.255.0.0" --> >
+	    	        <input type="text" class="form-control" name="netmask" maxlength="64" value=<!--# echo var="netmask" default="" --> >
 							</div>
 							<div class="mb-3">
 								<label for="gateway" class="form-label">gateway</label>
