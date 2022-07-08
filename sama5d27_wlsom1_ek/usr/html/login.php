@@ -1,13 +1,14 @@
 <?php
 session_start();
 	if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-			header("location: index_dashboard.html");
+			header("location: index_dashboard.php");
 			exit;
 	}
 	require_once "inc/config.php";
 	$username = $password = "";
 	$username_err = $password_err = "";
 	$auth = "";
+  $firstLogin = "";
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 	    if(empty(trim($_POST["username"]))){
 	        $username_err = "please enter your username";
@@ -20,7 +21,7 @@ session_start();
 	        $password = trim($_POST["password"]);
 	    }
 	    if(empty($username_err) && empty($password_err)){
-	        $sql = "SELECT id, username, password, auth FROM users WHERE username = ?";
+	        $sql = "SELECT id, username, password, auth, firstLogin FROM users WHERE username = ?";
 	        if($stmt = mysqli_prepare($link, $sql)){
 	            mysqli_stmt_bind_param($stmt, "s", $param_username);
 	            $param_username = $username;
@@ -36,7 +37,9 @@ session_start();
 	                            $usernameSolo = strstr($username, '@', true);
 	                            $_SESSION["username"] = $usernameSolo;
 															$_SESSION["auth"] = $auth;
-	                            header("location: index_dashboard.html");
+                              $_SESSION["firstLogin"] = $firstLogin;
+                							$_SESSION["change"] = $password;
+	                            header("location: index_dashboard.php");
 	                        } else{
 	                            $password_err = "<div class='alert alert-warning' role='alert'>please check your credentials</div>";
 	                        }
@@ -56,7 +59,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DKC wallbox login</title>
+    <title>DKC wallbox LOGIN</title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />

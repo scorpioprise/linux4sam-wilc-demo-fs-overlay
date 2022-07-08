@@ -6,6 +6,11 @@ session_start();
 	}
 	$id = $_SESSION["id"];
 	$auth = $_SESSION["auth"];
+  $firstLogin = $_SESSION["firstLogin"];
+  if ($firstLogin == 1) {
+  	header("location: change_password.php");
+  	exit;
+  }
 	require_once "inc/config.php";
 	include "loader.php";
 	// 0=admin 1=installer 2=user
@@ -27,7 +32,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DKC wallbox</title>
+    <title>DKC wallbox DASHBOARD</title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -44,9 +49,6 @@ session_start();
 	    </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="reset-password.php">reset password</a>
-					</li>
 					<li class="nav-item me-2">
             <a class="nav-link active" href="logout.php">sign out</a>
           </li>
