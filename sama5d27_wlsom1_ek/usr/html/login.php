@@ -21,7 +21,7 @@ session_start();
 	        $password = trim($_POST["password"]);
 	    }
 	    if(empty($username_err) && empty($password_err)){
-	        $sql = "SELECT id, username, password, auth, firstLogin FROM users WHERE username = ?";
+	        $sql = "SELECT id, username, password, auth, firstlogin FROM users WHERE username = ?";
 	        if($stmt = mysqli_prepare($link, $sql)){
 	            mysqli_stmt_bind_param($stmt, "s", $param_username);
 	            $param_username = $username;

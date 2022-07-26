@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     if (empty($new_password_err) && empty($confirm_password_err)) {
-        $sql = "UPDATE users SET password = ?, firstLogin = 0 WHERE id = ?";
+        $sql = "UPDATE users SET password = ?, firstlogin = 0 WHERE id = ?";
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
             $param_password = password_hash($new_password, PASSWORD_DEFAULT);
