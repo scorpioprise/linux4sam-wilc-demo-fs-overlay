@@ -5,7 +5,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 $id = $_SESSION["id"];
-$firstLogin = $_SESSION["firstLogin"];
+$firstlogin = $_SESSION["firstlogin"];
 $change = $_SESSION["change"];
 require_once "inc/config.php";
 $new_password = $confirm_password = "";

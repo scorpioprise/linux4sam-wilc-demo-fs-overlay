@@ -8,7 +8,7 @@ session_start();
 	$username = $password = "";
 	$username_err = $password_err = "";
 	$auth = "";
-  $firstLogin = "";
+  $firstlogin = "";
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 	    if(empty(trim($_POST["username"]))){
 	        $username_err = "please enter your username";
@@ -28,7 +28,7 @@ session_start();
 	            if(mysqli_stmt_execute($stmt)){
 	                mysqli_stmt_store_result($stmt);
 	                if(mysqli_stmt_num_rows($stmt) == 1){
-	                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $auth);
+	                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $auth, $firstlogin);
 	                    if(mysqli_stmt_fetch($stmt)){
 	                        if(password_verify($password, $hashed_password)){
 	                            session_start();
@@ -37,7 +37,7 @@ session_start();
 	                            $usernameSolo = strstr($username, '@', true);
 	                            $_SESSION["username"] = $usernameSolo;
 															$_SESSION["auth"] = $auth;
-                              $_SESSION["firstLogin"] = $firstLogin;
+                              $_SESSION["firstlogin"] = $firstlogin;
                 							$_SESSION["change"] = $password;
 	                            header("location: index_dashboard.php");
 	                        } else{

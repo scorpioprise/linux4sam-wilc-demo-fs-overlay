@@ -6,8 +6,8 @@ session_start();
 	}
 	$id = $_SESSION["id"];
 	$auth = $_SESSION["auth"];
-  $firstLogin = $_SESSION["firstLogin"];
-  if ($firstLogin == 1) {
+  $firstlogin = $_SESSION["firstlogin"];
+  if ($firstlogin == 1) {
   	header("location: change_password.php");
   	exit;
   }
