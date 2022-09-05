@@ -218,6 +218,7 @@ $numerocarta = $_POST['cardnumber'];
 			}
 			mysqli_stmt_close($stmt);
 	}
+  include "changename.php";
 }
 ##################### QUERY SQL UTENTI #####################
 $sql = "SELECT * FROM cards ORDER BY id DESC";
