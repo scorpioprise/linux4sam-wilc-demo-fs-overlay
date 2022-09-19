@@ -164,7 +164,9 @@ session_start();
 							<tbody>
 								<tr><td>DOMESTIC LOADS CONSUMPTION</td><td id="potenzacarichidomestici"></td></tr>
 								<tr><td>WALLBOX POWER</td><td id="potenzawallbox"></td></tr>
-								<tr><td>WALLBOX CURRENT</td><td id="corrente"></td></tr>
+								<tr><td>WALLBOX CURRENT R</td><td id="corrente"></td></tr>
+                <tr><td>WALLBOX CURRENT S</td><td id="corrente2"></td></tr>
+                <tr><td>WALLBOX CURRENT T</td><td id="corrente3"></td></tr>
 								<tr><td>WALLBOX VOLTAGE</td><td id="tensione"></td></tr>
 								<tr><td>ACTIVE USER</td><td id="utenteattivo"></td></tr>
 								<tr><td>WORK TIME</td><td id="worktime"></td></tr>

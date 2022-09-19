@@ -127,7 +127,7 @@
                   <div class="modal-body">YOU CANNOT UNDO THIS ACTION!</div>
                   <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">NO</button>
-                    <button class="btn btn-danger" type="submit" name="apply" value="apply" onClick="submitButton('nonetwork.php')">YES</button>
+                    <button class="btn btn-danger" type="submit" name="apply" value="apply" onClick="submitButton('reload_index.php')">YES</button>
                   </div>
                 </div>
               </div>
