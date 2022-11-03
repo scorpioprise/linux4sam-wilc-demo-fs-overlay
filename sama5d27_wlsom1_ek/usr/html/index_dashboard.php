@@ -352,7 +352,10 @@ if ($auth == 0) {
                             <tr>
                                 <td>POTENZA NOMINALE CONTATORE</td>
                                 <td class="text-end">
-                                    <!--#  echo var="potenzanominalecontatore" -->
+                                  <script>
+                                      var contatore = '<!--#  echo var="potenzanominalecontatore" -->';
+                                      document.write(contatore.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+                                  </script>
                                 </td>
                                 <td class="text-start"> W</td>
                             </tr>
@@ -436,7 +439,10 @@ if ($auth == 0) {
                             <tr>
                                 <td>POTENZA DI TARGA</td>
                                 <td class="text-end">
-                                    <!--#  echo var="potenzatarga" -->
+                                  <script>
+                                      var potenza = '<!--#  echo var="potenzatarga" -->';
+                                      document.write(potenza.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+                                  </script>
                                 </td>
                                 <td class="text-start"> W</td>
                             </tr>
