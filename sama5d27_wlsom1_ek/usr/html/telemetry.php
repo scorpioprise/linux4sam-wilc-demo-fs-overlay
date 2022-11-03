@@ -310,7 +310,7 @@ if ($auth == 0) {
                                 <td class="text-start"> W</td>
                             </tr>
                             <tr>
-                                <td>POTENZA WALLBOX ISTANTANEA</td>
+                                <td>POTENZA ISTANTANEA E.CHARGER</td>
                                 <td class="text-end" id="potenzawallbox"></td>
                                 <td class="text-start"> W</td>
                             </tr>
@@ -350,12 +350,12 @@ if ($auth == 0) {
                                 <td class="text-start"> kWh</td>
                             </tr>
                             <tr>
-                                <td>TEMPERATURA ATTUALE</td>
+                                <td>TEMPERATURA</td>
                                 <td class="text-end" id="temperatura"></td>
                                 <td class="text-start"> °C</td>
                             </tr>
                             <tr>
-                                <td>STATO DELLA WALLBOX</td>
+                                <td>STATO E.CHARGER</td>
                                 <td class="text-end" id="statowallbox"></td>
                                 <td class="text-start"></td>
                             </tr>
@@ -390,6 +390,19 @@ if ($auth == 0) {
             if (channel == 'map1') {
                 const obj = JSON.parse(text);
                 for (var key of Object.keys(obj)) {
+                    if (key == 'statowallbox' && obj[key] == 0) {
+                        obj[key] = 'PRONTO';
+                    } else if (key == 'statowallbox' && obj[key] == 1) {
+                        obj[key] = 'CONNESSO';
+                    } else if (key == 'statowallbox' && obj[key] == 2) {
+                        obj[key] = 'IN CARICA';
+                    } else if (key == 'statowallbox' && obj[key] == 3) {
+                        obj[key] = 'LOCKED';
+                    } else if (key == 'statowallbox' && obj[key] == 4) {
+                        obj[key] = 'IN ERRORE';
+                    } else if (key == 'statowallbox' && obj[key] > 4) {
+                        obj[key] = 'IN ERRORE';
+                    };
                     var el = document.getElementById(key).innerHTML = obj[key];
                     if (el) {
                         el.value = obj[key];
