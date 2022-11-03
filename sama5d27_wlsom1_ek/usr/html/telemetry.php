@@ -12,7 +12,7 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-//include_once "loader.php";
+include_once "loader.php";
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
@@ -31,7 +31,7 @@ if ($auth == 0) {
 <html lang="it">
 
 <head>
-    <title>DKC E.CHARGER | DASHBOARD SISTEMA</title>
+    <title>DKC E.CHARGER | TELEMETRIA</title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -54,7 +54,7 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item active">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -75,7 +75,7 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="index_dashboard.php" class="dkc-selected">
+                            <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
                                 E.CHARGER
                             </a>
@@ -83,7 +83,7 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="telemetry.php">
+                            <a href="telemetry.php" class="dkc-selected">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
                                 TELEMETRIA
                             </a>
@@ -174,7 +174,7 @@ if ($auth == 0) {
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="index_dashboard.php" class="dkc-selected">
+                        <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
                             E.CHARGER
                         </a>
@@ -182,7 +182,7 @@ if ($auth == 0) {
                 </li>
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="telemetry.php">
+                        <a href="telemetry.php" class="dkc-selected">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
                             TELEMETRIA
                         </a>
@@ -244,7 +244,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMMANDI
+                            COMANDI
                         </a>
                     </h4>
                 </li>
@@ -285,17 +285,17 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">DASHBOARD SISTEMA</h3>
+                            <h3 class="bold" style="color:#d91a15; font-weight:900;">TELEMETRIA</h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
+
             <div class="row mt-1 ms-2 rounded shadow-sm py-2">
                 <div class="col mt-1">
-                    <table class="table table-light table-sm table-responsive table-hover text-break">
+                    <table class="table table-light table-sm table-responsive table-striped table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
                                 <th>dati</th>
@@ -305,146 +305,64 @@ if ($auth == 0) {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>DATA SERVER</td>
-                                <td class="text-end">
-                                    <script>
-                                        var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
-                                        document.write(dataServer.toISOString());
-                                    </script>
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATA E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="timewallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>MAC ADDRESS</td>
-                                <td class="text-end">
-                                    <!--#  echo var="macaddress" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>ID INSTALLAZIONE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idimpianto" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>PRODUTTORE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="costruttore" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>CONFIGURAZIONE MACCHINA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="configurazione" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>POTENZA NOMINALE CONTATORE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="potenzanominalecontatore" -->
-                                </td>
+                                <td>POTENZA CARICHI DOMESTICI</td>
+                                <td class="text-end" id="potenzacarichidomestici"></td>
                                 <td class="text-start"> W</td>
                             </tr>
                             <tr>
-                                <td>INDIRIZZO MODBUS</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzomodbus" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO IP LOCALE LAN</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoiplocale" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO IP LOCALE Wi-Fi</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoipwlan" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATAE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="dataora" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>LINGUA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="lingua" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>FREQUENZA INVIO VALORI REAL TIME</td>
-                                <td class="text-end">
-                                    <!--#  echo var="frequenzainviorealtime" -->
-                                </td>
-                                <td class="text-start"> s</td>
-                            </tr>
-                            <tr>
-                                <td>TIPOLOGIA E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="tipologiawallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>ID E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idwallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>NUMERO DI SERIE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="numeroserie" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>VERSIONE FIRMWARE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionefw" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>VERSIONE SOFTWARE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionesw" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>POTENZA DI TARGA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="potenzatarga" -->
-                                </td>
+                                <td>POTENZA WALLBOX ISTANTANEA</td>
+                                <td class="text-end" id="potenzawallbox"></td>
                                 <td class="text-start"> W</td>
+                            </tr>
+                            <tr>
+                                <td>CORRENTE WALLBOX - FASE R</td>
+                                <td class="text-end" id="corrente"></td>
+                                <td class="text-start"> A</td>
+                            </tr>
+                            <tr>
+                                <td>CORRENTE WALLBOX - FASE S</td>
+                                <td class="text-end" id="corrente2"></td>
+                                <td class="text-start"> A</td>
+                            </tr>
+                            <tr>
+                                <td>CORRENTE WALLBOX - FASE T</td>
+                                <td class="text-end" id="corrente3"></td>
+                                <td class="text-start"> A</td>
+                            </tr>
+                            <tr>
+                                <td>TENSIONE FASE - NEUTRO</td>
+                                <td class="text-end" id="tensione"></td>
+                                <td class="text-start"> V</td>
+                            </tr>
+                            <tr>
+                                <td>UTENTE ATTIVO</td>
+                                <td class="text-end" id="utenteattivo"></td>
+                                <td class="text-start"></td>
+                            </tr>
+                            <tr>
+                                <td>DURATA - RICARICA IN CORSO</td>
+                                <td class="text-end" id="worktime"></td>
+                                <td class="text-start"></td>
+                            </tr>
+                            <tr>
+                                <td>ENERGIA EROGATA - RICARICA IN CORSO</td>
+                                <td class="text-end" id="energiacicloricarica"></td>
+                                <td class="text-start"> kWh</td>
+                            </tr>
+                            <tr>
+                                <td>TEMPERATURA ATTUALE</td>
+                                <td class="text-end" id="temperatura"></td>
+                                <td class="text-start"> °C</td>
+                            </tr>
+                            <tr>
+                                <td>STATO DELLA WALLBOX</td>
+                                <td class="text-end" id="statowallbox"></td>
+                                <td class="text-start"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
     </main>
     <!-- ################################# INIZIO MENU FOOTER MOBILE ################################################ -->
@@ -466,6 +384,28 @@ if ($auth == 0) {
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
 
     <script src="js/jquery.slim.min.js"></script>
+    <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+    <script type="text/javascript" language="javascript" charset="utf-8">
+        function messageReceived(text, id, channel) {
+            if (channel == 'map1') {
+                const obj = JSON.parse(text);
+                for (var key of Object.keys(obj)) {
+                    var el = document.getElementById(key).innerHTML = obj[key];
+                    if (el) {
+                        el.value = obj[key];
+                    }
+                }
+            }
+        };
+        var pushstream = new PushStream({
+            host: window.location.hostname,
+            port: window.location.port,
+            modes: "eventsource"
+        });
+        pushstream.onmessage = messageReceived;
+        pushstream.addChannel('map1');
+        pushstream.connect();
+    </script>
     <script>
         $(document).ready(function() {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))

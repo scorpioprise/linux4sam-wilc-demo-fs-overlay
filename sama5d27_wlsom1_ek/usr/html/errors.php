@@ -31,7 +31,7 @@ if ($auth == 0) {
 <html lang="it">
 
 <head>
-    <title>DKC E.CHARGER | DASHBOARD SISTEMA</title>
+    <title>DKC E.CHARGER | ERRORI</title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -54,7 +54,7 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item active">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -75,7 +75,7 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="index_dashboard.php" class="dkc-selected">
+                            <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
                                 E.CHARGER
                             </a>
@@ -137,7 +137,7 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="errors.php">
+                            <a href="errors.php" class="dkc-selected">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
                                 ERRORI
                             </a>
@@ -174,7 +174,7 @@ if ($auth == 0) {
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="index_dashboard.php" class="dkc-selected">
+                        <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
                             E.CHARGER
                         </a>
@@ -244,7 +244,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMMANDI
+                            COMANDI
                         </a>
                     </h4>
                 </li>
@@ -258,7 +258,7 @@ if ($auth == 0) {
                 </li>
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="errors.php">
+                        <a href="errors.php" class="dkc-selected">
                             <img src="img/ico_error.png" width="25px" class="me-3">
                             ERRORI
                         </a>
@@ -285,167 +285,80 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">DASHBOARD SISTEMA</h3>
+                            <h3 class="bold" style="color:#d91a15; font-weight:900;">ERRORI</h3>
                         </div>
-                        <div class="col d-flex justify-content-end">
+                        <div class="col-sm-3 d-flex justify-content-end">
+                            <select id="filtro" class="form-select" onchange="filtra()">
+                                <option value="" selected>filtra SEVERITY</option>
+                                <option value="INFO">INFO</option>
+                                <option value="ERROR">ERROR</option>
+                                <option value="WARNING">WARNING</option>
+                                <option value="">TUTTI</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
+
             <div class="row mt-1 ms-2 rounded shadow-sm py-2">
                 <div class="col mt-1">
-                    <table class="table table-light table-sm table-responsive table-hover text-break">
+                    <table id="tabella" class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>dati</th>
-                                <th class="text-end">valori</th>
-                                <th class="text-start">unita'</th>
+                                <th>id</th>
+                                <th>data</th>
+                                <th>valori</th>
+                                <th>severity</th>
+                                <th>parametro</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>DATA SERVER</td>
-                                <td class="text-end">
-                                    <script>
-                                        var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
-                                        document.write(dataServer.toISOString());
-                                    </script>
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATA E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="timewallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>MAC ADDRESS</td>
-                                <td class="text-end">
-                                    <!--#  echo var="macaddress" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>ID INSTALLAZIONE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idimpianto" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>PRODUTTORE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="costruttore" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>CONFIGURAZIONE MACCHINA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="configurazione" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>POTENZA NOMINALE CONTATORE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="potenzanominalecontatore" -->
-                                </td>
-                                <td class="text-start"> W</td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO MODBUS</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzomodbus" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO IP LOCALE LAN</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoiplocale" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO IP LOCALE Wi-Fi</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoipwlan" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATAE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="dataora" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>LINGUA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="lingua" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>FREQUENZA INVIO VALORI REAL TIME</td>
-                                <td class="text-end">
-                                    <!--#  echo var="frequenzainviorealtime" -->
-                                </td>
-                                <td class="text-start"> s</td>
-                            </tr>
-                            <tr>
-                                <td>TIPOLOGIA E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="tipologiawallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>ID E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idwallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>NUMERO DI SERIE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="numeroserie" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>VERSIONE FIRMWARE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionefw" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>VERSIONE SOFTWARE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionesw" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>POTENZA DI TARGA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="potenzatarga" -->
-                                </td>
-                                <td class="text-start"> W</td>
-                            </tr>
+                            <?php
+                            ##################### QUERY SQL ERRORI #####################
+                            $sql = "SELECT * FROM errors ORDER BY id DESC";
+                            if ($stmt = mysqli_prepare($link, $sql)) {
+                                if (mysqli_stmt_execute($stmt)) {
+                                    $result = $stmt->get_result();
+                                    $nrows = 0;
+                                    while ($row = $result->fetch_assoc()) {
+                                        $nrows++;
+                                        echo "<tr><td>" . $row['id'] . "</td><td>" . $row['date'] . "</td><td>" . $row['value'] . "</td><td>" . $row['severity'] . "</td><td>" . $row['parameter'] . "</td></tr>";
+                                    }
+                                    if ($nrows == 0) {
+                                        echo "<tr><td>no ERRORS found</td><td></td><td></td><td></td><td></td></tr>";
+                                    }
+                                } else {
+                                    echo "Something went wrong. Please try again later. ";
+                                }
+                                mysqli_stmt_close($stmt);
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
+        <script>
+            function filtra() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("filtro");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("tabella");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
     </main>
     <!-- ################################# INIZIO MENU FOOTER MOBILE ################################################ -->
     <footer class="footer d-md-none">

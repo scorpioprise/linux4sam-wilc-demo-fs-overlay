@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'roboto-light';
+    src: local('roboto-light'), url(../fonts/Roboto-Light.woff2) format('woff2');
+}
+
+html,
+body {
+    font-family: 'roboto-light', sans-serif;
+    font-size: .975rem;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #0e1b35;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a:target,
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 390px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: 14px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 14px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.form-signin input[name="new_password"] {
+    margin-top: 15px !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    background-color: #797979 !important;
+}
+
+.form-signin input[name="confirm_password"] {
+    margin-top: 15px !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    background-color: #797979 !important;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+.bg-dkcenergy {
+    background-color: #0e1b35;
+}
+.text-dkc {
+    color: #d91a15 !important;
+}
+.help-block {
+    color: #d91a15;
+  }
+  

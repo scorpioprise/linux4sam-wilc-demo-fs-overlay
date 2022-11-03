@@ -13,13 +13,35 @@ if ($firstlogin == 1) {
 }
 require_once "inc/config.php";
 //include_once "loader.php";
+if (isset($_POST['response'])) {
+    $response = exec('issue_command 7002 ' . $_REQUEST['parameter'] . " " . $_REQUEST['valore']);
+    if ($response == 'RESPONSE_MESSAGE_FAILED') {
+        $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_OK') {
+        $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        COMANDO ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
+        $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        COMANDO NON DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'SKIP SERIAL') {
+        $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } else {
+        $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ERRORE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    }
+}
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
+    $listConf = '0, 1, 2';
 } elseif ($auth == 1) {
     $utente = 'installer';
+    $listConf = '1, 2';
 } else {
     $utente = 'user';
+    $listConf = '2';
     $configuration_menu = "";
 }
 ?>
@@ -31,7 +53,7 @@ if ($auth == 0) {
 <html lang="it">
 
 <head>
-    <title>DKC E.CHARGER | DASHBOARD SISTEMA</title>
+    <title>DKC E.CHARGER | CONFIGURAZIONI</title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -54,7 +76,7 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item active">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -75,7 +97,7 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="index_dashboard.php" class="dkc-selected">
+                            <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
                                 E.CHARGER
                             </a>
@@ -129,7 +151,7 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="configurations.php">
+                            <a href="configurations.php" class="dkc-selected">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
                                 CONFIGURAZIONI
                             </a>
@@ -174,7 +196,7 @@ if ($auth == 0) {
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="index_dashboard.php" class="dkc-selected">
+                        <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
                             E.CHARGER
                         </a>
@@ -244,13 +266,13 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMMANDI
+                            COMANDI
                         </a>
                     </h4>
                 </li>
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="configurations.php">
+                        <a href="configurations.php" class="dkc-selected">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
                             CONFIGURAZIONI
                         </a>
@@ -285,166 +307,80 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">DASHBOARD SISTEMA</h3>
+                            <h3 class="bold" style="color:#d91a15; font-weight:900;">CONFIGURAZIONI</h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
                     </div>
+                    <?php echo $response_toast; ?>
                 </div>
             </div>
-            <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
             <div class="row mt-1 ms-2 rounded shadow-sm py-2">
                 <div class="col mt-1">
                     <table class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>dati</th>
-                                <th class="text-end">valori</th>
-                                <th class="text-start">unita'</th>
+                                <th>nome</th>
+                                <th>valore</th>
+                                <th>unita'</th>
+                                <th>modifica / aggiorna</th>
+                                <th>aiuto</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>DATA SERVER</td>
-                                <td class="text-end">
-                                    <script>
-                                        var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
-                                        document.write(dataServer.toISOString());
-                                    </script>
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATA E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="timewallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>MAC ADDRESS</td>
-                                <td class="text-end">
-                                    <!--#  echo var="macaddress" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>ID INSTALLAZIONE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idimpianto" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>PRODUTTORE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="costruttore" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>CONFIGURAZIONE MACCHINA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="configurazione" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>POTENZA NOMINALE CONTATORE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="potenzanominalecontatore" -->
-                                </td>
-                                <td class="text-start"> W</td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO MODBUS</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzomodbus" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO IP LOCALE LAN</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoiplocale" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>INDIRIZZO IP LOCALE Wi-Fi</td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoipwlan" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATAE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="dataora" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>LINGUA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="lingua" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>FREQUENZA INVIO VALORI REAL TIME</td>
-                                <td class="text-end">
-                                    <!--#  echo var="frequenzainviorealtime" -->
-                                </td>
-                                <td class="text-start"> s</td>
-                            </tr>
-                            <tr>
-                                <td>TIPOLOGIA E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="tipologiawallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>ID E.CHARGER</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idwallbox" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>NUMERO DI SERIE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="numeroserie" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>VERSIONE FIRMWARE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionefw" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>VERSIONE SOFTWARE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionesw" -->
-                                </td>
-                                <td class="text-start"></td>
-                            </tr>
-                            <tr>
-                                <td>POTENZA DI TARGA</td>
-                                <td class="text-end">
-                                    <!--#  echo var="potenzatarga" -->
-                                </td>
-                                <td class="text-start"> W</td>
-                            </tr>
+                            <?php
+                            ##################### QUERY SQL TRANSAZIONI #####################
+                            $sql = "SELECT * FROM configuration WHERE visibility IN ($listConf) ORDER BY id ASC";
+                            if ($stmt = mysqli_prepare($link, $sql)) {
+                                if (mysqli_stmt_execute($stmt)) {
+                                    $result = $stmt->get_result();
+                                    $nrows = 0;
+                                    while ($row = $result->fetch_assoc()) {
+                                        $nrows++;
+                                        if ($row['tipo'] == 'bool') {
+                                            $formtipo = "<select style='min-width:200px;' class='form-select form-select-sm' name='valore' required><option selected disabled value=''>seleziona</option><option value='true' >true</option><option value='false'>false</option></select>";
+                                        } elseif ($row['tipo'] == 'float') {
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '0.1' min= '0' placeholder='' name='valore' required>";
+                                        } elseif ($row['tipo'] == 'int') {
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' placeholder='' name='valore' required>";
+                                        } elseif ($row['tipo'] == 'string') {
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='text' maxlength='50' placeholder='' name='valore' required>";
+                                        } elseif ($row['tipo'] == 'uint8_t') {
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '255' placeholder='' name='valore' required>";
+                                        } elseif ($row['tipo'] == 'uint16_t') {
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '65535' placeholder='' name='valore' required>";
+                                        } elseif ($row['tipo'] == 'uint32_t') {
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '4294967295' placeholder='' name='valore' required>";
+                                        } else {
+                                            $formtipo = "missing";
+                                        }
+
+                                        echo "</td><td>" . $row['name'] .
+                                            "</td><td>" . $row['value'] .
+                                            "</td><td>" . $row['unit'] .
+                                            "</td><td>" .
+                                            "<form class='row me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'>
+<div class='col-auto'>
+<input type='hidden' name= 'parameter' value='" . $row['id'] . "'>
+<input type='hidden' name= 'type' value='" . $row['tipo'] . "'>" .
+                                            $formtipo .
+                                            "</div>
+<div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>aggiorna</button></div></form>" .
+                                            "</td><td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' title='" . $row['description'] . "'>aiuto</button></td></tr>";
+                                    }
+                                    if ($nrows == 0) {
+                                        echo "<tr><td>nessuna CONFIGURAZIONE trovata</td><td></td><td></td><td></td><td></td></tr>";
+                                    }
+                                } else {
+                                    echo "Something went wrong. Please try again later.";
+                                }
+                                mysqli_stmt_close($stmt);
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
     </main>
     <!-- ################################# INIZIO MENU FOOTER MOBILE ################################################ -->
