@@ -342,7 +342,7 @@ if ($auth == 0) {
                             <tr>
                                 <td>DURATA - RICARICA IN CORSO</td>
                                 <td class="text-end" id="worktime"></td>
-                                <td class="text-start"></td>
+                                <td class="text-start">hh:mm:ss</td>
                             </tr>
                             <tr>
                                 <td>ENERGIA EROGATA - RICARICA IN CORSO</td>
@@ -390,6 +390,22 @@ if ($auth == 0) {
             if (channel == 'map1') {
                 const obj = JSON.parse(text);
                 for (var key of Object.keys(obj)) {
+                    if (key == 'tensione') {
+                        const tensionewb = obj[key].toFixed();
+                        obj[key] = tensionewb;
+                    }
+                    if (key == 'worktime') {
+                        const tempolavoro = new Date(obj[key] * 1000).toISOString().slice(11, 19);
+                        obj[key] = tempolavoro;
+                    }
+                    if (key == 'energiacicloricarica') {
+                        const energiacarica = (obj[key] / 1000).toFixed(2);
+                        obj[key] = energiacarica;
+                    }
+                    if (key == 'temperatura') {
+                        const temperaturawb = obj[key].toFixed();
+                        obj[key] = temperaturawb;
+                    }
                     if (key == 'statowallbox' && obj[key] == 0) {
                         obj[key] = 'PRONTO';
                     } else if (key == 'statowallbox' && obj[key] == 1) {

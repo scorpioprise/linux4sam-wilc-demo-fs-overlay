@@ -56,7 +56,7 @@ if (isset($_POST['response'])) {
 }
 ##################### RESPONSE CHANGE NAME #####################
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nuovonome = $_POST['newname'];
+    $nuovonome = preg_replace('/\s+/', '_', $_POST['newname']);
     $numerocarta = $_POST['cardnumber'];
     $sql2 = "UPDATE cards SET name='$nuovonome' WHERE card_no='$numerocarta'";
     if ($stmt = mysqli_prepare($link, $sql2)) {
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_close($stmt);
     }
     if (isset($_POST['responseName'])) {
-        $response = exec('issue_command 3015 ' . $_REQUEST['cardnumber'] . " " . $_REQUEST['newname']);
+        $response = exec('issue_command 3015 ' . $nuovonome . " " . $nuovonome);
         if ($response == 'RESPONSE_MESSAGE_FAILED') {
             $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
             ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';

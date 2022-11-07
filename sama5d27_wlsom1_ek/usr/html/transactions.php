@@ -334,6 +334,8 @@ if ($auth == 0) {
                                         } else {
                                             $row['status'] = 'ERRORE';
                                         }
+                                        $row['duration'] = sprintf('%02d:%02d:%02d', ($row['duration'] / 3600), ($row['duration'] / 60 % 60), $row['duration'] % 60);
+                                        $row['delivered_kwh'] = number_format(($row['delivered_kwh'] / 1000), 2);
                                         echo "<tr><td>" . $row['id'] . "</td><td>" . $row['tempo'] . "</td><td>" . $row['card_no'] . "</td><td>" . $row['name'] . "</td><td>" . $row['status'] . "</td><td>" . $row['start_time'] . "</td><td>" . $row['end_time'] . "</td><td>" . $row['duration'] . "</td><td>" . $row['delivered_kwh'] . "</td><td>" . $row['error'] . "</td></tr>";
                                     }
                                     if ($nrows == 0) {
