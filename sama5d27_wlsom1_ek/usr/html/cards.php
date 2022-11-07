@@ -388,7 +388,6 @@ if ($auth == 0) {
                         </thead>
                         <tbody>
                             <?php
-
                             ##################### QUERY SQL UTENTI #####################
                             $sql = "SELECT * FROM cards ORDER BY id DESC";
                             if ($stmt = mysqli_prepare($link, $sql)) {
@@ -396,6 +395,9 @@ if ($auth == 0) {
                                     $result = $stmt->get_result();
                                     $nrows = 0;
                                     while ($row = $result->fetch_assoc()) {
+                                        if ($row['status'] == 'disabled') {
+                                            continue;
+                                        }
                                         $nrows++;
                                         echo "<tr><td>" . $row['id'] . "</td><td>" . $row['card_no'] . "</td><td>" . $row['name'] . "</td><td>" . $row['tempo'] . "</td>
 				<td><button type='submit' class='btn btn-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#changeModal' data-bs-change='" . $row['name'] . "' name='change' data-bs-value='" . $row['card_no'] . "'>modifica nome carta</button></td>

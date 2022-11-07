@@ -313,13 +313,27 @@ if ($auth == 0) {
                         <tbody>
                             <?php
                             ##################### QUERY SQL TRANSAZIONI #####################
-                            $sql = "SELECT transactions.id, transactions.tempo, transactions.card_no, cards.name, transactions.status, transactions.start_time, transactions.end_time, transactions.duration, transactions.delivered_kwh, transactions.error FROM transactions JOIN cards ON transactions.card_no=cards.card_no ORDER BY transactions.id DESC";
+                            $sql = "SELECT transactions.id, transactions.tempo, cards.card_no, cards.name, cards.status AS cardstatus, transactions.status, transactions.start_time, transactions.end_time, transactions.duration, transactions.delivered_kwh, transactions.error FROM transactions JOIN cards ON transactions.card_no=cards.id ORDER BY transactions.id DESC";
                             if ($stmt = mysqli_prepare($link, $sql)) {
                                 if (mysqli_stmt_execute($stmt)) {
                                     $result = $stmt->get_result();
                                     $nrows = 0;
                                     while ($row = $result->fetch_assoc()) {
+                                        if ($row['cardstatus'] == 'disabled') {
+                                            continue;
+                                        }
                                         $nrows++;
+                                        if ($row['status'] == 0) {
+                                            $row['status'] = 'PRONTO';
+                                        } else if ($row['status'] == 1) {
+                                            $row['status'] = 'CONNESSO';
+                                        } else if ($row['status'] == 2) {
+                                            $row['status'] = 'IN CARICA';
+                                        } else if ($row['status'] == 3) {
+                                            $row['status'] = 'LOCKED';
+                                        } else {
+                                            $row['status'] = 'ERRORE';
+                                        }
                                         echo "<tr><td>" . $row['id'] . "</td><td>" . $row['tempo'] . "</td><td>" . $row['card_no'] . "</td><td>" . $row['name'] . "</td><td>" . $row['status'] . "</td><td>" . $row['start_time'] . "</td><td>" . $row['end_time'] . "</td><td>" . $row['duration'] . "</td><td>" . $row['delivered_kwh'] . "</td><td>" . $row['error'] . "</td></tr>";
                                     }
                                     if ($nrows == 0) {
