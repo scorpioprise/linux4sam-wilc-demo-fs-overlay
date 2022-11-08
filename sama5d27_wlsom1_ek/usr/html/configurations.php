@@ -69,7 +69,6 @@ if ($auth == 0) {
             <img src="img/logo_menu.png" width="164" height="50">
         </span>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="dropdown me-2">
             <button type="button" class="btn btn-sm dropdown-toggle" style="background-color:#d91a15; color:#fff;" id="dropdownUser" data-bs-toggle="dropdown" data-toggle="tooltip" data-bs-placement="left" title="<?php echo htmlspecialchars($utente); ?>">
@@ -359,7 +358,7 @@ if ($auth == 0) {
                                             "</td><td>" . $row['value'] .
                                             "</td><td>" . $row['unit'] .
                                             "</td><td>" .
-                                            "<form class='row me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'>
+                                            "<form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'>
 <div class='col-auto'>
 <input type='hidden' name= 'parameter' value='" . $row['id'] . "'>
 <input type='hidden' name= 'type' value='" . $row['tipo'] . "'>" .

@@ -36,23 +36,23 @@ if (isset($_POST['response'])) {
 if ($auth == 0) {
     $utente = 'admin';
     $commands_menu = "<tr><td>3009 - ABILITA / DISABILITA OCPP 1.6</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'>
-    <input type='hidden' name='parameter' value='3009'><input style='min-width:200px;' class='form-control form-control-sm' type='number' min='0' placeholder='inserisci un valore' name='valore' required=''>
+    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select>
     </div><div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td>
-    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='help 3009'>aiuto</button></td></tr>
+    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo OCPP'>aiuto</button></td></tr>
     <tr><td>3010 - ABILITA / DISABILITA MODBUS</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3010'>
-    <input style='min-width:200px;' class='form-control form-control-sm' type='number' min='0' placeholder='inserisci un valore' name='valore' required=''></div><div class='col-auto'>
+    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select></div><div class='col-auto'>
     <button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='help 3010'>aiuto</button></td></tr>";
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr>";
 } elseif ($auth == 1) {
     $utente = 'installer';
     $commands_menu = "<tr><td>3009 - ABILITA / DISABILITA OCPP 1.6</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'>
-    <input type='hidden' name='parameter' value='3009'><input style='min-width:200px;' class='form-control form-control-sm' type='number' min='0' placeholder='inserisci un valore' name='valore' required=''>
+    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select>
     </div><div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td>
-    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='help 3009'>aiuto</button></td></tr>
+    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo OCPP'>aiuto</button></td></tr>
     <tr><td>3010 - ABILITA / DISABILITA MODBUS</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3010'>
-    <input style='min-width:200px;' class='form-control form-control-sm' type='number' min='0' placeholder='inserisci un valore' name='valore' required=''></div><div class='col-auto'>
+    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select></div><div class='col-auto'>
     <button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='help 3010'>aiuto</button></td></tr>";
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr>";
 } else {
     $utente = 'user';
     $commands_menu = "";
@@ -82,7 +82,6 @@ if ($auth == 0) {
             <img src="img/logo_menu.png" width="164" height="50">
         </span>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="dropdown me-2">
             <button type="button" class="btn btn-sm dropdown-toggle" style="background-color:#d91a15; color:#fff;" id="dropdownUser" data-bs-toggle="dropdown" data-toggle="tooltip" data-bs-placement="left" title="<?php echo htmlspecialchars($utente); ?>">
@@ -348,13 +347,13 @@ if ($auth == 0) {
                                             <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
                                                 <option value="">seleziona</option>
                                                 <option value="0">START</option>
-                                                <option value="1">STOP</option>
+                                                <option value="2">STOP</option>
                                             </select>
                                         </div>
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="0 = START, 1 = STOP">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="start / stop carica">aiuto</button></td>
                             </tr>
                             <tr>
                                 <td>3003 - IMPOSTA POTENZA MASSIMA | W</td>
@@ -396,12 +395,16 @@ if ($auth == 0) {
                                 <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3005">aiuto</button></td>
                             </tr>
                             <tr>
-                                <td>3006 - FUNZIONAMENTO A POTENZA FISSA | W</td>
+                                <td>3006 - FUNZIONAMENTO A POTENZA FISSA</td>
                                 <td>
                                     <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="col-auto">
                                             <input type="hidden" name="parameter" value="3006">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="number" min="0" placeholder="inserisci un valore" name="valore" required="">
+                                            <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
+                                                <option value="">seleziona</option>
+                                                <option value="0">FALSE</option>
+                                                <option value="1">TRUE</option>
+                                            </select>
                                         </div>
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
                                     </form>
@@ -414,12 +417,16 @@ if ($auth == 0) {
                                     <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="col-auto">
                                             <input type="hidden" name="parameter" value="3007">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="number" min="0" placeholder="inserisci un valore" name="valore" required="">
+                                            <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
+                                                <option value="">seleziona</option>
+                                                <option value="0">FALSE</option>
+                                                <option value="1">TRUE</option>
+                                            </select>
                                         </div>
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3007">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="imposta utilizzo RFID">aiuto</button></td>
                             </tr>
 
                             <?php echo $commands_menu; ?>
@@ -455,10 +462,10 @@ if ($auth == 0) {
                                         </div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3012">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="aggiorna software E.CHARGER">aiuto</button></td>
                             </tr>
                             <tr>
-                                <td>3013 - INVIO FORMAZIONI DISPOSITIVO</td>
+                                <td>3013 - INVIO FORMAZIONI DISPOSITIVO IN CLOUD</td>
                                 <td>
                                     <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="col-auto">
@@ -469,7 +476,7 @@ if ($auth == 0) {
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3013">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="invia le informazioni E.CHARGER al CLOUD">aiuto</button></td>
                             </tr>
                             <tr>
                                 <td>3014 - RESET ERRORI</td>
@@ -483,7 +490,7 @@ if ($auth == 0) {
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3014">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="ripristina stato dopo errori">aiuto</button></td>
                             </tr>
                         </tbody>
                     </table>
