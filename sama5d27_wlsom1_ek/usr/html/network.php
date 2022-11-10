@@ -36,12 +36,8 @@ if (isset($_POST['applyNetwork'])) {
     }
 }
 if (isset($_POST['applyNoNetwork'])) {
-    ###############################################################
-    $args = '';
-    foreach ($_POST as $k => $v) $args = $args . " $k='$v'";
-    $response = exec("issue_command 9008 $args");
+    $response = exec("issue_command 9008 ssid='' pass='' wifidhcp='' wifiipaddress='' wifinetmask='' wifigateway='' wifidns='' dhcp='' ipaddress='' netmask='' gateway='' dns='' applyNoNetwork='apply'");
     echo $response;
-    ###############################################################
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
@@ -337,10 +333,7 @@ if ($auth == 0) {
                     </div>
                 </div>
             </div>
-
-
             <!-- /////////////////////////////////////// PROVISIONING ////////////////////////////////////////////////////////// -->
-
             <form name="network" id="network" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="row mt-1 ms-2 rounded shadow-sm py-2 bg-wifi">
                     <div class="col-lg-4 mt-1">
@@ -374,23 +367,6 @@ if ($auth == 0) {
                                 <label for="wifidns" class="form-label">server DNS rete wireless</label>
                                 <input type="text" class="form-control" name="wifidns" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifidns" default="" --> >
                             </div>
-                        </div>
-                        <!-- ############################################## SCAN RESULT ##############################################-->
-                        <div id="scanresult" class="mb-3" style="display:none;">
-                            <div class="list-group">
-                                <div class="list-group-item list-group-item-action text-info bg-dark">SCEGLI UNA RETE WIRELESS</div>
-                                <input id="wifi1" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi2" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi3" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi4" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi5" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi6" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi7" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                                <input id="wifi8" type="button" class="list-group-item list-group-item-action" onclick="" value="">
-                            </div>
-                        </div>
-                        <div>
-                            <input type="button" class="w-100 btn btn-lg btn-dark my-2" name="scan" value="trova reti wireless" onClick="scanDiv()">
                         </div>
                     </div>
                 </div>
@@ -446,7 +422,7 @@ if ($auth == 0) {
                                 <div class="modal-body">SEI SICURO DI VOLER CONTINUARE SENZA RETE?</div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">NO</button>
-                                    <button class="btn btn-danger" type="submit" name="applyNoNetwork" id="applyNoNetwork" value="apply" onclick="checkOne(this.id)">SI</button>
+                                    <button class="btn btn-danger" type="submit" name="applyNoNetwork" id="applyNoNetwork" value="apply">SI</button>
                                 </div>
                             </div>
                         </div>
@@ -497,7 +473,6 @@ if ($auth == 0) {
                 const obj = JSON.parse(text);
                 for (var key of Object.keys(obj)) {
                     var el = document.getElementById(key).value = obj[key];
-                    var el = document.getElementById(key).setAttribute('onClick', "fillwifi('" + obj[key] + "')");
                     if (el) {
                         el.value = obj[key];
                     }
@@ -512,13 +487,6 @@ if ($auth == 0) {
         pushstream.onmessage = messageReceived;
         pushstream.addChannel('ch1');
         pushstream.connect();
-        //############################################## JS PER DIV ##############################################
-        function scanDiv() {
-            var x = document.getElementById("scanresult");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            }
-        };
         //############################################## CHECK WIFI ##############################################
         function wifidhcp_checked() {
             if ($('.wifidhcp').is(":checked")) {
@@ -538,12 +506,6 @@ if ($auth == 0) {
         window.onload = function() {
             wifidhcp_checked();
             dhcp_checked();
-        };
-        //############################################## RIEMPI WIFI ##############################################
-        function fillwifi(wifissid, wifipassword) {
-            var wifissid = wifissid;
-            var wifipassword = wifipassword;
-            document.getElementById("ssid").value = wifissid;
         };
         //############################################## ALMENO 1 CAMPO FORM ##############################################
         function checkFields(form) {
