@@ -3,7 +3,6 @@ if (isset($_POST['applyNetwork'])) {
     $args = '';
     foreach ($_POST as $k => $v) $args = $args . " $k='$v'";
     $response = exec('issue_command 9008' . $args);
-    echo $response;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
@@ -23,7 +22,6 @@ if (isset($_POST['applyNetwork'])) {
 }
 if (isset($_POST['applyNoNetwork'])) {
     $response = exec("issue_command 9008 ssid='' pass='' wifidhcp='' wifiipaddress='' wifinetmask='' wifigateway='' wifidns='' dhcp='' ipaddress='' netmask='' gateway='' dns='' applyNoNetwork='apply'");
-    echo $response;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
