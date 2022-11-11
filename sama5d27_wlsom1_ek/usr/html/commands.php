@@ -12,7 +12,6 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-//include_once "loader.php";
 if (isset($_POST['response'])) {
     $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
@@ -453,7 +452,7 @@ if ($auth == 0) {
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">SEI SICURO DI VOLER AGGIORNARE IL SOFTWARE?</div>
-                                                    <div class="modal-footer">
+                                                    <div class="modal-footer btn-group">
                                                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">NO</button>
                                                         <button class="btn btn-danger" type="submit" name="response" value="apply">SI</button>
                                                     </div>
@@ -494,7 +493,6 @@ if ($auth == 0) {
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -516,7 +514,6 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.slim.min.js"></script>
     <script>
         $(document).ready(function() {

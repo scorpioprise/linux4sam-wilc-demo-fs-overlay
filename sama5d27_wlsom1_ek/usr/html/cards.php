@@ -12,7 +12,6 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-//include_once "loader.php";
 ##################### RESPONSE AGGIUNGI CARD #####################
 if (isset($_POST['responseInsert'])) {
     $response = exec('issue_command 9000');
@@ -435,7 +434,7 @@ if ($auth == 0) {
                                             <input type="text" class="form-control" id="newname" name="newname" required>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-footer btn-group">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">chiudi</button>
                                         <button type="submit" name="responseName" class="btn btn-primary">OK</button>
                                     </div>
@@ -459,7 +458,7 @@ if ($auth == 0) {
                                             <p>SEI SICURO DI VOLER ELIMINARE QUESTA CARTA RFID?</p>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-footer btn-group">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                                         <button type="submit" name="response" class="btn btn-primary">SI</button>
                                     </div>

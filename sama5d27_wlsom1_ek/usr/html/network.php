@@ -12,11 +12,17 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-//include_once "loader.php";
 if (isset($_POST['applyNetwork'])) {
+		sleep(2);
     $args = '';
     foreach ($_POST as $k => $v) $args = $args . " $k='$v'";
+		echo"<!DOCTYPE html><html lang='it'><head><title>DKC E.CHARGER | REBOOTING</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
+		<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/signin.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
+		<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
+		<img src='img/dkcenergyportal.png'><h3 class='display-6 my-5'>RIAVVIO E.CHARGER</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>Rebooting...</span></div>
+		<p class='mt-5'>se hai modificato i parametri di rete, cambia indirizzo nella barra del browser per trovare il tuo E.CHARGER</p><p class='text-dkc'>registrati sulla nostra piattaforma per tutti i servizi aggiuntivi</p></div></div></div></body></html>";
     $response = exec('issue_command 9008' . $args);
+		die;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
@@ -35,7 +41,14 @@ if (isset($_POST['applyNetwork'])) {
     }
 }
 if (isset($_POST['applyNoNetwork'])) {
+		sleep(2);
+		echo"<!DOCTYPE html><html lang='it'><head><title>DKC E.CHARGER | REBOOTING</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
+		<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/signin.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
+		<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
+		<img src='img/dkcenergyportal.png'><h3 class='display-6 my-5'>RIAVVIO E.CHARGER</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>Rebooting...</span></div>
+		<p class='mt-5'>quando i led saranno verdi, il tuo E.CHARGER sara' pronto</p><p class='text-muted'>puoi chiudere questa finestra</p></div></div></div></body></html>";
     $response = exec("issue_command 9008 ssid='' pass='' wifidhcp='' wifiipaddress='' wifinetmask='' wifigateway='' wifidns='' dhcp='' ipaddress='' netmask='' gateway='' dns='' applyNoNetwork='apply'");
+		die;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
@@ -418,7 +431,8 @@ if ($auth == 0) {
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">SEI SICURO DI VOLER CONTINUARE SENZA RETE?</div>
-                                <div class="modal-footer">
+																<h6 class="modal-body text-center text-danger"><b>--- ATTENZIONE ---<br>--- IL TUO E.CHARGER SI RIAVVIERA' ---<b></h6>
+                                <div class="modal-footer btn-group">
                                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">NO</button>
                                     <button class="btn btn-danger" type="submit" name="applyNoNetwork" id="applyNoNetwork" value="apply">SI</button>
                                 </div>
@@ -436,7 +450,7 @@ if ($auth == 0) {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">COMPILA TUTTI I CAMPI NECESSARI!</div>
-                        <div class="modal-footer">
+                        <div class="modal-footer btn-group">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CHIUDI</button>
                         </div>
                     </div>
@@ -526,10 +540,10 @@ if ($auth == 0) {
                     if (oneFilled) {
                         //almeno 1 campo compilato
                     } else {
+                        //nessun campo compilato
                         e.preventDefault();
                         clicked_id = '';
                         $('#missingDetails').modal('show');
-                        //nessun campo compilato
                     }
                 } else {
                     //NIENTE RETE

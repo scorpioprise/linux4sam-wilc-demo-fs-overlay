@@ -12,7 +12,6 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-//include_once "loader.php";
 if (isset($_POST['response'])) {
     $response = exec('issue_command 7002 ' . $_REQUEST['parameter'] . " " . $_REQUEST['valore']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {

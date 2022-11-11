@@ -12,7 +12,6 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-//include_once "loader.php";
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
