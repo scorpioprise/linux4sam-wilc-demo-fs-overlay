@@ -364,7 +364,7 @@ if ($auth == 0) {
                         </div>
                         <div class="col d-flex justify-content-end">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <button class="btn btn-info btn-sm mt-2" type="submit" name="responseInsert">AGGIUNGI UNA NUOVA CARTA RFID</button>
+                                <button class="btn btn-info btn-sm mt-2" data-toggle="tooltip" data-bs-placement="left" data-bs-title="clicca e passa la carta sul lettore RFID" type="submit" name="responseInsert">AGGIUNGI UNA NUOVA CARTA RFID</button>
                             </form>
                         </div>
                     </div>
