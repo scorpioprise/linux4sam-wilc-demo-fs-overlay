@@ -398,7 +398,7 @@ if ($auth == 0) {
                         obj[key] = tempolavoro;
                     }
                     if (key == 'energiacicloricarica') {
-                        const energiacarica = (obj[key] / 1000).toFixed(2);
+                        const energiacarica = obj[key].toFixed(2);
                         obj[key] = energiacarica;
                     }
                     if (key == 'temperatura') {
