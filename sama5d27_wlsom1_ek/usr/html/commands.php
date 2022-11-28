@@ -26,7 +26,7 @@ if (isset($_POST['response'])) {
     } elseif ($response == 'SKIP SERIAL') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
-    } elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
+    }  elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
         $response_toast = '<div class="toast align-items-center fade show bg-primary fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         NESSUN AGGIORNAMENTO DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
@@ -38,23 +38,31 @@ if (isset($_POST['response'])) {
 if ($auth == 0) {
     $utente = 'admin';
     $commands_menu = "<tr><td>3009 - ABILITA / DISABILITA OCPP 1.6</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'>
-    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select>
+    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select>
     </div><div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td>
     <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo OCPP'>aiuto</button></td></tr>
     <tr><td>3010 - ABILITA / DISABILITA MODBUS</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3010'>
-    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select></div><div class='col-auto'>
+    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select></div><div class='col-auto'>
     <button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr>";
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr><tr><td>3017 - SYSTEM REBOOT</td><td>
+    <form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3017'>
+    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>REBOOT</option><option value='1'>SOFT-RESTART</option></select></div>
+    <div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='REBOOT=riavvia il tuo E.CHARGER | SOFT-RESTART=riavvia servizi essenziali'>aiuto</button></td></tr>";
 } elseif ($auth == 1) {
     $utente = 'installer';
     $commands_menu = "<tr><td>3009 - ABILITA / DISABILITA OCPP 1.6</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'>
-    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select>
+    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select>
     </div><div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td>
     <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo OCPP'>aiuto</button></td></tr>
     <tr><td>3010 - ABILITA / DISABILITA MODBUS</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3010'>
-    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>FALSE</option><option value='1'>TRUE</option></select></div><div class='col-auto'>
+    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select></div><div class='col-auto'>
     <button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr>";
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr><tr><td>3017 - SYSTEM REBOOT</td><td>
+    <form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3017'>
+    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>REBOOT</option><option value='1'>SOFT-RESTART</option></select></div>
+    <div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='REBOOT=riavvia il tuo E.CHARGER | SOFT-RESTART=riavvia servizi essenziali'>aiuto</button></td></tr>";
 } else {
     $utente = 'user';
     $commands_menu = "";
@@ -404,8 +412,8 @@ if ($auth == 0) {
                                             <input type="hidden" name="parameter" value="3006">
                                             <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
                                                 <option value="">seleziona</option>
-                                                <option value="0">FALSE</option>
-                                                <option value="1">TRUE</option>
+                                                <option value="0">DISABILITATO</option>
+                                                <option value="1">ABILITATO</option>
                                             </select>
                                         </div>
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
@@ -414,15 +422,15 @@ if ($auth == 0) {
                                 <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="imposta il funzionamento a potenza costante e disabilita la gestione dinamica del power meter">aiuto</button></td>
                             </tr>
                             <tr>
-                                <td>3007 - ABILITA / DISABILITA RFID</td>
+                                <td>3007 - LETTORE CARTE RFID</td>
                                 <td>
                                     <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                         <div class="col-auto">
                                             <input type="hidden" name="parameter" value="3007">
                                             <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
                                                 <option value="">seleziona</option>
-                                                <option value="0">FALSE</option>
-                                                <option value="1">TRUE</option>
+                                                <option value="0">DISABILITATO</option>
+                                                <option value="1">ABILITATO</option>
                                             </select>
                                         </div>
                                         <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
