@@ -342,7 +342,7 @@ if ($auth == 0) {
                                         } elseif ($row['tipo'] == 'int') {
                                             $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'string') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='text' maxlength='50' placeholder='' name='valore' required>";
+                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='text' maxlength='255' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint8_t') {
                                             $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '255' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint16_t') {
