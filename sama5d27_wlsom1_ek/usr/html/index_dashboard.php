@@ -53,6 +53,7 @@ if ($auth == 0) {
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                 <li><a class="dropdown-item active">HOME</a></li>
+                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -304,10 +305,10 @@ if ($auth == 0) {
                         <tbody>
                             <tr>
                                 <td>DATA SERVER</td>
-                                <td class="text-end">
+                                <td class="text-end" id="echargerdate">
                                     <script>
                                         var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
-                                        document.write(dataServer.toISOString());
+                                        document.getElementById("echargerdate").innerHTML = dataServer.toISOString();
                                     </script>
                                 </td>
                                 <td class="text-start"></td>
@@ -349,11 +350,11 @@ if ($auth == 0) {
                             </tr>
                             <tr>
                                 <td>POTENZA NOMINALE CONTATORE</td>
-                                <td class="text-end">
-                                  <script>
-                                      var contatore = '<!--#  echo var="potenzanominalecontatore" -->';
-                                      document.write(contatore.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
-                                  </script>
+                                <td class="text-end" id="echargerpotenzacontatore">
+                                    <script>
+                                        var contatore = '<!--#  echo var="potenzanominalecontatore" -->';
+                                        document.getElementById("echargerpotenzacontatore").innerHTML = contatore.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+                                    </script>
                                 </td>
                                 <td class="text-start"> W</td>
                             </tr>
@@ -401,43 +402,43 @@ if ($auth == 0) {
                             </tr>
                             <tr>
                                 <td>TIPOLOGIA E.CHARGER</td>
-                                <td class="text-end">
-                                  <script>
-                                      var tipologia = '<!--#  echo var="tipologiawallbox" -->';
-                                      if (tipologia == 0) {
-                                          document.write('MONOFASE | CAVO');
-                                      } else if (tipologia == 1) {
-                                          document.write('TRIFASE | CAVO');
-                                      } else if (tipologia == 2) {
-                                          document.write('MONOFASE | PRESA');
-                                      } else if (tipologia == 3) {
-                                          document.write('TRIFASE | PRESA');
-                                      } else if (tipologia == 4) {
-                                          document.write('MONOFASE | CAVO | MID');
-                                      } else if (tipologia == 5) {
-                                          document.write('TRIFASE | CAVO | MID');
-                                      } else if (tipologia == 6) {
-                                          document.write('MONOFASE | PRESA | MID');
-                                      } else if (tipologia == 7) {
-                                          document.write('TRIFASE | PRESA | MID');
-                                      } else if (tipologia == 8) {
-                                          document.write('MONOFASE | CAVO | SIM');
-                                      } else if (tipologia == 9) {
-                                          document.write('TRIFASE | CAVO | SIM');
-                                      } else if (tipologia == 10) {
-                                          document.write('MONOFASE | PRESA | SIM');
-                                      } else if (tipologia == 11) {
-                                          document.write('TRIFASE | PRESA | SIM');
-                                      } else if (tipologia == 12) {
-                                          document.write('MONOFASE | CAVO | MID | SIM');
-                                      } else if (tipologia == 13) {
-                                          document.write('TRIFASE | CAVO | MID | SIM');
-                                      } else if (tipologia == 14) {
-                                          document.write('MONOFASE | PRESA | MID | SIM');
-                                      } else if (tipologia == 15) {
-                                          document.write('TRIFASE | PRESA | MID | SIM');
-                                      };
-                                  </script>
+                                <td class="text-end" id="echargertipologia">
+                                    <script>
+                                        var tipologia = '<!--#  echo var="tipologiawallbox" -->';
+                                        if (tipologia == 0) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO";
+                                        } else if (tipologia == 1) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO";
+                                        } else if (tipologia == 2) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA";
+                                        } else if (tipologia == 3) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA";
+                                        } else if (tipologia == 4) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO | MID";
+                                        } else if (tipologia == 5) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO | MID";
+                                        } else if (tipologia == 6) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA | MID";
+                                        } else if (tipologia == 7) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA | MID";
+                                        } else if (tipologia == 8) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO | SIM";
+                                        } else if (tipologia == 9) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO | SIM";
+                                        } else if (tipologia == 10) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA | SIM";
+                                        } else if (tipologia == 11) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA | SIM";
+                                        } else if (tipologia == 12) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO | MID | SIM";
+                                        } else if (tipologia == 13) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO | MID | SIM";
+                                        } else if (tipologia == 14) {
+                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA | MID | SIM";
+                                        } else if (tipologia == 15) {
+                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA | MID | SIM";
+                                        };
+                                    </script>
                                 </td>
                                 <td class="text-start"></td>
                             </tr>
@@ -471,11 +472,11 @@ if ($auth == 0) {
                             </tr>
                             <tr>
                                 <td>POTENZA DI TARGA</td>
-                                <td class="text-end">
-                                  <script>
-                                      var potenza = '<!--#  echo var="potenzatarga" -->';
-                                      document.write(potenza.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
-                                  </script>
+                                <td class="text-end" id="echargerpotenza">
+                                    <script>
+                                        var potenza = '<!--#  echo var="potenzatarga" -->';
+                                        document.getElementById("echargerpotenza").innerHTML = potenza.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+                                    </script>
                                 </td>
                                 <td class="text-start"> W</td>
                             </tr>
