@@ -12,7 +12,6 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
-// 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
 } elseif ($auth == 1) {
@@ -53,7 +52,6 @@ if ($auth == 0) {
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                 <li><a class="dropdown-item active">HOME</a></li>
-                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -504,7 +502,6 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.slim.min.js"></script>
     <script>
         $(document).ready(function() {
