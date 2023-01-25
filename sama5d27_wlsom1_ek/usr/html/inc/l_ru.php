@@ -2,6 +2,7 @@
 //RUSSIAN
 //login.php
 define("_TITLELOGIN", "DKC EOS Charge | Логин");
+define("_HEADLOGIN", "DKC EOS Charge Логин");
 define("_USERNAME", "Имя пользователя");
 define("_PASSWORD", "Пароль");
 define("_SUBMITLOGIN", "Логин");
@@ -46,7 +47,7 @@ define("_TABLEMODBUSADDRESS", "АДРЕС MODBUS");
 define("_TABLELANIPADDRESS", "IP-АДРЕС LAN");
 define("_TABLEWIFIPADDRESS", "IP-АДРЕС Wi-Fi");
 define("_TABLELANGUAGE", "Язык");
-define("_TABLEREALTIMESAMPLING", "REAL-TIME SAMPLING");
+define("_TABLEREALTIMESAMPLING", "ВЫБОРКА В РЕАЛЬНОМ ВРЕМЕНИ");
 define("_TABLEWBTYPE", "ТИП EOS Charge");
 define("_TABLESERIALNUMBER", "СЕРИЙНЫЙ НОМЕР");
 define("_TABLEFWVERSION", "ВЕРСИЯ ПРОШИВКИ");
@@ -74,7 +75,7 @@ define("_HEADTELEMETRY", "ТЕЛЕМЕТРИЯ");
 define("_TABLEDATATELEMETRY", "ДАННЫЕ");
 define("_TABLEVALUETELEMETRY", "ЗНАЧЕНИЕ");
 define("_TABLEPOWERMETERTELEMETRY", "ИЗМЕРИТЕЛЬ МОЩНОСТИ");
-define("_TABLEINSTANTPOWERTELEMETRY", "INSTANT POWER");
+define("_TABLEINSTANTPOWERTELEMETRY", "МГНОВЕННАЯ МОЩНОСТЬ");
 define("_TABLERPHASECURRENTRTELEMETRY", "ТОК ФАЗЫ R");
 define("_TABLESPHASECURRENTRTELEMETRY", "ТОК ФАЗЫ S");
 define("_TABLETPHASECURRENTRTELEMETRY", "ТОК ФАЗЫ T");
