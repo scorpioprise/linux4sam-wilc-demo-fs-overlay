@@ -12,6 +12,14 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
+// 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
 } elseif ($auth == 1) {
@@ -26,10 +34,10 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER | DASHBOARD SISTEMA</title>
+    <title><?= _TITLESYSTEM ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -51,11 +59,12 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item active">HOME</a></li>
+                <li><a class="dropdown-item active"><?= _MENUHOME ?></a></li>
+                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-primary" href="logout.php">LOGOUT</a></li>
+                <li><a class="dropdown-item text-primary" href="logout.php"><?= _MENULOGOUT ?></a></li>
             </ul>
         </div>
     </header>
@@ -67,14 +76,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            OVERVIEW
+                            <?= _MENUOVERVIEW ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="index_dashboard.php" class="dkc-selected">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                E.CHARGER
+                                <?= _MENUECHARGER ?>
                             </a>
                         </div>
                     </li>
@@ -82,7 +91,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
-                                TELEMETRIA
+                                <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
                     </li>
@@ -90,7 +99,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="cards.php">
                                 <img src="img/ico_card.png" width="25px" class="me-3">
-                                CARTE RFID
+                                <?= _MENURFIDCARDS ?>
                             </a>
                         </div>
                     </li>
@@ -98,14 +107,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            STATISTICHE
+                            <?= _MENUSTATISTICS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
                                 <img src="img/ico_service.png" width="25px" class="me-3">
-                                TRANSAZIONI
+                                <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
                     </li>
@@ -113,14 +122,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            IMPOSTAZIONI
+                            <?= _MENUSETTINGS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
                                 <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                                COMANDI
+                                <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
                     </li>
@@ -128,7 +137,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
-                                CONFIGURAZIONI
+                                <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
                     </li>
@@ -136,7 +145,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
-                                ERRORI
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -144,7 +153,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="network.php">
                                 <img src="img/ico_network.png" width="25px" class="me-3">
-                                RETE
+                                <?= _MENUNETWORK ?>
                             </a>
                         </div>
                     </li>
@@ -160,10 +169,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">OVERVIEW</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -173,7 +182,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="index_dashboard.php" class="dkc-selected">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            E.CHARGER
+                            <?= _MENUECHARGER ?>
                         </a>
                     </h4>
                 </li>
@@ -181,7 +190,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
-                            TELEMETRIA
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -189,7 +198,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="cards.php">
                             <img src="img/ico_card.png" width="25px" class="me-3">
-                            CARTE RFID
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -202,10 +211,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">STATISTICHE</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -215,7 +224,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
                             <img src="img/ico_service.png" width="25px" class="me-3">
-                            TRANSAZIONI
+                            <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -228,10 +237,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">IMPOSTAZIONI</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -241,7 +250,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMMANDI
+                            <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
                 </li>
@@ -249,7 +258,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
-                            CONFIGURAZIONI
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -257,7 +266,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
                             <img src="img/ico_error.png" width="25px" class="me-3">
-                            ERRORI
+                            <?= _MENUERRORS ?>
                         </a>
                     </h4>
                 </li>
@@ -265,7 +274,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="network.php">
                             <img src="img/ico_network.png" width="25px" class="me-3">
-                            RETE
+                            <?= _MENUNETWORK ?>
                         </a>
                     </h4>
                 </li>
@@ -282,7 +291,7 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">DASHBOARD SISTEMA</h3>
+                            <h3 class="bold text-dkc"><?= _HEAD  ?></h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
@@ -295,188 +304,171 @@ if ($auth == 0) {
                     <table class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>dati</th>
-                                <th class="text-end">valori</th>
-                                <th class="text-start">unita'</th>
+                                <th><?= _TABLEDATA ?></th>
+                                <th class="text-end"><?= _TABLEVALUE ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>DATA SERVER</td>
+                                <td><?= _TABLESERVERCOMM ?></td>
                                 <td class="text-end" id="echargerdate">
                                     <script>
                                         var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
                                         document.getElementById("echargerdate").innerHTML = dataServer.toISOString();
                                     </script>
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr class="d-none">
-                                <td>DATA E.CHARGER</td>
+                                <td>E.CHARGER DATE</td>
                                 <td class="text-end">
                                     <!--#  echo var="timewallbox" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>MAC ADDRESS</td>
+                                <td><?= _TABLEMACADDRESS ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="macaddress" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr class="d-none">
-                                <td>ID INSTALLAZIONE</td>
+                                <td>INSTALLATION ID</td>
                                 <td class="text-end">
                                     <!--#  echo var="idimpianto" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>PRODUTTORE</td>
+                                <td><?= _TABLEMANUFACTURER ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="costruttore" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr class="d-none">
-                                <td>CONFIGURAZIONE MACCHINA</td>
+                                <td>MACHINE CONFIGURATION</td>
                                 <td class="text-end">
                                     <!--#  echo var="configurazione" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>POTENZA NOMINALE CONTATORE</td>
+                                <td><?= _TABLEMAXPOWER ?></td>
                                 <td class="text-end" id="echargerpotenzacontatore">
                                     <script>
                                         var contatore = '<!--#  echo var="potenzanominalecontatore" -->';
                                         document.getElementById("echargerpotenzacontatore").innerHTML = contatore.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
                                     </script>
+                                    W
                                 </td>
-                                <td class="text-start"> W</td>
                             </tr>
                             <tr>
-                                <td>INDIRIZZO MODBUS</td>
+                                <td><?= _TABLEMODBUSADDRESS ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="indirizzomodbus" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>INDIRIZZO IP LOCALE LAN</td>
+                                <td><?= _TABLELANIPADDRESS ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="indirizzoiplocale" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>INDIRIZZO IP LOCALE Wi-Fi</td>
+                                <td><?= _TABLEWIFIPADDRESS ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="indirizzoipwlan" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr class="d-none">
-                                <td>DATAE</td>
+                                <td>DATETIME</td>
                                 <td class="text-end">
                                     <!--#  echo var="dataora" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>LINGUA</td>
+                                <td><?= _TABLELANGUAGE ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="lingua" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>FREQUENZA INVIO VALORI REAL TIME</td>
+                                <td><?= _TABLEREALTIMESAMPLING ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="frequenzainviorealtime" -->
+                                    s
                                 </td>
-                                <td class="text-start"> s</td>
                             </tr>
                             <tr>
-                                <td>TIPOLOGIA E.CHARGER</td>
+                                <td><?= _TABLEWBTYPE ?></td>
                                 <td class="text-end" id="echargertipologia">
                                     <script>
                                         var tipologia = '<!--#  echo var="tipologiawallbox" -->';
                                         if (tipologia == 0) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT0 ?>";
                                         } else if (tipologia == 1) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT1 ?>";
                                         } else if (tipologia == 2) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT2 ?>";
                                         } else if (tipologia == 3) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT3 ?>";
                                         } else if (tipologia == 4) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO | MID";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT4 ?>";
                                         } else if (tipologia == 5) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO | MID";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT5 ?>";
                                         } else if (tipologia == 6) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA | MID";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT6 ?>";
                                         } else if (tipologia == 7) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA | MID";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT7 ?>";
                                         } else if (tipologia == 8) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT8 ?>";
                                         } else if (tipologia == 9) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT9 ?>";
                                         } else if (tipologia == 10) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT10 ?>";
                                         } else if (tipologia == 11) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT11 ?>";
                                         } else if (tipologia == 12) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | CAVO | MID | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT12 ?>";
                                         } else if (tipologia == 13) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | CAVO | MID | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT13 ?>";
                                         } else if (tipologia == 14) {
-                                            document.getElementById("echargertipologia").innerHTML = "MONOFASE | PRESA | MID | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT14 ?>";
                                         } else if (tipologia == 15) {
-                                            document.getElementById("echargertipologia").innerHTML = "TRIFASE | PRESA | MID | SIM";
+                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT15 ?>";
                                         };
                                     </script>
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr class="d-none">
-                                <td>ID E.CHARGER</td>
+                                <td>E.CHARGER ID</td>
                                 <td class="text-end">
                                     <!--#  echo var="idwallbox" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>NUMERO DI SERIE</td>
+                                <td><?= _TABLESERIALNUMBER ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="numeroserie" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>VERSIONE FIRMWARE</td>
+                                <td><?= _TABLEFWVERSION ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="versionefw" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>VERSIONE SOFTWARE</td>
+                                <td><?= _TABLESWVERSION ?></td>
                                 <td class="text-end">
                                     <!--#  echo var="versionesw" -->
                                 </td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>POTENZA DI TARGA</td>
+                                <td><?= _TABLERATEDPOWER ?></td>
                                 <td class="text-end" id="echargerpotenza">
                                     <script>
                                         var potenza = '<!--#  echo var="potenzatarga" -->';
                                         document.getElementById("echargerpotenza").innerHTML = potenza.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
                                     </script>
+                                    W
                                 </td>
-                                <td class="text-start"> W</td>
                             </tr>
                         </tbody>
                     </table>
@@ -502,6 +494,7 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
+
     <script src="js/jquery.slim.min.js"></script>
     <script>
         $(document).ready(function() {

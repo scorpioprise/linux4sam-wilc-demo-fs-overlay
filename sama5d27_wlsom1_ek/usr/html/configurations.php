@@ -11,25 +11,42 @@ if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
 }
-require_once "inc/config.php";
 if (isset($_POST['response'])) {
     $response = exec('issue_command 7002 ' . $_REQUEST['parameter'] . " " . $_REQUEST['valore']);
+    if ($_REQUEST['valore'] == 'it-IT') {
+        include "inc/config.php";
+        include "inc/l_it.php";
+    } else if ($_REQUEST['valore'] == 'en-EN') {
+        include "inc/config.php";
+        include "inc/l_en.php";
+    } else if ($_REQUEST['valore'] == 'ru-RU') {
+        include "inc/config.php";
+        include "inc/l_ru.php";
+    }
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
         $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO NON DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
         $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
+}
+require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -41,7 +58,7 @@ if ($auth == 0) {
 } else {
     $utente = 'user';
     $listConf = '2';
-    $configuration_menu = "";
+    //    $configuration_menu = "";
 }
 ?>
 <!--# if expr="$internetenabled=false" -->
@@ -49,10 +66,10 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER | CONFIGURAZIONI</title>
+    <title><?= _TITLECONFIGURATIONS ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -74,11 +91,11 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-primary" href="logout.php">LOGOUT</a></li>
+                <li><a class="dropdown-item text-primary" href="logout.php"><?= _MENULOGOUT ?></a></li>
             </ul>
         </div>
     </header>
@@ -90,14 +107,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            OVERVIEW
+                            <?= _MENUOVERVIEW ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                E.CHARGER
+                                <?= _MENUECHARGER ?>
                             </a>
                         </div>
                     </li>
@@ -105,7 +122,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
-                                TELEMETRIA
+                                <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
                     </li>
@@ -113,7 +130,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="cards.php">
                                 <img src="img/ico_card.png" width="25px" class="me-3">
-                                CARTE RFID
+                                <?= _MENURFIDCARDS ?>
                             </a>
                         </div>
                     </li>
@@ -121,14 +138,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            STATISTICHE
+                            <?= _MENUSTATISTICS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
                                 <img src="img/ico_service.png" width="25px" class="me-3">
-                                TRANSAZIONI
+                                <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
                     </li>
@@ -136,14 +153,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            IMPOSTAZIONI
+                            <?= _MENUSETTINGS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
                                 <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                                COMANDI
+                                <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
                     </li>
@@ -151,7 +168,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php" class="dkc-selected">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
-                                CONFIGURAZIONI
+                                <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
                     </li>
@@ -159,7 +176,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
-                                ERRORI
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -167,7 +184,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="network.php">
                                 <img src="img/ico_network.png" width="25px" class="me-3">
-                                RETE
+                                <?= _MENUNETWORK ?>
                             </a>
                         </div>
                     </li>
@@ -183,10 +200,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">OVERVIEW</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -196,7 +213,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            E.CHARGER
+                            <?= _MENUECHARGER ?>
                         </a>
                     </h4>
                 </li>
@@ -204,7 +221,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
-                            TELEMETRIA
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -212,7 +229,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="cards.php">
                             <img src="img/ico_card.png" width="25px" class="me-3">
-                            CARTE RFID
+                            <?= _MENURFIDCARDS ?>
                         </a>
                     </h4>
                 </li>
@@ -225,10 +242,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">STATISTICHE</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -238,7 +255,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
                             <img src="img/ico_service.png" width="25px" class="me-3">
-                            TRANSAZIONI
+                            <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -251,10 +268,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">IMPOSTAZIONI</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -264,7 +281,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMANDI
+                            <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
                 </li>
@@ -272,7 +289,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php" class="dkc-selected">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
-                            CONFIGURAZIONI
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -280,7 +297,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
                             <img src="img/ico_error.png" width="25px" class="me-3">
-                            ERRORI
+                            <?= _MENUERRORS ?>
                         </a>
                     </h4>
                 </li>
@@ -288,7 +305,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="network.php">
                             <img src="img/ico_network.png" width="25px" class="me-3">
-                            RETE
+                            <?= _MENUNETWORK ?>
                         </a>
                     </h4>
                 </li>
@@ -305,7 +322,7 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">CONFIGURAZIONI</h3>
+                            <h3 class="bold text-dkc"><?= _HEADCONFIGURATIONS ?></h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
@@ -318,11 +335,11 @@ if ($auth == 0) {
                     <table class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>nome</th>
-                                <th>valore</th>
-                                <th>unita'</th>
-                                <th>modifica / aggiorna</th>
-                                <th>aiuto</th>
+                                <th><?= _TABLENAMECONFIGURATIONS ?></th>
+                                <th><?= _TABLEVALUECONFIGURATIONS ?></th>
+                                <th><?= _TABLEUOMCONFIGURATIONS ?></th>
+                                <th><?= _TABLEMODIFYCONFIGURATIONS ?></th>
+                                <th class="d-none"><?= _TABLEHELPCONFIGURATIONS ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -336,47 +353,103 @@ if ($auth == 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         $nrows++;
                                         if ($row['tipo'] == 'bool') {
-                                            $formtipo = "<select style='min-width:200px;' class='form-select form-select-sm' name='valore' required><option selected disabled value=''>seleziona</option><option value='true' >true</option><option value='false'>false</option></select>";
+                                            $formtipo = "<select class='form-select form-select-sm' name='valore' required><option selected disabled value=''>" . _TABLESELCONFIGURATIONS . "</option><option value='true' >" . _TABLETRUECONFIGURATIONS . "</option><option value='false'>" . _TABLEFALSECONFIGURATIONS . "</option></select>";
                                         } elseif ($row['tipo'] == 'float') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '0.1' min= '0' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '0.1' min= '0' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'int') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'string') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='text' maxlength='255' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='text' maxlength='255' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint8_t') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '255' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' max= '255' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint16_t') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '65535' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' max= '65535' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint32_t') {
-                                            $formtipo = "<input style='min-width:200px;' class='form-control form-control-sm' type='number' step= '1' min= '0' max= '4294967295' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' max= '4294967295' placeholder='' name='valore' required>";
                                         } else {
-                                            $formtipo = "missing";
+                                            $formtipo = "<div>Missing parameter</div>";
+                                        }
+                                        if ($row['name'] == 'minimum_available_power') {
+                                            $formnome = _TABLECONF1;
+                                        } else if ($row['name'] == 'rfid_validity_timeout') {
+                                            $formnome = _TABLECONF2;
+                                        } else if ($row['name'] == 'userstop_long_press') {
+                                            $formnome = _TABLECONF3;
+                                        } else if ($row['name'] == 'userstop_verylong_press') {
+                                            $formnome = _TABLECONF4;
+                                        } else if ($row['name'] == 'minimum_current_available_vehicle') {
+                                            $formnome = _TABLECONF5;
+                                        } else if ($row['name'] == 'builder_name') {
+                                            $formnome = _TABLECONF6;
+                                        } else if ($row['name'] == 'modbus_address') {
+                                            $formnome = _TABLECONF7;
+                                        } else if ($row['name'] == 'activation_timestamp') {
+                                            $formnome = _TABLECONF8;
+                                        } else if ($row['name'] == 'language') {
+                                            $formnome = _TABLECONF9;
+                                            $formtipo = "<select class='form-select form-select-sm' name='valore' required><option selected disabled value=''>" . _TABLESELCONFIGURATIONS . "</option><option value='it-IT' >" . _TABLEITCONFIGURATIONS . "</option><option value='en-EN'>" . _TABLEENCONFIGURATIONS . "</option><option value='ru-RU'>" . _TABLERUCONFIGURATIONS . "</option></select>";
+                                        } else if ($row['name'] == 'polling_period_realtime_mqtt_data') {
+                                            $formnome = _TABLECONF10;
+                                        } else if ($row['name'] == 'wallbox_serial_number') {
+                                            $formnome = _TABLECONF11;
+                                        } else if ($row['name'] == 'max_temperature_on') {
+                                            $formnome = _TABLECONF12;
+                                        } else if ($row['name'] == 'min_temperature_off') {
+                                            $formnome = _TABLECONF13;
+                                        } else if ($row['name'] == 'min_voltage') {
+                                            $formnome = _TABLECONF14;
+                                        } else if ($row['name'] == 'max_voltage') {
+                                            $formnome = _TABLECONF15;
+                                        } else if ($row['name'] == 'wallbox_connection_timeout') {
+                                            $formnome = _TABLECONF16;
+                                        } else if ($row['name'] == 'wallbox_ocpp_server_ip_address') {
+                                            $formnome = _TABLECONF17;
+                                        } else if ($row['name'] == 'wallbox_ocpp_ip_server_port') {
+                                            $formnome = _TABLECONF18;
+                                        } else if ($row['name'] == 'wallbox_ocpp_url_server') {
+                                            $formnome = _TABLECONF19;
+                                        } else if ($row['name'] == 'has_car_powermeter_mid') {
+                                            $formnome = _TABLECONF20;
+                                        } else if ($row['name'] == 'has_domestic_powermeter') {
+                                            $formnome = _TABLECONF21;
+                                        } else if ($row['name'] == 'inverter_presence') {
+                                            $formnome = _TABLECONF22;
+                                        } else if ($row['name'] == 'charge_paused_at_startup') {
+                                            $formnome = _TABLECONF23;
+                                        } else if ($row['name'] == 'led_intensity_factor') {
+                                            $formnome = _TABLECONF24;
+                                        } else if ($row['name'] == 'timezone') {
+                                            $formnome = _TABLECONF25;
+                                        } else {
+                                            $formnome = _TABLECONF26;
                                         }
 
-                                        echo "</td><td>" . $row['name'] .
+                                        echo "</td><td>" . $formnome .
                                             "</td><td>" . $row['value'] .
                                             "</td><td>" . $row['unit'] .
                                             "</td><td>" .
                                             "<form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'>
-<div class='col-auto'>
+<div class='col-8 col-sm-6'>
 <input type='hidden' name= 'parameter' value='" . $row['id'] . "'>
 <input type='hidden' name= 'type' value='" . $row['tipo'] . "'>" .
                                             $formtipo .
                                             "</div>
-<div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>aggiorna</button></div></form>" .
-                                            "</td><td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' title='" . $row['description'] . "'>aiuto</button></td></tr>";
+<div class='col-4 col-sm-6'><button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>" . _TABLEUPDATECONFIGURATIONS . "</span></button></div></form>" .
+                                            "</td><td class='d-none'><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' title='" . $row['description'] . "'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>" . _TABLEHELPCONFIGURATIONS . "</span></button></td></tr>";
                                     }
                                     if ($nrows == 0) {
-                                        echo "<tr><td>nessuna CONFIGURAZIONE trovata</td><td></td><td></td><td></td><td></td></tr>";
+                                        echo "<tr><td colspan='5'>" . _TABLENOCONFIGURATIONS . "</td></tr>";
                                     }
                                 } else {
                                     echo "Something went wrong. Please try again later.";
                                 }
                                 mysqli_stmt_close($stmt);
                             }
+                            mysqli_close($link);
                             ?>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>

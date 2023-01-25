@@ -12,57 +12,64 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
 if (isset($_POST['response'])) {
     $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        '._TOASTCOMMANDKO.'</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        '._TOASTCOMMANDOK.'</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
         $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO NON DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        '._TOASTCOMMANDNOTAVAILABLE.'</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
-    }  elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
+        '._TOASTCOMMANDSKIPSERIAL.'</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
         $response_toast = '<div class="toast align-items-center fade show bg-primary fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        NESSUN AGGIORNAMENTO DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        '._TOASTCOMMANDNOUPDATE.'</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
         $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        '._TOASTCOMMANDERROR.'</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
-    $commands_menu = "<tr><td>3009 - ABILITA / DISABILITA OCPP 1.6</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'>
-    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select>
-    </div><div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td>
-    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo OCPP'>aiuto</button></td></tr>
-    <tr><td>3010 - ABILITA / DISABILITA MODBUS</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3010'>
-    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select></div><div class='col-auto'>
-    <button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr><tr><td>3017 - SYSTEM REBOOT</td><td>
-    <form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3017'>
-    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>REBOOT</option><option value='1'>SOFT-RESTART</option></select></div>
-    <div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='REBOOT=riavvia il tuo E.CHARGER | SOFT-RESTART=riavvia servizi essenziali'>aiuto</button></td></tr>";
+    $commands_menu = "<tr><td>"._TABLE3009COMMANDS."</td><td><form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-8 col-sm-6'>
+    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' name='valore' required><option value=''>"._TABLE3009SELCOMMANDS."</option><option value='0'>"._TABLE3009DISABLECOMMANDS."</option><option value='1'>"._TABLE3009ENABLECOMMANDS."</option></select>
+    </div><div class='col-4 col-sm-6'><button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>"._TABLEAPPLYCOMMANDS."</span></button></div></form></td>
+    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='"._HELPOCPPCOMMANDS."'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>"._TABLEHELPCOMMANDS."</span></button></td></tr>
+    <tr><td>"._TABLE3010COMMANDS."</td><td><form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-8 col-sm-6'><input type='hidden' name='parameter' value='3010'>
+    <select class='form-select form-select-sm' name='valore' required><option value=''>"._TABLE3010SELCOMMANDS."</option><option value='0'>"._TABLE3010DISABLECOMMANDS."</option><option value='1'>"._TABLE3010ENABLECOMMANDS."</option></select></div><div class='col-4 col-sm-6'>
+    <button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>"._TABLEAPPLYCOMMANDS."</span></button></div></form></td><td>
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='"._HELPMODBUSCOMMANDS."'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>"._TABLEHELPCOMMANDS."</span></button></td></tr><tr><td>"._TABLE3017COMMANDS."</td><td>
+    <form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-8 col-sm-6'><input type='hidden' name='parameter' value='3017'>
+    <select class='form-select form-select-sm' name='valore' required><option value=''>"._TABLE3017SELCOMMANDS."</option><option value='0'>"._TABLE3017REBOOTCOMMANDS."</option><option value='1'>"._TABLE3017RESTARTCOMMANDS."</option></select></div>
+    <div class='col-4 col-sm-6'><button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>"._TABLEAPPLYCOMMANDS."</span></button></div></form></td><td>
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='"._HELPREBOOT."'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>"._TABLEHELPCOMMANDS."</span></button></td></tr>";
 } elseif ($auth == 1) {
     $utente = 'installer';
-    $commands_menu = "<tr><td>3009 - ABILITA / DISABILITA OCPP 1.6</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'>
-    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select>
-    </div><div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td>
-    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo OCPP'>aiuto</button></td></tr>
-    <tr><td>3010 - ABILITA / DISABILITA MODBUS</td><td><form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3010'>
-    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>DISABILITATO</option><option value='1'>ABILITATO</option></select></div><div class='col-auto'>
-    <button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='imposta utilizzo protocollo MODBUS'>aiuto</button></td></tr><tr><td>3017 - SYSTEM REBOOT</td><td>
-    <form class='row row-cols-lg-auto g-3 align-items-center' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-auto'><input type='hidden' name='parameter' value='3017'>
-    <select class='form-select form-select-sm' style='min-width:200px;' name='valore' required><option value=''>seleziona</option><option value='0'>REBOOT</option><option value='1'>SOFT-RESTART</option></select></div>
-    <div class='col-auto'><button type='submit' name='response' class='btn btn-primary btn-sm'>applica</button></div></form></td><td>
-    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='REBOOT=riavvia il tuo E.CHARGER | SOFT-RESTART=riavvia servizi essenziali'>aiuto</button></td></tr>";
+    $commands_menu = "<tr><td>"._TABLE3009COMMANDS."</td><td><form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-8 col-sm-6'>
+    <input type='hidden' name='parameter' value='3009'><select class='form-select form-select-sm' name='valore' required><option value=''>"._TABLE3009SELCOMMANDS."</option><option value='0'>"._TABLE3009DISABLECOMMANDS."</option><option value='1'>"._TABLE3009ENABLECOMMANDS."</option></select>
+    </div><div class='col-4 col-sm-6'><button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>"._TABLEAPPLYCOMMANDS."</span></button></div></form></td>
+    <td><button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='"._HELPOCPPCOMMANDS."'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>"._TABLEHELPCOMMANDS."</span></button></td></tr>
+    <tr><td>"._TABLE3010COMMANDS."</td><td><form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-8 col-sm-6'><input type='hidden' name='parameter' value='3010'>
+    <select class='form-select form-select-sm' name='valore' required><option value=''>"._TABLE3010SELCOMMANDS."</option><option value='0'>"._TABLE3010DISABLECOMMANDS."</option><option value='1'>"._TABLE3010ENABLECOMMANDS."</option></select></div><div class='col-4 col-sm-6'>
+    <button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>"._TABLEAPPLYCOMMANDS."</span></button></div></form></td><td>
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='"._HELPMODBUSCOMMANDS."'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>"._TABLEHELPCOMMANDS."</span></button></td></tr><tr><td>"._TABLE3017COMMANDS."</td><td>
+    <form class='row g-3 me-1' action='" . ($_SERVER["PHP_SELF"]) . "' method='post'><div class='col-8 col-sm-6'><input type='hidden' name='parameter' value='3017'>
+    <select class='form-select form-select-sm' name='valore' required><option value=''>"._TABLE3017SELCOMMANDS."</option><option value='0'>"._TABLE3017REBOOTCOMMANDS."</option><option value='1'>"._TABLE3017RESTARTCOMMANDS."</option></select></div>
+    <div class='col-4 col-sm-6'><button type='submit' name='response' class='btn btn-primary btn-sm'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-check-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'></path></svg><span class='d-none d-lg-block'>"._TABLEAPPLYCOMMANDS."</span></button></div></form></td><td>
+    <button type='button' class='btn btn-warning btn-sm' data-toggle='tooltip' data-bs-placement='left' data-bs-original-title='"._HELPREBOOT."'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-info-circle-fill' viewBox='0 0 16 16'><path d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'></path></svg><span class='d-none d-lg-block'>"._TABLEHELPCOMMANDS."</span></button></td></tr>";
 } else {
     $utente = 'user';
     $commands_menu = "";
@@ -73,10 +80,10 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER | COMANDI</title>
+    <title><?= _TITLECOMMANDS ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -98,11 +105,12 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
+                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-primary" href="logout.php">LOGOUT</a></li>
+                <li><a class="dropdown-item text-primary" href="logout.php"><?= _MENULOGOUT ?></a></li>
             </ul>
         </div>
     </header>
@@ -114,14 +122,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            OVERVIEW
+                            <?= _MENUOVERVIEW ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                E.CHARGER
+                                <?= _MENUECHARGER ?>
                             </a>
                         </div>
                     </li>
@@ -129,7 +137,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
-                                TELEMETRIA
+                                <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
                     </li>
@@ -137,7 +145,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="cards.php">
                                 <img src="img/ico_card.png" width="25px" class="me-3">
-                                CARTE RFID
+                                <?= _MENURFIDCARDS ?>
                             </a>
                         </div>
                     </li>
@@ -145,14 +153,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            STATISTICHE
+                            <?= _MENUSTATISTICS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
                                 <img src="img/ico_service.png" width="25px" class="me-3">
-                                TRANSAZIONI
+                                <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
                     </li>
@@ -160,14 +168,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            IMPOSTAZIONI
+                            <?= _MENUSETTINGS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php" class="dkc-selected">
                                 <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                                COMANDI
+                                <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
                     </li>
@@ -175,7 +183,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
-                                CONFIGURAZIONI
+                                <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
                     </li>
@@ -183,7 +191,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
-                                ERRORI
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -191,7 +199,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="network.php">
                                 <img src="img/ico_network.png" width="25px" class="me-3">
-                                RETE
+                                <?= _MENUNETWORK ?>
                             </a>
                         </div>
                     </li>
@@ -207,10 +215,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">OVERVIEW</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -220,7 +228,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            E.CHARGER
+                            <?= _MENUECHARGER ?>
                         </a>
                     </h4>
                 </li>
@@ -228,7 +236,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
-                            TELEMETRIA
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -236,7 +244,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="cards.php">
                             <img src="img/ico_card.png" width="25px" class="me-3">
-                            CARTA RFID
+                            <?= _MENURFIDCARDS ?>
                         </a>
                     </h4>
                 </li>
@@ -249,10 +257,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">STATISTICHE</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -262,7 +270,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
                             <img src="img/ico_service.png" width="25px" class="me-3">
-                            TRANSAZIONI
+                            <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -275,10 +283,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">IMPOSTAZIONI</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -288,7 +296,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php" class="dkc-selected">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMANDI
+                            <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
                 </li>
@@ -296,7 +304,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
-                            CONFIGURAZIONI
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -304,7 +312,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
                             <img src="img/ico_error.png" width="25px" class="me-3">
-                            ERRORI
+                            <?= _MENUERRORS ?>
                         </a>
                     </h4>
                 </li>
@@ -312,7 +320,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="network.php">
                             <img src="img/ico_network.png" width="25px" class="me-3">
-                            RETE
+                            <?= _MENUNETWORK ?>
                         </a>
                     </h4>
                 </li>
@@ -329,7 +337,7 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">COMANDI</h3>
+                            <h3 class="bold text-dkc"><?= _HEADCOMMANDS ?></h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
@@ -342,168 +350,167 @@ if ($auth == 0) {
                     <table class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>parametro</th>
-                                <th>valore / azione</th>
-                                <th>aiuto</th>
+                                <th><?= _TABLEPARAMETERCOMMANDS ?></th>
+                                <th><?= _TABLEVALUECOMMANDS ?></th>
+                                <th><?= _TABLEHELPCOMMANDS ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>3000 - AZIONA E.CHARGER</td>
+                                <td><?= _TABLE3000COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3000">
-                                            <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
-                                                <option value="">seleziona</option>
-                                                <option value="0">START</option>
-                                                <option value="2">STOP</option>
+                                            <select class="form-select form-select-sm" name="valore" required>
+                                                <option value=""><?= _TABLE3000SELCOMMANDS ?></option>
+                                                <option value="0"><?= _TABLE3000STARTCOMMANDS ?></option>
+                                                <option value="2"><?= _TABLE3000STOPCOMMANDS ?></option>
                                             </select>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="start / stop carica">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPOPERATECOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr>
-                                <td>3003 - IMPOSTA POTENZA MASSIMA | W</td>
+                                <td><?= _TABLE3003COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3003">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="number" min="0" placeholder="inserisci un valore" name="valore" required="">
+                                            <input class="form-control form-control-sm" type="number" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="">
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="imposta il carico massimo">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPMAXPOWERCOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr class="d-none">
                                 <td>3004 - ADD AUTHORIZED USER (swipe RFID card)</td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3004">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="number" min="0" placeholder="inserisci un valore" name="valore" required="" value="1" readonly>
+                                            <input class="form-control form-control-sm" type="number" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">apply</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3004">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3004"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr class="d-none">
                                 <td>3005 - REMOVE AUTHORIZED USER (swipe RFID card)</td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3005">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="number" min="0" placeholder="inserisci un valore" name="valore" required="" value="1" readonly>
+                                            <input class="form-control form-control-sm" type="number" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">apply</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3005">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="help 3005"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr>
-                                <td>3006 - FUNZIONAMENTO A POTENZA FISSA</td>
+                                <td><?= _TABLE3006COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3006">
-                                            <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
-                                                <option value="">seleziona</option>
-                                                <option value="0">DISABILITATO</option>
-                                                <option value="1">ABILITATO</option>
+                                            <select class="form-select form-select-sm" name="valore" required>
+                                                <option value=""><?= _TABLE3006SELCOMMANDS ?></option>
+                                                <option value="0"><?= _TABLE3006DISABLECOMMANDS ?></option>
+                                                <option value="1"><?= _TABLE3006ENABLECOMMANDS ?></option>
                                             </select>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="imposta il funzionamento a potenza costante e disabilita la gestione dinamica del power meter">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPFIXEDPOWERCOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr>
-                                <td>3007 - LETTORE CARTE RFID</td>
+                                <td><?= _TABLE3007COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3007">
-                                            <select class="form-select form-select-sm" style="min-width:200px;" name="valore" required>
-                                                <option value="">seleziona</option>
-                                                <option value="0">DISABILITATO</option>
-                                                <option value="1">ABILITATO</option>
+                                            <select class="form-select form-select-sm" name="valore" required>
+                                                <option value=""><?= _TABLE3007SELCOMMANDS ?></option>
+                                                <option value="0"><?= _TABLE3007DISABLECOMMANDS ?></option>
+                                                <option value="1"><?= _TABLE3007ENABLECOMMANDS ?></option>
                                             </select>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="imposta utilizzo RFID">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPRFIDREADERCOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
 
                             <?php echo $commands_menu; ?>
 
                             <tr>
-                                <td>3012 - AGGIORNAMENTO SOFTWARE</td>
+                                <td><?= _TABLE3012COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3012">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="hidden" min="0" placeholder="inserisci un valore" name="valore" required="" value="1" readonly>
+                                            <input class="form-control form-control-sm" type="hidden" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
                                             <p style="min-width:200px;"></p>
                                         </div>
-                                        <div class="col-auto">
-                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#softwareUpdate">
-                                                applica
-                                            </button>
+                                        <div class="col-4 col-sm-6">
+                                            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#softwareUpdate"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button>
                                         </div>
                                         <div class="modal fade" id="softwareUpdate" tabindex="-1" aria-labelledby="softwareUpdateLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="softwareUpdateLabel">AGGIORNAMENTO SOFTWARE</h5>
+                                                        <h5 class="modal-title" id="softwareUpdateLabel"><?= _MODALSWUPDATECOMMANDS ?></h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">SEI SICURO DI VOLER AGGIORNARE IL SOFTWARE?</div>
+                                                    <div class="modal-body"><?= _MODALSWUPDATEWARNINGCOMMANDS ?></div>
                                                     <div class="modal-footer btn-group">
-                                                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">NO</button>
-                                                        <button class="btn btn-danger" type="submit" name="response" value="apply">SI</button>
+                                                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><?= _MODALNOCOMMANDS ?></button>
+                                                        <button class="btn btn-danger" type="submit" name="response" value="apply"><?= _MODALYESCOMMANDS ?></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="aggiorna software E.CHARGER">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPSWUPDATECOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr>
-                                <td>3013 - INVIO FORMAZIONI DISPOSITIVO IN CLOUD</td>
+                                <td><?= _TABLE3013COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3013">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="hidden" min="0" placeholder="inserisci un valore" name="valore" required="" value="1" readonly>
+                                            <input class="form-control form-control-sm" type="hidden" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
                                             <p style="min-width:200px;"></p>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="invia le informazioni E.CHARGER al CLOUD">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPSENDCLOUDCOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                             <tr>
-                                <td>3014 - RESET ERRORI</td>
+                                <td><?= _TABLE3014COMMANDS ?></td>
                                 <td>
-                                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                        <div class="col-auto">
+                                    <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="col-8 col-sm-6">
                                             <input type="hidden" name="parameter" value="3014">
-                                            <input style="min-width:200px;" class="form-control form-control-sm" type="hidden" min="0" placeholder="inserisci un valore" name="valore" required="" value="1" readonly>
+                                            <input class="form-control form-control-sm" type="hidden" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
                                             <p style="min-width:200px;"></p>
                                         </div>
-                                        <div class="col-auto"><button type="submit" name="response" class="btn btn-primary btn-sm">applica</button></div>
+                                        <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path></svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button></div>
                                     </form>
                                 </td>
-                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="ripristina stato dopo errori">aiuto</button></td>
+                                <td><button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-bs-placement="left" data-bs-original-title="<?= _HELPERRORCOMMANDS ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-info-circle-fill" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path></svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                             </tr>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -525,6 +532,7 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
+
     <script src="js/jquery.slim.min.js"></script>
     <script>
         $(document).ready(function() {

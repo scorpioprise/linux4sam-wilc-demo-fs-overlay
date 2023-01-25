@@ -13,6 +13,13 @@ if ($firstlogin == 1) {
 }
 require_once "inc/config.php";
 include_once "loader.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
@@ -28,10 +35,10 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER | TELEMETRIA</title>
+    <title><?= _TITLETELEMETRY ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -53,11 +60,12 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
+                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-primary" href="logout.php">LOGOUT</a></li>
+                <li><a class="dropdown-item text-primary" href="logout.php"><?= _MENULOGOUT ?></a></li>
             </ul>
         </div>
     </header>
@@ -69,14 +77,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            OVERVIEW
+                            <?= _MENUOVERVIEW ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                E.CHARGER
+                                <?= _MENUECHARGER ?>
                             </a>
                         </div>
                     </li>
@@ -84,7 +92,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php" class="dkc-selected">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
-                                TELEMETRIA
+                                <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
                     </li>
@@ -92,7 +100,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="cards.php">
                                 <img src="img/ico_card.png" width="25px" class="me-3">
-                                CARTE RFID
+                                <?= _MENURFIDCARDS ?>
                             </a>
                         </div>
                     </li>
@@ -100,14 +108,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            STATISTICHE
+                            <?= _MENUSTATISTICS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
                                 <img src="img/ico_service.png" width="25px" class="me-3">
-                                TRANSAZIONI
+                                <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
                     </li>
@@ -115,14 +123,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            IMPOSTAZIONI
+                            <?= _MENUSETTINGS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
                                 <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                                COMANDI
+                                <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
                     </li>
@@ -130,7 +138,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
-                                CONFIGURAZIONI
+                                <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
                     </li>
@@ -138,7 +146,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
-                                ERRORI
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -146,7 +154,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="network.php">
                                 <img src="img/ico_network.png" width="25px" class="me-3">
-                                RETE
+                                <?= _MENUNETWORK ?>
                             </a>
                         </div>
                     </li>
@@ -162,10 +170,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">OVERVIEW</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -175,7 +183,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            E.CHARGER
+                            <?= _MENUECHARGER ?>
                         </a>
                     </h4>
                 </li>
@@ -183,7 +191,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php" class="dkc-selected">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
-                            TELEMETRIA
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -191,7 +199,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="cards.php">
                             <img src="img/ico_card.png" width="25px" class="me-3">
-                            CARTE RFID
+                            <?= _MENURFIDCARDS ?>
                         </a>
                     </h4>
                 </li>
@@ -204,10 +212,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">STATISTICHE</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -217,7 +225,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
                             <img src="img/ico_service.png" width="25px" class="me-3">
-                            TRANSAZIONI
+                            <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -230,10 +238,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">IMPOSTAZIONI</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -243,7 +251,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMANDI
+                            <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
                 </li>
@@ -251,7 +259,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
-                            CONFIGURAZIONI
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -259,7 +267,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
                             <img src="img/ico_error.png" width="25px" class="me-3">
-                            ERRORI
+                            <?= _MENUERRORS ?>
                         </a>
                     </h4>
                 </li>
@@ -267,7 +275,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="network.php">
                             <img src="img/ico_network.png" width="25px" class="me-3">
-                            RETE
+                            <?= _MENUNETWORK ?>
                         </a>
                     </h4>
                 </li>
@@ -284,7 +292,7 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">TELEMETRIA</h3>
+                            <h3 class="bold text-dkc"><?= _HEADTELEMETRY ?></h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
@@ -297,66 +305,54 @@ if ($auth == 0) {
                     <table class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>dati</th>
-                                <th class="text-end">valori</th>
-                                <th class="text-start">unita'</th>
+                                <th><?= _TABLEDATATELEMETRY ?></th>
+                                <th class="text-end"><?= _TABLEVALUETELEMETRY ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>POTENZA CARICHI DOMESTICI</td>
-                                <td class="text-end" id="potenzacarichidomestici"></td>
-                                <td class="text-start"> W</td>
+                                <td><?= _TABLEPOWERMETERTELEMETRY ?></td>
+                                <td class="text-end" id="potenzacarichidomestici"> W</td>
                             </tr>
                             <tr>
-                                <td>POTENZA ISTANTANEA E.CHARGER</td>
-                                <td class="text-end" id="potenzawallbox"></td>
-                                <td class="text-start"> W</td>
+                                <td><?= _TABLEINSTANTPOWERTELEMETRY ?></td>
+                                <td class="text-end" id="potenzawallbox"> W</td>
                             </tr>
                             <tr>
-                                <td>CORRENTE WALLBOX - FASE R</td>
-                                <td class="text-end" id="corrente"></td>
-                                <td class="text-start"> A</td>
+                                <td><?= _TABLERPHASECURRENTRTELEMETRY ?></td>
+                                <td class="text-end" id="corrente"> A</td>
                             </tr>
                             <tr>
-                                <td>CORRENTE WALLBOX - FASE S</td>
-                                <td class="text-end" id="corrente2"></td>
-                                <td class="text-start"> A</td>
+                                <td><?= _TABLESPHASECURRENTRTELEMETRY ?></td>
+                                <td class="text-end" id="corrente2"> A</td>
                             </tr>
                             <tr>
-                                <td>CORRENTE WALLBOX - FASE T</td>
-                                <td class="text-end" id="corrente3"></td>
-                                <td class="text-start"> A</td>
+                                <td><?= _TABLETPHASECURRENTRTELEMETRY ?></td>
+                                <td class="text-end" id="corrente3"> A</td>
                             </tr>
                             <tr>
-                                <td>TENSIONE FASE - NEUTRO</td>
-                                <td class="text-end" id="tensione"></td>
-                                <td class="text-start"> V</td>
+                                <td><?= _TABLEVOLTAGETELEMETRY ?></td>
+                                <td class="text-end" id="tensione"> V</td>
                             </tr>
                             <tr>
-                                <td>UTENTE ATTIVO</td>
+                                <td><?= _TABLEACTIVEUSERTELEMETRY ?></td>
                                 <td class="text-end" id="utenteattivo"></td>
-                                <td class="text-start"></td>
                             </tr>
                             <tr>
-                                <td>DURATA - RICARICA IN CORSO</td>
-                                <td class="text-end" id="worktime"></td>
-                                <td class="text-start">hh:mm:ss</td>
+                                <td><?= _TABLECHARGINGTIMETELEMETRY ?></td>
+                                <td class="text-end" id="worktime"> hh:mm:ss</td>
                             </tr>
                             <tr>
-                                <td>ENERGIA EROGATA - RICARICA IN CORSO</td>
-                                <td class="text-end" id="energiacicloricarica"></td>
-                                <td class="text-start"> kWh</td>
+                                <td><?= _TABLESUPPLIEDENERGYTELEMETRY ?></td>
+                                <td class="text-end" id="energiacicloricarica"> kWh</td>
                             </tr>
                             <tr>
-                                <td>TEMPERATURA</td>
-                                <td class="text-end" id="temperatura"></td>
-                                <td class="text-start"> °C</td>
+                                <td><?= _TABLETEMPERATURETELEMETRY ?></td>
+                                <td class="text-end" id="temperatura"> °C</td>
                             </tr>
                             <tr>
-                                <td>STATO E.CHARGER</td>
+                                <td><?= _TABLEECHARGERSTATUSTELEMETRY ?></td>
                                 <td class="text-end" id="statowallbox"></td>
-                                <td class="text-start"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -389,34 +385,54 @@ if ($auth == 0) {
             if (channel == 'map1') {
                 const obj = JSON.parse(text);
                 for (var key of Object.keys(obj)) {
+                    if (key == 'potenzacarichidomestici') {
+                        const potenzacarichidomesticiwb = obj[key];
+                        obj[key] = potenzacarichidomesticiwb + ' W';
+                    }
+                    if (key == 'potenzawallbox') {
+                        const potenzawallboxwb = obj[key];
+                        obj[key] = potenzawallboxwb + ' W';
+                    }
+                    if (key == 'corrente') {
+                        const correntewb = obj[key];
+                        obj[key] = correntewb + ' A';
+                    }
+                    if (key == 'corrente2') {
+                        const corrente2wb = obj[key];
+                        obj[key] = corrente2wb + ' A';
+                    }
+                    if (key == 'corrente3') {
+                        const corrente3wb = obj[key];
+                        obj[key] = corrente3wb + ' A';
+                    }
                     if (key == 'tensione') {
                         const tensionewb = obj[key].toFixed();
-                        obj[key] = tensionewb;
+                        obj[key] = tensionewb + ' V';
                     }
                     if (key == 'worktime') {
                         const tempolavoro = new Date(obj[key] * 1000).toISOString().slice(11, 19);
-                        obj[key] = tempolavoro;
+                        obj[key] = tempolavoro + ' hh:mm:ss';
                     }
                     if (key == 'energiacicloricarica') {
                         const energiacarica = obj[key].toFixed(2);
-                        obj[key] = energiacarica;
+                        obj[key] = energiacarica + ' kWh';
                     }
                     if (key == 'temperatura') {
                         const temperaturawb = obj[key].toFixed();
-                        obj[key] = temperaturawb;
+                        obj[key] = temperaturawb + ' °C';
                     }
                     if (key == 'statowallbox' && obj[key] == 0) {
-                        obj[key] = 'PRONTO';
+                        obj[key] = '<?= _ECHARGERSTATUSREADY ?>';
                     } else if (key == 'statowallbox' && obj[key] == 1) {
-                        obj[key] = 'CONNESSO';
+                        obj[key] = '<?= _ECHARGERSTATUSCONNECTED ?>';
                     } else if (key == 'statowallbox' && obj[key] == 2) {
-                        obj[key] = 'IN CARICA';
+                        obj[key] = '<?= _ECHARGERSTATUSCHARGING ?>';
                     } else if (key == 'statowallbox' && obj[key] == 3) {
-                        obj[key] = 'LOCKED';
+                        obj[key] = '<?= _ECHARGERSTATUSLOCKED ?>';
                     } else if (key == 'statowallbox' && obj[key] == 4) {
-                        obj[key] = 'IN ERRORE';
+                        obj[key] = '<?= _ECHARGERSTATUSERROR ?>';
                     } else if (key == 'statowallbox' && obj[key] > 4) {
-                        obj[key] = 'IN ERRORE';
+                        obj[key] = '<?= _ECHARGERSTATUSERROR ?>';
                     };
                     var el = document.getElementById(key).innerHTML = obj[key];
                     if (el) {

@@ -12,6 +12,13 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
@@ -27,10 +34,10 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER | ERRORI</title>
+    <title><?= _TITLEERRORS ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -52,11 +59,11 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-primary" href="logout.php">LOGOUT</a></li>
+                <li><a class="dropdown-item text-primary" href="logout.php"><?= _MENULOGOUT ?></a></li>
             </ul>
         </div>
     </header>
@@ -68,14 +75,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            OVERVIEW
+                            <?= _MENUOVERVIEW ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                E.CHARGER
+                                <?= _MENUECHARGER ?>
                             </a>
                         </div>
                     </li>
@@ -83,7 +90,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
-                                TELEMETRIA
+                                <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
                     </li>
@@ -91,7 +98,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="cards.php">
                                 <img src="img/ico_card.png" width="25px" class="me-3">
-                                CARTE RFID
+                                <?= _MENURFIDCARDS ?>
                             </a>
                         </div>
                     </li>
@@ -99,14 +106,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            STATISTICHE
+                            <?= _MENUSTATISTICS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
                                 <img src="img/ico_service.png" width="25px" class="me-3">
-                                TRANSAZIONI
+                                <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
                     </li>
@@ -114,14 +121,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            IMPOSTAZIONI
+                            <?= _MENUSETTINGS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
                                 <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                                COMANDI
+                                <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
                     </li>
@@ -129,7 +136,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
-                                CONFIGURAZIONI
+                                <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
                     </li>
@@ -137,7 +144,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php" class="dkc-selected">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
-                                ERRORI
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -145,7 +152,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="network.php">
                                 <img src="img/ico_network.png" width="25px" class="me-3">
-                                RETE
+                                <?= _MENUNETWORK ?>
                             </a>
                         </div>
                     </li>
@@ -161,10 +168,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">OVERVIEW</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -174,7 +181,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            E.CHARGER
+                            <?= _MENUECHARGER ?>
                         </a>
                     </h4>
                 </li>
@@ -182,7 +189,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
-                            TELEMETRIA
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -190,7 +197,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="cards.php">
                             <img src="img/ico_card.png" width="25px" class="me-3">
-                            CARTE RFID
+                            <?= _MENURFIDCARDS ?>
                         </a>
                     </h4>
                 </li>
@@ -203,10 +210,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">STATISTICHE</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -216,7 +223,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
                             <img src="img/ico_service.png" width="25px" class="me-3">
-                            TRANSAZIONI
+                            <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -229,10 +236,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">IMPOSTAZIONI</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -242,7 +249,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMANDI
+                            <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
                 </li>
@@ -250,7 +257,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
-                            CONFIGURAZIONI
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -258,7 +265,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php" class="dkc-selected">
                             <img src="img/ico_error.png" width="25px" class="me-3">
-                            ERRORI
+                            <?= _MENUERRORS ?>
                         </a>
                     </h4>
                 </li>
@@ -266,7 +273,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="network.php">
                             <img src="img/ico_network.png" width="25px" class="me-3">
-                            RETE
+                            <?= _MENUNETWORK ?>
                         </a>
                     </h4>
                 </li>
@@ -283,15 +290,15 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">ERRORI</h3>
+                            <h3 class="bold text-dkc"><?= _HEADERRORS ?></h3>
                         </div>
                         <div class="col-sm-3 d-flex justify-content-end">
                             <select id="filtro" class="form-select" onchange="filtra()">
-                                <option value="" selected>filtra SEVERITY</option>
-                                <option value="INFO">INFO</option>
-                                <option value="ERROR">ERROR</option>
-                                <option value="WARNING">WARNING</option>
-                                <option value="">TUTTI</option>
+                                <option value="" selected><?= _FILTERSEL ?></option>
+                                <option value="INFO"><?= _FILTERSELINFO ?></option>
+                                <option value="ERROR"><?= _FILTERSELERROR ?></option>
+                                <option value="WARNING"><?= _FILTERSELWARNING ?></option>
+                                <option value=""><?= _FILTERSELALL ?></option>
                             </select>
                         </div>
                     </div>
@@ -303,11 +310,11 @@ if ($auth == 0) {
                     <table id="tabella" class="table table-light table-sm table-responsive table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>id</th>
-                                <th>data</th>
-                                <th>valori</th>
-                                <th>severity</th>
-                                <th>parametro</th>
+                                <th><?= _TABLEIDERRORS ?></th>
+                                <th><?= _TABLEDATEERRORS ?></th>
+                                <th><?= _TABLEVALUEERRORS ?></th>
+                                <th><?= _TABLESEVERITYERRORS ?></th>
+                                <th><?= _TABLEPARAMETERERRORS ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -323,13 +330,14 @@ if ($auth == 0) {
                                         echo "<tr><td>" . $row['id'] . "</td><td>" . $row['date'] . "</td><td>" . $row['value'] . "</td><td>" . $row['severity'] . "</td><td>" . $row['parameter'] . "</td></tr>";
                                     }
                                     if ($nrows == 0) {
-                                        echo "<tr><td>no ERRORS found</td><td></td><td></td><td></td><td></td></tr>";
+                                        echo "<tr><td colspan='5'>"._TABLENOERRORS."</td></tr>";
                                     }
                                 } else {
-                                    echo "Something went wrong. Please try again later. ";
+                                    echo "Something went wrong. Please try again later.";
                                 }
                                 mysqli_stmt_close($stmt);
                             }
+                            mysqli_close($link);
                             ?>
                         </tbody>
                     </table>

@@ -5,18 +5,25 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     exit;
 }
 require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
 $username = $password = "";
 $username_err = $password_err = "";
 $auth = "";
 $firstlogin = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST["username"]))) {
-        $username_err = "inserisci il tuo username";
+        $username_err = _FORMMESSAGE1;
     } else {
         $username = trim($_POST["username"]);
     }
     if (empty(trim($_POST["password"]))) {
-        $password_err = "inserisci la tua password";
+        $password_err = _FORMMESSAGE2;
     } else {
         $password = trim($_POST["password"]);
     }
@@ -41,11 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["change"] = $password;
                             header("location: index_dashboard.php");
                         } else {
-                            $password_err = "<div class='alert alert-warning' role='alert'>controlla le tue credenziali</div>";
+                            $password_err = "<div class='alert alert-warning' role='alert'>"._FORMMESSAGE3."</div>";
                         }
                     }
                 } else {
-                    $username_err = "<div class='alert alert-warning' role='alert'>controlla le tue credenziali</div>";
+                    $username_err = "<div class='alert alert-warning' role='alert'>"._FORMMESSAGE3."</div>";
                 }
             } else {
                 echo "Something went wrong. Please try again later.";
@@ -61,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="it">
 
 <head>
-    <title>DKC E.CHARGER | LOGIN</title>
+    <title><?= _TITLELOGIN ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -77,16 +84,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1 class="h3 my-3 fw-normal text-dkc">DKC E.CHARGER LOGIN</h1>
         <div class="form-floating <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
             <input type="text" name="username" class="form-control" placeholder="username" id="floatingInput" value="<?php echo $username; ?>" required>
-            <label for="floatingInput">nome utente</label>
+            <label for="floatingInput"><?= _USERNAME ?></label>
         </div>
         <div class="form-floating <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
             <input type="password" name="password" class="form-control" placeholder="password" id="floatingPassword" required>
-            <label for="floatingPassword">password</label>
+            <label for="floatingPassword"><?= _PASSWORD ?></label>
             <span><?php echo $username_err; ?></span>
             <span><?php echo $password_err; ?></span>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">login</button>
-        <p class="mt-4 text-muted">&copy; 2022 DKC Europe S.r.l.</p>
+        <button class="w-100 btn btn-lg btn-primary" type="submit"><?= _SUBMITLOGIN ?></button>
+        <p class="mt-4 text-muted">&copy; 2023 DKC Europe S.r.l.</p>
     </form>
 </body>
 

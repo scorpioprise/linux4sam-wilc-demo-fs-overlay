@@ -8,24 +8,31 @@ $id = $_SESSION["id"];
 $firstlogin = $_SESSION["firstlogin"];
 $change = $_SESSION["change"];
 require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST["new_password"]))) {
-        $new_password_err = "inserisci la nuova password";
+        $new_password_err = _NEWPASSWORDMESSAGE1;
     } elseif (strlen(trim($_POST["new_password"])) < 6) {
-        $new_password_err = "la password deve contenere almeno 6 caratteri";
+        $new_password_err = _NEWPASSWORDMESSAGE2;
     } elseif ($_POST["new_password"] == $change) {
-        $new_password_err = "la password deve essere differente da quella vecchia";
+        $new_password_err = _NEWPASSWORDMESSAGE3;
     } else {
         $new_password = trim($_POST["new_password"]);
     }
     if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "conferma la nuova password";
+        $confirm_password_err = _NEWPASSWORDMESSAGE4;
     } else {
         $confirm_password = trim($_POST["confirm_password"]);
         if (empty($new_password_err) && ($new_password != $confirm_password)) {
-            $confirm_password_err = "le password non corrispondono";
+            $confirm_password_err = _NEWPASSWORDMESSAGE5;
         }
     }
     if (empty($new_password_err) && empty($confirm_password_err)) {
@@ -52,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER</title>
+    <title><?= _TITLECHANGEPASSWORD ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -69,20 +76,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 my-5">
-                <h3 class="display-6">CAMBIO PASSWORD AL PRIMO LOGIN</h3>
+                <h3 class="display-6"><?= _HEADCHANGEPASSWORD ?></h3>
                 <form class="form-signin" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <img src="img/dkcenergyportal.png">
                     <div class="form-floating my-2 <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                         <input type="password" name="new_password" class="form-control" placeholder="new password" id="floatingPassword" value="<?php echo $new_password; ?>">
-                        <label for="new_password" class="sr-only">nuova password</label>
+                        <label for="new_password" class="sr-only"><?= _NEWPASSWORD1 ?></label>
                         <span class="help-block"><?php echo $new_password_err; ?></span>
                     </div>
                     <div class="form-floating my-2 <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
                         <input type="password" name="confirm_password" class="form-control" placeholder="confirm password" id="floatingPassword">
-                        <label for="password" class="sr-only">conferma nuova password</label>
+                        <label for="password" class="sr-only"><?= _NEWPASSWORD2 ?></label>
                         <span class="help-block"><?php echo $confirm_password_err; ?></span>
                     </div>
-                    <button class="w-100 btn btn-lg btn-primary my-2" type="submit">aggiorna</button>
+                    <button class="w-100 btn btn-lg btn-primary my-2" type="submit"><?= _NEWPASSWORDUPDATE ?></button>
                 </form>
             </div>
         </div>

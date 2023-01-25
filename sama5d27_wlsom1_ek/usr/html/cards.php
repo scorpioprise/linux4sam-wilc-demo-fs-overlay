@@ -12,24 +12,31 @@ if ($firstlogin == 1) {
     exit;
 }
 require_once "inc/config.php";
+if (trovaLingua() == 'it') {
+    include "inc/l_it.php";
+} else if (trovaLingua() == 'en') {
+    include "inc/l_en.php";
+} else if (trovaLingua() == 'ru') {
+    include "inc/l_ru.php";
+}
 ##################### RESPONSE AGGIUNGI CARD #####################
 if (isset($_POST['responseInsert'])) {
     $response = exec('issue_command 9000');
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
         $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO NON DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
         $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
     sleep(5);
 }
@@ -38,24 +45,25 @@ if (isset($_POST['response'])) {
     $response = exec('issue_command 9002 ' . $_POST['id']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
         $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMANDO NON DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
         $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
         $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ERRORE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
 }
 ##################### RESPONSE CHANGE NAME #####################
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nuovonome = preg_replace('/\s+/', '_', $_POST['newname']);
+    //$nuovonome = $_POST['newname'];
     $numerocarta = $_POST['cardnumber'];
     $sql2 = "UPDATE cards SET name='$nuovonome' WHERE card_no='$numerocarta'";
     if ($stmt = mysqli_prepare($link, $sql2)) {
@@ -65,27 +73,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($nrows == 0) {
             }
         } else {
-            echo "Something went wrong. Please try again later. ";
+            echo "Something went wrong. Please try again later.";
         }
         mysqli_stmt_close($stmt);
     }
+    mysqli_close($link);
+    //include "changename.php";
     if (isset($_POST['responseName'])) {
         $response = exec('issue_command 3015 ' . $numerocarta . " " . $nuovonome);
         if ($response == 'RESPONSE_MESSAGE_FAILED') {
             $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-            ERRORE - COMANDO NON ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+            ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } elseif ($response == 'RESPONSE_MESSAGE_OK') {
             $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-            COMANDO ESEGUITO</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+            ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
             $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-            COMANDO NON DISPONIBILE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+            ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } elseif ($response == 'SKIP SERIAL') {
             $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-            COMMAND ESEGUITO - SKIP SERIAL</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+            ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } else {
             $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-            ERRORE</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+            ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         }
     }
 }
@@ -104,10 +114,10 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <title>DKC E.CHARGER | CARTE RFID</title>
+    <title><?= _TITLECARDS ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -129,11 +139,11 @@ if ($auth == 0) {
                 <img src="img/ico_user.png" class="me-3">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="index_dashboard.php">HOME</a></li>
+                <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item text-primary" href="logout.php">LOGOUT</a></li>
+                <li><a class="dropdown-item text-primary" href="logout.php"><?= _MENULOGOUT ?></a></li>
             </ul>
         </div>
     </header>
@@ -145,14 +155,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            OVERVIEW
+                            <?= _MENUOVERVIEW ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="index_dashboard.php">
                                 <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                E.CHARGER
+                                <?= _MENUECHARGER ?>
                             </a>
                         </div>
                     </li>
@@ -160,7 +170,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
-                                TELEMETRIA
+                                <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
                     </li>
@@ -168,7 +178,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="cards.php" class="dkc-selected">
                                 <img src="img/ico_card.png" width="25px" class="me-3">
-                                CARTE RFID
+                                <?= _MENURFIDCARDS ?>
                             </a>
                         </div>
                     </li>
@@ -176,14 +186,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            STATISTICHE
+                            <?= _MENUSTATISTICS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
                                 <img src="img/ico_service.png" width="25px" class="me-3">
-                                TRANSAZIONI
+                                <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
                     </li>
@@ -191,14 +201,14 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy">
                         <h5 class="fw-bolder" style="color:#b0b0b0;">
                             <img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            IMPOSTAZIONI
+                            <?= _MENUSETTINGS ?>
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
                                 <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                                COMANDI
+                                <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
                     </li>
@@ -206,7 +216,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
                                 <img src="img/ico_portale.png" width="25px" class="me-3">
-                                CONFIGURAZIONI
+                                <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
                     </li>
@@ -214,7 +224,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
                                 <img src="img/ico_error.png" width="25px" class="me-3">
-                                ERRORI
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -222,7 +232,7 @@ if ($auth == 0) {
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="network.php">
                                 <img src="img/ico_network.png" width="25px" class="me-3">
-                                RETE
+                                <?= _MENUNETWORK ?>
                             </a>
                         </div>
                     </li>
@@ -238,10 +248,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">OVERVIEW</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -251,7 +261,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="index_dashboard.php">
                             <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            E.CHARGER
+                            <?= _MENUECHARGER ?>
                         </a>
                     </h4>
                 </li>
@@ -259,7 +269,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
-                            TELEMETRIA
+                            <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
                 </li>
@@ -267,7 +277,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="cards.php" class="dkc-selected">
                             <img src="img/ico_card.png" width="25px" class="me-3">
-                            CARTE RFID
+                            <?= _MENURFIDCARDS ?>
                         </a>
                     </h4>
                 </li>
@@ -280,10 +290,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">STATISTICHE</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -293,7 +303,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
                             <img src="img/ico_service.png" width="25px" class="me-3">
-                            TRANSAZIONI
+                            <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -306,10 +316,10 @@ if ($auth == 0) {
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">IMPOSTAZIONI</h5>
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b>CHIUDI </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -319,7 +329,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
                             <img src="img/ico_notifiche.png" width="25px" class="me-3">
-                            COMANDI
+                            <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
                 </li>
@@ -327,7 +337,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
                             <img src="img/ico_portale.png" width="25px" class="me-3">
-                            CONFIGURAZIONI
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -335,7 +345,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
                             <img src="img/ico_error.png" width="25px" class="me-3">
-                            ERRORI
+                            <?= _MENUERRORS ?>
                         </a>
                     </h4>
                 </li>
@@ -343,7 +353,7 @@ if ($auth == 0) {
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="network.php">
                             <img src="img/ico_network.png" width="25px" class="me-3">
-                            RETE
+                            <?= _MENUNETWORK ?>
                         </a>
                     </h4>
                 </li>
@@ -360,11 +370,11 @@ if ($auth == 0) {
                     <div class="d-flex align-items-start">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold" style="color:#d91a15; font-weight:900;">CARTE RFID</h3>
+                            <h3 class="bold text-dkc"><?= _HEADCARDS ?></h3>
                         </div>
                         <div class="col d-flex justify-content-end">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <button class="btn btn-info btn-sm mt-2" data-toggle="tooltip" data-bs-placement="left" data-bs-title="clicca e passa la carta sul lettore RFID" type="submit" name="responseInsert">AGGIUNGI UNA NUOVA CARTA RFID</button>
+                                <button class="btn btn-info btn-sm mt-2" data-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _ADDBUTTONHELPCARDS ?>" type="submit" name="responseInsert"><?= _ADDBUTTONCARDS ?></button>
                             </form>
                         </div>
                     </div>
@@ -377,11 +387,11 @@ if ($auth == 0) {
                     <table class="table table-light table-sm table-responsive table-striped table-hover text-break">
                         <thead class="thead-dark">
                             <tr>
-                                <th>id</th>
-                                <th>numero carta RFID</th>
-                                <th>nome carta</th>
-                                <th>data creazione</th>
-                                <th colspan="2">funzioni</th>
+                                <th><?= _TABLEIDCARDS ?></th>
+                                <th><?= _TABLERFIDCARDNOCARDS ?></th>
+                                <th><?= _TABLECARDNAMECARDS ?></th>
+                                <th><?= _TABLECREATIONDATECARDS ?></th>
+                                <th colspan="2"><?= _TABLEFUNCTIONSCARDS ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -389,6 +399,7 @@ if ($auth == 0) {
                             ##################### QUERY SQL UTENTI #####################
                             $sql = "SELECT * FROM cards ORDER BY id DESC";
                             if ($stmt = mysqli_prepare($link, $sql)) {
+                                #mysqli_stmt_bind_param($stmt, "sssss", $card_id, $card_no, $card_name, $card_tempo, $card_status);
                                 if (mysqli_stmt_execute($stmt)) {
                                     $result = $stmt->get_result();
                                     $nrows = 0;
@@ -398,17 +409,18 @@ if ($auth == 0) {
                                         }
                                         $nrows++;
                                         echo "<tr><td>" . $row['id'] . "</td><td>" . $row['card_no'] . "</td><td>" . $row['name'] . "</td><td>" . $row['tempo'] . "</td>
-				<td><button type='submit' class='btn btn-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#changeModal' data-bs-change='" . $row['name'] . "' name='change' data-bs-value='" . $row['card_no'] . "'>modifica nome carta</button></td>
-				<td><button type='submit' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal' data-bs-delete='" . $row['card_no'] . "' name='delete' data-bs-value='" . $row['card_no'] . "'>elimina carta</button></td></tr>";
+				<td><button type='submit' class='btn btn-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#changeModal' data-bs-change='" . $row['name'] . "' name='change' data-bs-value='" . $row['card_no'] . "'>" . _TABLEBUTTONMODIFYNAMECARDS . "</button></td>
+				<td><button type='submit' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal' data-bs-delete='" . $row['card_no'] . "' name='delete' data-bs-value='" . $row['card_no'] . "'>" . _TABLEBUTTONDELETECARDCARDS . "</button></td></tr>";
                                     }
                                     if ($nrows == 0) {
-                                        echo "<tr><td>nessuna carta RFID trovata</td><td></td><td></td><td></td><td></td><td></td></tr>";
+                                        echo "<tr><td colspan='6'>" . _TABLENOCARDSCARDS . "</td></tr>";
                                     }
                                 } else {
-                                    echo "Something went wrong. Please try again later. ";
+                                    echo "Something went wrong. Please try again later.";
                                 }
                                 mysqli_stmt_close($stmt);
                             }
+                            mysqli_close($link);
                             ?>
                         </tbody>
                     </table>
@@ -418,7 +430,7 @@ if ($auth == 0) {
                             <div class="modal-content">
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="changeModalLabel">modifica nome carta</h5>
+                                        <h5 class="modal-title" id="changeModalLabel"><?= _MODALMODIFYNAMECARDS ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-prebody">
@@ -426,17 +438,17 @@ if ($auth == 0) {
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label for="cardholdername-name" class="col-form-label">vecchio nome:</label>
+                                            <label for="cardholdername-name" class="col-form-label"><?= _MODALOLDNAMECARDS ?></label>
                                             <input type="text" class="form-control" id="cardholdername-name" name="oldname" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="newname" class="col-form-label">nuovo nome:</label>
+                                            <label for="newname" class="col-form-label"><?= _MODALNEWNAMECARDS ?></label>
                                             <input type="text" class="form-control" id="newname" name="newname" required>
                                         </div>
                                     </div>
                                     <div class="modal-footer btn-group">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">chiudi</button>
-                                        <button type="submit" name="responseName" class="btn btn-primary">OK</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= _MENUCLOSE ?></button>
+                                        <button type="submit" name="responseName" class="btn btn-primary"><?= _MODALOKCARDS ?></button>
                                     </div>
                                 </form>
                             </div>
@@ -447,7 +459,7 @@ if ($auth == 0) {
                             <div class="modal-content">
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">ELIMINA CARTA</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel"><?= _MODALDELETECARDCARDS ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-prebody">
@@ -455,12 +467,12 @@ if ($auth == 0) {
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <p>SEI SICURO DI VOLER ELIMINARE QUESTA CARTA RFID?</p>
+                                            <p><?= _MODALDELETECARDWARNINGCARDS ?></p>
                                         </div>
                                     </div>
                                     <div class="modal-footer btn-group">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
-                                        <button type="submit" name="response" class="btn btn-primary">SI</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= _MODALNOCARDS ?></button>
+                                        <button type="submit" name="response" class="btn btn-primary"><?= _MODALYESCARDS ?></button>
                                     </div>
                                 </form>
                             </div>
@@ -475,7 +487,7 @@ if ($auth == 0) {
                             var modalTitle = changeModal.querySelector('.modal-title')
                             var modalBody = changeModal.querySelector('.modal-prebody input')
                             var modalBodyInput = changeModal.querySelector('.modal-body input')
-                            modalTitle.textContent = 'modifica nome per la carta numero: ' + cardnumber
+                            modalTitle.textContent = '<?= _MODALTITLEMODIFYCARDCARDS ?>' + cardnumber
                             modalBody.value = cardnumber
                             modalBodyInput.value = cardholdername
                         })
@@ -489,7 +501,7 @@ if ($auth == 0) {
                             var modalTitle = deleteModal.querySelector('.modal-title')
                             var modalBody = deleteModal.querySelector('.modal-prebody input')
                             var modalBodyInput = deleteModal.querySelector('.modal-body input')
-                            modalTitle.textContent = 'elimina carta RFID numero: ' + cardnumber
+                            modalTitle.textContent = '<?= _MODALTITLEDELETECARDCARDS ?>' + cardnumber
                             modalBody.value = cardnumber
                             modalBodyInput.value = cardholdername
                         })
