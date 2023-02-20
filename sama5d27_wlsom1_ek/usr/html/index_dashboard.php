@@ -14,10 +14,19 @@ if ($firstlogin == 1) {
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userruen') {
+    include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userenru') {
+    include "inc/l_en-ru.php";
+    $logo = 'logo_menu_dkc.png';
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -26,8 +35,9 @@ if ($auth == 0) {
     $utente = 'installer';
 } else {
     $utente = 'user';
-    $configuration_menu = "";
 }
+$_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
+//$_SESSION["echargertipo"] = '<!--#  echo var="tipologiawallbox" -->';
 ?>
 <!--# if expr="$internetenabled=false" -->
 <!--# include file="session.php" -->
@@ -50,7 +60,7 @@ if ($auth == 0) {
 <body>
     <header class="navbar sticky-top bg-dkcenergy flex-md-nowrap p-0 shadow">
         <span class="navbar-brand col-md-3 col-lg-2 me-0 px-1">
-            <img src="img/logo_menu.png" width="164" height="50">
+            <img src="img/<?php echo $logo ?>" width="164" height="50">
         </span>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         </button>
@@ -90,7 +100,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
-                                <img src="img/ico_inverter.png" width="25px" class="me-3">
+                                <img src="img/ico_telemetria.png" width="25px" class="me-3">
                                 <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
@@ -113,7 +123,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
-                                <img src="img/ico_service.png" width="25px" class="me-3">
+                                <img src="img/ico_transazioni.png" width="25px" class="me-3">
                                 <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
@@ -128,7 +138,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
-                                <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                                <img src="img/ico_comandi.png" width="25px" class="me-3">
                                 <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
@@ -136,7 +146,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
-                                <img src="img/ico_portale.png" width="25px" class="me-3">
+                                <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                                 <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
@@ -144,7 +154,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
-                                <img src="img/ico_error.png" width="25px" class="me-3">
+                                <img src="img/ico_errori.png" width="25px" class="me-3">
                                 <?= _MENUERRORS ?>
                             </a>
                         </div>
@@ -189,7 +199,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
-                            <img src="img/ico_inverter.png" width="25px" class="me-3">
+                            <img src="img/ico_telemetria.png" width="25px" class="me-3">
                             <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
@@ -223,7 +233,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
-                            <img src="img/ico_service.png" width="25px" class="me-3">
+                            <img src="img/ico_transazioni.png" width="25px" class="me-3">
                             <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
@@ -249,7 +259,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
-                            <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                            <img src="img/ico_comandi.png" width="25px" class="me-3">
                             <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
@@ -257,7 +267,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
-                            <img src="img/ico_portale.png" width="25px" class="me-3">
+                            <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                             <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
@@ -265,7 +275,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
-                            <img src="img/ico_error.png" width="25px" class="me-3">
+                            <img src="img/ico_errori.png" width="25px" class="me-3">
                             <?= _MENUERRORS ?>
                         </a>
                     </h4>
@@ -283,195 +293,223 @@ if ($auth == 0) {
     </div>
     <div class="smartphone-padding d-none d-md-block"></div>
     <!-- ################################# FINE MENU MOBILE ################################################ -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="container-fluid mt-1 ms-auto">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+        <div class="container-fluid">
             <!-- ################################# INIZIO PAGINA ################################################ -->
-            <div class="row ms-2">
-                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0">
-                    <div class="d-flex align-items-start">
+            <div class="row">
+                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                    <div class="d-flex align-items-justify">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold text-dkc"><?= _HEAD  ?></h3>
-                        </div>
-                        <div class="col d-flex justify-content-end">
+                            <h3 class="bold text-dkc"><?= _HEAD . '&nbsp;' ?></h3>
+                            <img id="iconaInternet" src="img/offlineLight.png">
                         </div>
                     </div>
                 </div>
             </div>
             <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
-            <div class="row mt-1 ms-2 rounded shadow-sm py-2">
-                <div class="col mt-1">
-                    <table class="table table-light table-sm table-responsive table-hover text-break">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th><?= _TABLEDATA ?></th>
-                                <th class="text-end"><?= _TABLEVALUE ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><?= _TABLESERVERCOMM ?></td>
-                                <td class="text-end" id="echargerdate">
-                                    <script>
-                                        var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
-                                        document.getElementById("echargerdate").innerHTML = dataServer.toISOString();
-                                    </script>
-                                </td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>E.CHARGER DATE</td>
-                                <td class="text-end">
-                                    <!--#  echo var="timewallbox" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEMACADDRESS ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="macaddress" -->
-                                </td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>INSTALLATION ID</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idimpianto" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEMANUFACTURER ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="costruttore" -->
-                                </td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>MACHINE CONFIGURATION</td>
-                                <td class="text-end">
-                                    <!--#  echo var="configurazione" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEMAXPOWER ?></td>
-                                <td class="text-end" id="echargerpotenzacontatore">
-                                    <script>
-                                        var contatore = '<!--#  echo var="potenzanominalecontatore" -->';
-                                        document.getElementById("echargerpotenzacontatore").innerHTML = contatore.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-                                    </script>
-                                    W
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEMODBUSADDRESS ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzomodbus" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLELANIPADDRESS ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoiplocale" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEWIFIPADDRESS ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="indirizzoipwlan" -->
-                                </td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>DATETIME</td>
-                                <td class="text-end">
-                                    <!--#  echo var="dataora" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLELANGUAGE ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="lingua" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEREALTIMESAMPLING ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="frequenzainviorealtime" -->
-                                    s
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEWBTYPE ?></td>
-                                <td class="text-end" id="echargertipologia">
-                                    <script>
-                                        var tipologia = '<!--#  echo var="tipologiawallbox" -->';
-                                        if (tipologia == 0) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT0 ?>";
-                                        } else if (tipologia == 1) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT1 ?>";
-                                        } else if (tipologia == 2) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT2 ?>";
-                                        } else if (tipologia == 3) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT3 ?>";
-                                        } else if (tipologia == 4) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT4 ?>";
-                                        } else if (tipologia == 5) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT5 ?>";
-                                        } else if (tipologia == 6) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT6 ?>";
-                                        } else if (tipologia == 7) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT7 ?>";
-                                        } else if (tipologia == 8) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT8 ?>";
-                                        } else if (tipologia == 9) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT9 ?>";
-                                        } else if (tipologia == 10) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT10 ?>";
-                                        } else if (tipologia == 11) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT11 ?>";
-                                        } else if (tipologia == 12) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT12 ?>";
-                                        } else if (tipologia == 13) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT13 ?>";
-                                        } else if (tipologia == 14) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT14 ?>";
-                                        } else if (tipologia == 15) {
-                                            document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT15 ?>";
-                                        };
-                                    </script>
-                                </td>
-                            </tr>
-                            <tr class="d-none">
-                                <td>E.CHARGER ID</td>
-                                <td class="text-end">
-                                    <!--#  echo var="idwallbox" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLESERIALNUMBER ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="numeroserie" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEFWVERSION ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionefw" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLESWVERSION ?></td>
-                                <td class="text-end">
-                                    <!--#  echo var="versionesw" -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLERATEDPOWER ?></td>
-                                <td class="text-end" id="echargerpotenza">
-                                    <script>
-                                        var potenza = '<!--#  echo var="potenzatarga" -->';
-                                        document.getElementById("echargerpotenza").innerHTML = potenza.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-                                    </script>
-                                    W
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+            <div class="row py-2 ms-0">
+                <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
+                    <div class="icon-square flex-shrink-0 mt-1 me-3">
+                        <img id="iconaTipo" src="img/ico_wb_nodata.png">
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-3 ms-0 rounded-4 shadow">
+                <div class="row">
+                    <div class="col mt-2 table-responsive">
+                        <table class="table table-sm table-hover table-borderless">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th><?= _TABLEDATA ?></th>
+                                    <th class="text-end"><?= _TABLEVALUE ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><?= _TABLESERVERCOMM ?></td>
+                                    <td class="text-end" id="echargerdate">
+                                        <script>
+                                            var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
+                                            document.getElementById("echargerdate").innerHTML = dataServer.toISOString();
+                                        </script>
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td>E.CHARGER DATE</td>
+                                    <td class="text-end">
+                                        <!--#  echo var="timewallbox" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEMACADDRESS ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="macaddress" -->
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td>INSTALLATION ID</td>
+                                    <td class="text-end">
+                                        <!--#  echo var="idimpianto" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEMANUFACTURER ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="costruttore" -->
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td>MACHINE CONFIGURATION</td>
+                                    <td class="text-end">
+                                        <!--#  echo var="configurazione" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEMAXPOWER ?></td>
+                                    <td class="text-end" id="echargerpotenzacontatore">
+                                        <script>
+                                            var contatore = '<!--#  echo var="potenzanominalecontatore" -->';
+                                            document.getElementById("echargerpotenzacontatore").innerHTML = contatore.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+                                        </script>
+                                        W
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td><?= _TABLEMODBUSADDRESS ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="indirizzomodbus" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLELANIPADDRESS ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="indirizzoiplocale" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEWIFIPADDRESS ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="indirizzoipwlan" -->
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td>DATETIME</td>
+                                    <td class="text-end">
+                                        <!--#  echo var="dataora" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLELANGUAGE ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="lingua" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEREALTIMESAMPLING ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="frequenzainviorealtime" -->
+                                        s
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEWBTYPE ?></td>
+                                    <td class="text-end" id="echargertipologia">
+                                        <script>
+                                            var tipologia = '<!--# echo var="tipologiawallbox" -->';
+                                            if (tipologia == 0) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT0 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_cable.png';
+                                            } else if (tipologia == 1) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT1 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_cable.png';
+                                            } else if (tipologia == 2) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT2 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_nocable.png';
+                                            } else if (tipologia == 3) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT3 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_nocable.png';
+                                            } else if (tipologia == 4) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT4 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_cable.png';
+                                            } else if (tipologia == 5) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT5 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_cable.png';
+                                            } else if (tipologia == 6) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT6 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_nocable.png';
+                                            } else if (tipologia == 7) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT7 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_nocable.png';
+                                            } else if (tipologia == 8) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT8 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_cable.png';
+                                            } else if (tipologia == 9) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT9 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_cable.png';
+                                            } else if (tipologia == 10) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT10 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_nocable.png';
+                                            } else if (tipologia == 11) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT11 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_nocable.png';
+                                            } else if (tipologia == 12) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT12 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_cable.png';
+                                            } else if (tipologia == 13) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT13 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_cable.png';
+                                            } else if (tipologia == 14) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT14 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_mono_nocable.png';
+                                            } else if (tipologia == 15) {
+                                                document.getElementById("echargertipologia").innerHTML = "<?= _JAVASCRIPT15 ?>";
+                                                document.getElementById("iconaTipo").src = 'img/ico_wb_tri_nocable.png';
+                                            };
+                                        </script>
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td>E.CHARGER ID</td>
+                                    <td class="text-end">
+                                        <!--#  echo var="idwallbox" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLESERIALNUMBER ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="numeroserie" -->
+                                    </td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td><?= _TABLEFWVERSION ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="versionefw" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLESWVERSION ?></td>
+                                    <td class="text-end">
+                                        <!--#  echo var="versionesw" -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLERATEDPOWER ?></td>
+                                    <td class="text-end" id="echargerpotenza">
+                                        <script>
+                                            var potenza = '<!--#  echo var="potenzatarga" -->';
+                                            document.getElementById("echargerpotenza").innerHTML = potenza.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+                                        </script>
+                                        W
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -495,13 +533,43 @@ if ($auth == 0) {
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
 
-    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
+        });
+        var URL = 'https://data.madein.it/ping';
+        var settings = {
+            cache: false,
+            dataType: "jsonp",
+            async: true,
+            crossDomain: true,
+            url: URL,
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            statusCode: {
+                200: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/onlineLight.png';
+                },
+                400: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+                0: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+            },
+        };
+        $.ajax(settings).done(function(response) {
+            //					console.log(response);
+        });
+        $.post('set_type.php', {
+            'echargertipo': tipologia
         });
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>

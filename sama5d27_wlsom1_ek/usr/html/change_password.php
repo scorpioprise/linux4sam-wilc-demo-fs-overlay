@@ -6,14 +6,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 $id = $_SESSION["id"];
 $firstlogin = $_SESSION["firstlogin"];
+if ($firstlogin == 0) {
+    header("location: login.php");
+}
 $change = $_SESSION["change"];
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
+    $logo = 'dkcenergyportal.png';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
+    $logo = 'dkcenergyportal.png';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
+    $logo = 'dkc.png';
+} else if (trovaLingua() == 'userruen') {
+    include "inc/l_ru.php";
+    $logo = 'dkc.png';
+} else if (trovaLingua() == 'userenru') {
+    include "inc/l_en-ru.php";
+    $logo = 'dkc.png';
 }
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
@@ -78,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-12 col-md-6 my-5">
                 <h3 class="display-6"><?= _HEADCHANGEPASSWORD ?></h3>
                 <form class="form-signin" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <img src="img/dkcenergyportal.png">
+                    <img src="img/<?php echo $logo ?>">
                     <div class="form-floating my-2 <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                         <input type="password" name="new_password" class="form-control" placeholder="new password" id="floatingPassword" value="<?php echo $new_password; ?>">
                         <label for="new_password" class="sr-only"><?= _NEWPASSWORD1 ?></label>

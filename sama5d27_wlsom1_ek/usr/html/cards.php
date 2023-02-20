@@ -14,28 +14,37 @@ if ($firstlogin == 1) {
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userruen') {
+    include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userenru') {
+    include "inc/l_en-ru.php";
+    $logo = 'logo_menu_dkc.png';
 }
 ##################### RESPONSE AGGIUNGI CARD #####################
 if (isset($_POST['responseInsert'])) {
     $response = exec('issue_command 9000');
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
-        $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div id="toast" class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
-        $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
-        $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
-        $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
-        $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
     sleep(5);
@@ -44,57 +53,57 @@ if (isset($_POST['responseInsert'])) {
 if (isset($_POST['response'])) {
     $response = exec('issue_command 9002 ' . $_POST['id']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
-        $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
-        $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
-        $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
-        $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
-        $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
         ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
 }
 ##################### RESPONSE CHANGE NAME #####################
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['responseName'])) {
     $nuovonome = preg_replace('/\s+/', '_', $_POST['newname']);
     //$nuovonome = $_POST['newname'];
     $numerocarta = $_POST['cardnumber'];
     $sql2 = "UPDATE cards SET name='$nuovonome' WHERE card_no='$numerocarta'";
-    if ($stmt = mysqli_prepare($link, $sql2)) {
-        if (mysqli_stmt_execute($stmt)) {
-            $result = $stmt->get_result();
+    if ($stmt2 = mysqli_prepare($link, $sql2)) {
+        if (mysqli_stmt_execute($stmt2)) {
+            $result = $stmt2->get_result();
             $nrows = 0;
             if ($nrows == 0) {
             }
         } else {
             echo "Something went wrong. Please try again later.";
         }
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($stmt2);
     }
-    mysqli_close($link);
-    //include "changename.php";
+    //la connessione la chiudo poi alla prossima query
+    //mysqli_close($link);
     if (isset($_POST['responseName'])) {
         $response = exec('issue_command 3015 ' . $numerocarta . " " . $nuovonome);
         if ($response == 'RESPONSE_MESSAGE_FAILED') {
-            $response_toast = '<div class="toast align-items-center fade show bg-danger fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+            $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
             ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } elseif ($response == 'RESPONSE_MESSAGE_OK') {
-            $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+            $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
             ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
-            $response_toast = '<div class="toast align-items-center fade show bg-secondary text-white fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+            $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
             ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } elseif ($response == 'SKIP SERIAL') {
-            $response_toast = '<div class="toast align-items-center fade show bg-info fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+            $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
             ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         } else {
-            $response_toast = '<div class="toast align-items-center fade show bg-warning fw-bold" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+            $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
             ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
         }
     }
@@ -106,7 +115,6 @@ if ($auth == 0) {
     $utente = 'installer';
 } else {
     $utente = 'user';
-    $configuration_menu = "";
 }
 ?>
 <!--# if expr="$internetenabled=false" -->
@@ -130,7 +138,7 @@ if ($auth == 0) {
 <body>
     <header class="navbar sticky-top bg-dkcenergy flex-md-nowrap p-0 shadow">
         <span class="navbar-brand col-md-3 col-lg-2 me-0 px-1">
-            <img src="img/logo_menu.png" width="164" height="50">
+            <img src="img/<?php echo $logo ?>" width="164" height="50">
         </span>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         </button>
@@ -169,7 +177,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
-                                <img src="img/ico_inverter.png" width="25px" class="me-3">
+                                <img src="img/ico_telemetria.png" width="25px" class="me-3">
                                 <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
@@ -192,7 +200,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
-                                <img src="img/ico_service.png" width="25px" class="me-3">
+                                <img src="img/ico_transazioni.png" width="25px" class="me-3">
                                 <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
@@ -207,7 +215,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
-                                <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                                <img src="img/ico_comandi.png" width="25px" class="me-3">
                                 <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
@@ -215,7 +223,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
-                                <img src="img/ico_portale.png" width="25px" class="me-3">
+                                <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                                 <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
@@ -223,7 +231,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
-                                <img src="img/ico_error.png" width="25px" class="me-3">
+                                <img src="img/ico_errori.png" width="25px" class="me-3">
                                 <?= _MENUERRORS ?>
                             </a>
                         </div>
@@ -268,7 +276,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
-                            <img src="img/ico_inverter.png" width="25px" class="me-3">
+                            <img src="img/ico_telemetria.png" width="25px" class="me-3">
                             <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
@@ -302,7 +310,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
-                            <img src="img/ico_service.png" width="25px" class="me-3">
+                            <img src="img/ico_transazioni.png" width="25px" class="me-3">
                             <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
@@ -328,7 +336,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
-                            <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                            <img src="img/ico_comandi.png" width="25px" class="me-3">
                             <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
@@ -336,7 +344,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
-                            <img src="img/ico_portale.png" width="25px" class="me-3">
+                            <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                             <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
@@ -344,7 +352,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
-                            <img src="img/ico_error.png" width="25px" class="me-3">
+                            <img src="img/ico_errori.png" width="25px" class="me-3">
                             <?= _MENUERRORS ?>
                         </a>
                     </h4>
@@ -362,150 +370,169 @@ if ($auth == 0) {
     </div>
     <div class="smartphone-padding d-none d-md-block"></div>
     <!-- ################################# FINE MENU MOBILE ################################################ -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="container-fluid mt-1 ms-auto">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+        <div class="container-fluid">
             <!-- ################################# INIZIO PAGINA ################################################ -->
-            <div class="row ms-2">
-                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0">
-                    <div class="d-flex align-items-start">
+            <div class="row">
+                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                    <div class="d-flex">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold text-dkc"><?= _HEADCARDS ?></h3>
+                            <h3 class="bold text-dkc"><?= _HEADCARDS . '&nbsp;' ?></h3>
+                            <img id="iconaInternet" src="img/offlineLight.png">
                         </div>
-                        <div class="col d-flex justify-content-end">
+                        <div class="col d-flex justify-content-end align-items-start mt-0">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <button class="btn btn-info btn-sm mt-2" data-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _ADDBUTTONHELPCARDS ?>" type="submit" name="responseInsert"><?= _ADDBUTTONCARDS ?></button>
+                                <div class="d-flex flex-nowrap text-nowrap">
+                                    <button class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _ADDBUTTONHELPCARDS ?>" type="submit" name="responseInsert">
+                                        <img src="img/ico_tr_addcard.png">
+                                        <span class="d-none d-lg-block ms-2 mt-0 mt-lg-1 text-decoration-underline"><?= _ADDBUTTONCARDS ?></span><span class="d-none d-lg-block fw-bold ms-1 mt-1">+</span>
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row justify-content-between py-2 ms-0">
+                <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
+                    <div class="icon-square flex-shrink-0 mt-1 me-3">
+                        <img src="img/ico_card_grande.png">
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-end h-50">
                     <?php echo $response_toast; ?>
                 </div>
             </div>
-            <div class="row mt-1 ms-2 rounded shadow-sm py-2">
-                <div class="col mt-1">
-                    <!-- /////////////////////////////////////// UTENTI ////////////////////////////////////////////////////////// -->
-                    <table class="table table-light table-sm table-responsive table-striped table-hover text-break">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th><?= _TABLEIDCARDS ?></th>
-                                <th><?= _TABLERFIDCARDNOCARDS ?></th>
-                                <th><?= _TABLECARDNAMECARDS ?></th>
-                                <th><?= _TABLECREATIONDATECARDS ?></th>
-                                <th colspan="2"><?= _TABLEFUNCTIONSCARDS ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            ##################### QUERY SQL UTENTI #####################
-                            $sql = "SELECT * FROM cards ORDER BY id DESC";
-                            if ($stmt = mysqli_prepare($link, $sql)) {
-                                #mysqli_stmt_bind_param($stmt, "sssss", $card_id, $card_no, $card_name, $card_tempo, $card_status);
-                                if (mysqli_stmt_execute($stmt)) {
-                                    $result = $stmt->get_result();
-                                    $nrows = 0;
-                                    while ($row = $result->fetch_assoc()) {
-                                        if ($row['status'] == 'disabled') {
-                                            continue;
+            <div class="row py-3 ms-0 rounded-4 shadow">
+                <div class="row">
+                    <div class="col mt-2 table-responsive">
+                        <!-- /////////////////////////////////////// UTENTI ////////////////////////////////////////////////////////// -->
+                        <table class="table table-sm table-hover table-borderless">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th><?= _TABLEIDCARDS ?></th>
+                                    <th><?= _TABLERFIDCARDNOCARDS ?></th>
+                                    <th><?= _TABLECARDNAMECARDS ?></th>
+                                    <th><?= _TABLECREATIONDATECARDS ?></th>
+                                    <th colspan="2"><?= _TABLEFUNCTIONSCARDS ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                ##################### QUERY SQL UTENTI #####################
+                                $sql = "SELECT * FROM cards ORDER BY id DESC";
+                                if ($stmt = mysqli_prepare($link, $sql)) {
+                                    if (mysqli_stmt_execute($stmt)) {
+                                        $result = $stmt->get_result();
+                                        $nrows = 0;
+                                        while ($row = $result->fetch_assoc()) {
+                                            if ($row['status'] == 'disabled') {
+                                                continue;
+                                            }
+                                            $nrows++;
+                                            echo "<tr><td>" . $row['id'] . "</td><td class='text-break'>" . $row['card_no'] . "</td><td class='text-break'>" . $row['name'] . "</td><td>" . $row['tempo'] . "</td>
+				<td><button type='submit' class='btn btn-custom-grigio-mini btn-sm' data-bs-toggle='modal' data-bs-target='#changeModal' data-bs-change='" . $row['name'] . "' name='change' data-bs-value='" . $row['card_no'] . "'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-pencil-fill' viewBox='0 0 16 16'><path d='M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z'/></svg><span class='d-none d-lg-block'>" . _TABLEBUTTONMODIFYNAMECARDS . "</span></button></td>
+				<td><button type='submit' class='btn btn-custom-rosso-mini btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal' data-bs-delete='" . $row['card_no'] . "' name='delete' data-bs-value='" . $row['card_no'] . "'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-x-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z'/></svg><span class='d-none d-lg-block'>" . _TABLEBUTTONDELETECARDCARDS . "</span></button></td></tr>";
                                         }
-                                        $nrows++;
-                                        echo "<tr><td>" . $row['id'] . "</td><td>" . $row['card_no'] . "</td><td>" . $row['name'] . "</td><td>" . $row['tempo'] . "</td>
-				<td><button type='submit' class='btn btn-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#changeModal' data-bs-change='" . $row['name'] . "' name='change' data-bs-value='" . $row['card_no'] . "'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-pencil-fill' viewBox='0 0 16 16'><path d='M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z'/></svg><span class='d-none d-lg-block'>" . _TABLEBUTTONMODIFYNAMECARDS . "</span></button></td>
-				<td><button type='submit' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal' data-bs-delete='" . $row['card_no'] . "' name='delete' data-bs-value='" . $row['card_no'] . "'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='d-block d-lg-none bi bi-x-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z'/></svg><span class='d-none d-lg-block'>" . _TABLEBUTTONDELETECARDCARDS . "</span></button></td></tr>";
+                                        if ($nrows == 0) {
+                                            echo "<tr><td colspan='6'>" . _TABLENOCARDSCARDS . "</td></tr>";
+                                        }
+                                    } else {
+                                        echo "Something went wrong. Please try again later.";
                                     }
-                                    if ($nrows == 0) {
-                                        echo "<tr><td colspan='6'>" . _TABLENOCARDSCARDS . "</td></tr>";
-                                    }
-                                } else {
-                                    echo "Something went wrong. Please try again later.";
+                                    mysqli_stmt_close($stmt);
                                 }
-                                mysqli_stmt_close($stmt);
-                            }
-                            mysqli_close($link);
-                            ?>
-                        </tbody>
-                    </table>
+                                mysqli_close($link);
+                                ?>
+                            </tbody>
+                        </table>
 
-                    <div class="modal fade" id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="changeModalLabel"><?= _MODALMODIFYNAMECARDS ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-prebody">
-                                        <input type="hidden" id="cardnumber" name="cardnumber" value="">
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label for="cardholdername-name" class="col-form-label"><?= _MODALOLDNAMECARDS ?></label>
-                                            <input type="text" class="form-control" id="cardholdername-name" name="oldname" readonly>
+                        <div class="modal fade" id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="changeModalLabel"><?= _MODALMODIFYNAMECARDS ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="newname" class="col-form-label"><?= _MODALNEWNAMECARDS ?></label>
-                                            <input type="text" class="form-control" id="newname" name="newname" required>
+                                        <div class="modal-prebody">
+                                            <input type="hidden" id="cardnumber" name="cardnumber" value="">
                                         </div>
-                                    </div>
-                                    <div class="modal-footer btn-group">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= _MENUCLOSE ?></button>
-                                        <button type="submit" name="responseName" class="btn btn-primary"><?= _MODALOKCARDS ?></button>
-                                    </div>
-                                </form>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="cardholdername-name" class="col-form-label"><?= _MODALOLDNAMECARDS ?></label>
+                                                <input type="text" class="form-control" id="cardholdername-name" name="oldname" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="newname" class="col-form-label"><?= _MODALNEWNAMECARDS ?></label>
+                                                <input type="text" class="form-control" id="newname" name="newname" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer btn-group">
+                                            <button type="button" class="btn btn-custom-grigio" data-bs-dismiss="modal"><?= _MENUCLOSE ?></button>
+                                            <button type="submit" name="responseName" class="btn btn-custom-azzurro"><?= _MODALOKCARDS ?></button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel"><?= _MODALDELETECARDCARDS ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-prebody">
-                                        <input type="hidden" id="cardnumber" name="id" value="">
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <p><?= _MODALDELETECARDWARNINGCARDS ?></p>
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel"><?= _MODALDELETECARDCARDS ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer btn-group">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= _MODALNOCARDS ?></button>
-                                        <button type="submit" name="response" class="btn btn-primary"><?= _MODALYESCARDS ?></button>
-                                    </div>
-                                </form>
+                                        <div class="modal-prebody">
+                                            <input type="hidden" id="cardnumber" name="id" value="">
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <p><?= _MODALDELETECARDWARNINGCARDS ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer btn-group">
+                                            <button type="button" class="btn btn-custom-grigio" data-bs-dismiss="modal"><?= _MODALNOCARDS ?></button>
+                                            <button type="submit" name="response" class="btn btn-custom-rosso"><?= _MODALYESCARDS ?></button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                        <script>
+                            var changeModal = document.getElementById('changeModal')
+                            changeModal.addEventListener('show.bs.modal', function(event) {
+                                var button = event.relatedTarget
+                                var cardholdername = button.getAttribute('data-bs-change')
+                                var cardnumber = button.getAttribute('data-bs-value')
+                                var modalTitle = changeModal.querySelector('.modal-title')
+                                var modalBody = changeModal.querySelector('.modal-prebody input')
+                                var modalBodyInput = changeModal.querySelector('.modal-body input')
+                                modalTitle.textContent = '<?= _MODALTITLEMODIFYCARDCARDS ?>' + cardnumber
+                                modalBody.value = cardnumber
+                                modalBodyInput.value = cardholdername
+                            })
+                        </script>
+                        <script>
+                            var deleteModal = document.getElementById('deleteModal')
+                            deleteModal.addEventListener('show.bs.modal', function(event) {
+                                var button = event.relatedTarget
+                                var cardholdername = button.getAttribute('data-bs-delete')
+                                var cardnumber = button.getAttribute('data-bs-value')
+                                var modalTitle = deleteModal.querySelector('.modal-title')
+                                var modalBody = deleteModal.querySelector('.modal-prebody input')
+                                var modalBodyInput = deleteModal.querySelector('.modal-body input')
+                                modalTitle.textContent = '<?= _MODALTITLEDELETECARDCARDS ?>' + cardnumber
+                                modalBody.value = cardnumber
+                                modalBodyInput.value = cardholdername
+                            })
+                        </script>
                     </div>
-                    <script>
-                        var changeModal = document.getElementById('changeModal')
-                        changeModal.addEventListener('show.bs.modal', function(event) {
-                            var button = event.relatedTarget
-                            var cardholdername = button.getAttribute('data-bs-change')
-                            var cardnumber = button.getAttribute('data-bs-value')
-                            var modalTitle = changeModal.querySelector('.modal-title')
-                            var modalBody = changeModal.querySelector('.modal-prebody input')
-                            var modalBodyInput = changeModal.querySelector('.modal-body input')
-                            modalTitle.textContent = '<?= _MODALTITLEMODIFYCARDCARDS ?>' + cardnumber
-                            modalBody.value = cardnumber
-                            modalBodyInput.value = cardholdername
-                        })
-                    </script>
-                    <script>
-                        var deleteModal = document.getElementById('deleteModal')
-                        deleteModal.addEventListener('show.bs.modal', function(event) {
-                            var button = event.relatedTarget
-                            var cardholdername = button.getAttribute('data-bs-delete')
-                            var cardnumber = button.getAttribute('data-bs-value')
-                            var modalTitle = deleteModal.querySelector('.modal-title')
-                            var modalBody = deleteModal.querySelector('.modal-prebody input')
-                            var modalBodyInput = deleteModal.querySelector('.modal-body input')
-                            modalTitle.textContent = '<?= _MODALTITLEDELETECARDCARDS ?>' + cardnumber
-                            modalBody.value = cardnumber
-                            modalBodyInput.value = cardholdername
-                        })
-                    </script>
                 </div>
             </div>
         </div>
@@ -528,7 +555,7 @@ if ($auth == 0) {
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
 
-    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
@@ -536,6 +563,36 @@ if ($auth == 0) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         });
+        var URL = 'https://data.madein.it/ping';
+        var settings = {
+            cache: false,
+            dataType: "jsonp",
+            async: true,
+            crossDomain: true,
+            url: URL,
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            statusCode: {
+                200: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/onlineLight.png';
+                },
+                400: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+                0: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+            },
+        };
+        $.ajax(settings).done(function(response) {
+            //					console.log(response);
+        });
+        setTimeout(() => {
+            $('.toast').toast('hide');
+        }, 4000);
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

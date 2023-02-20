@@ -7,6 +7,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $id = $_SESSION["id"];
 $auth = $_SESSION["auth"];
 $firstlogin = $_SESSION["firstlogin"];
+$tipoecharger = $_SESSION["echargertipo"];
+switch ($tipoecharger) {
+    case '0':
+    case '4':
+    case '8':
+    case '12':
+        $iconaTipo = 'img/ico_wb_mono_cable.png';
+        break;
+    case '1':
+    case '5':
+    case '9':
+    case '13':
+        $iconaTipo = 'img/ico_wb_tri_cable.png';
+        break;
+    case '2':
+    case '6':
+    case '10':
+    case '14':
+        $iconaTipo = 'img/ico_wb_mono_nocable.png';
+        break;
+    case '3':
+    case '7':
+    case '11':
+    case '15':
+        $iconaTipo = 'img/ico_wb_tri_nocable.png';
+        break;
+    default:
+        $iconaTipo = 'img/ico_wb_nodata.png';
+}
 if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
@@ -15,10 +44,41 @@ require_once "inc/config.php";
 include_once "loader.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userruen') {
+    include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userenru') {
+    include "inc/l_en-ru.php";
+    $logo = 'logo_menu_dkc.png';
+}
+if (isset($_POST['response'])) {
+    $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['response']);
+    if ($response == 'RESPONSE_MESSAGE_FAILED') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_OK') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'SKIP SERIAL') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDNOUPDATE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } else {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    }
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -27,7 +87,6 @@ if ($auth == 0) {
     $utente = 'installer';
 } else {
     $utente = 'user';
-    $configuration_menu = "";
 }
 ?>
 <!--# if expr="$internetenabled=false" -->
@@ -51,7 +110,7 @@ if ($auth == 0) {
 <body>
     <header class="navbar sticky-top bg-dkcenergy flex-md-nowrap p-0 shadow">
         <span class="navbar-brand col-md-3 col-lg-2 me-0 px-1">
-            <img src="img/logo_menu.png" width="164" height="50">
+            <img src="img/<?php echo $logo ?>" width="164" height="50">
         </span>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         </button>
@@ -61,7 +120,6 @@ if ($auth == 0) {
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                 <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
-                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -91,7 +149,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php" class="dkc-selected">
-                                <img src="img/ico_inverter.png" width="25px" class="me-3">
+                                <img src="img/ico_telemetria.png" width="25px" class="me-3">
                                 <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
@@ -114,7 +172,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
-                                <img src="img/ico_service.png" width="25px" class="me-3">
+                                <img src="img/ico_transazioni.png" width="25px" class="me-3">
                                 <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
@@ -129,7 +187,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
-                                <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                                <img src="img/ico_comandi.png" width="25px" class="me-3">
                                 <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
@@ -137,7 +195,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
-                                <img src="img/ico_portale.png" width="25px" class="me-3">
+                                <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                                 <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
@@ -145,7 +203,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
-                                <img src="img/ico_error.png" width="25px" class="me-3">
+                                <img src="img/ico_errori.png" width="25px" class="me-3">
                                 <?= _MENUERRORS ?>
                             </a>
                         </div>
@@ -190,7 +248,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php" class="dkc-selected">
-                            <img src="img/ico_inverter.png" width="25px" class="me-3">
+                            <img src="img/ico_telemetria.png" width="25px" class="me-3">
                             <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
@@ -224,7 +282,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
-                            <img src="img/ico_service.png" width="25px" class="me-3">
+                            <img src="img/ico_transazioni.png" width="25px" class="me-3">
                             <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
@@ -250,7 +308,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
-                            <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                            <img src="img/ico_comandi.png" width="25px" class="me-3">
                             <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
@@ -258,7 +316,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
-                            <img src="img/ico_portale.png" width="25px" class="me-3">
+                            <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                             <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
@@ -266,7 +324,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
-                            <img src="img/ico_error.png" width="25px" class="me-3">
+                            <img src="img/ico_errori.png" width="25px" class="me-3">
                             <?= _MENUERRORS ?>
                         </a>
                     </h4>
@@ -284,79 +342,137 @@ if ($auth == 0) {
     </div>
     <div class="smartphone-padding d-none d-md-block"></div>
     <!-- ################################# FINE MENU MOBILE ################################################ -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="container-fluid mt-1 ms-auto">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+        <div class="container-fluid">
             <!-- ################################# INIZIO PAGINA ################################################ -->
-            <div class="row ms-2">
-                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0">
-                    <div class="d-flex align-items-start">
+            <div class="row">
+                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                    <div class=" d-flex align-items-justify">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold text-dkc"><?= _HEADTELEMETRY ?></h3>
-                        </div>
-                        <div class="col d-flex justify-content-end">
+                            <h3 class="bold text-dkc"><?= _HEADTELEMETRY . '&nbsp;' ?></h3>
+                            <img id="iconaInternet" src="img/offlineLight.png">
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row mt-1 ms-2 rounded shadow-sm py-2">
-                <div class="col mt-1">
-                    <table class="table table-light table-sm table-responsive table-hover text-break">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th><?= _TABLEDATATELEMETRY ?></th>
-                                <th class="text-end"><?= _TABLEVALUETELEMETRY ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><?= _TABLEPOWERMETERTELEMETRY ?></td>
-                                <td class="text-end" id="potenzacarichidomestici"> W</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEINSTANTPOWERTELEMETRY ?></td>
-                                <td class="text-end" id="potenzawallbox"> W</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLERPHASECURRENTRTELEMETRY ?></td>
-                                <td class="text-end" id="corrente"> A</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLESPHASECURRENTRTELEMETRY ?></td>
-                                <td class="text-end" id="corrente2"> A</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLETPHASECURRENTRTELEMETRY ?></td>
-                                <td class="text-end" id="corrente3"> A</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEVOLTAGETELEMETRY ?></td>
-                                <td class="text-end" id="tensione"> V</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEACTIVEUSERTELEMETRY ?></td>
-                                <td class="text-end" id="utenteattivo"></td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLECHARGINGTIMETELEMETRY ?></td>
-                                <td class="text-end" id="worktime"> hh:mm:ss</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLESUPPLIEDENERGYTELEMETRY ?></td>
-                                <td class="text-end" id="energiacicloricarica"> kWh</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLETEMPERATURETELEMETRY ?></td>
-                                <td class="text-end" id="temperatura"> °C</td>
-                            </tr>
-                            <tr>
-                                <td><?= _TABLEECHARGERSTATUSTELEMETRY ?></td>
-                                <td class="text-end" id="statowallbox"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="row justify-content-between py-2 ms-0">
+                <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
+                    <div class="icon-square flex-shrink-0 mt-1 me-3">
+                        <img src="img/ico_telemetria_grande.png">
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
+                    </div>
                 </div>
+                <div class="col d-flex justify-content-end h-50">
+                    <?php echo $response_toast; ?>
+                </div>
+            </div>
+
+
+
+
+            <form id="statoWbClasse" class="row py-3 ms-0 rounded-4 shadow mt-2 mb-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <input type="hidden" name="parameter" value="3000">
+                <div class="col-6 col-lg-5 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break">
+                    <div class="icon-square flex-shrink-0 mt-0 me-3">
+                        <img src="<?= $iconaTipo ?>">
+                    </div>
+                    <p class="mt-0 lh-sm"><span class="fwb-head">Stato:</span><br>
+                        <input type="hidden" value="bg1-0">
+                        <b class="fwb-text" id="statowallboxbottoni"></b>
+                    </p>
+                </div>
+                <div class="col-3 col-lg-3 me-0 align-items-center text-center">
+                    <div class="row d-flex align-items-center justify-content-end">
+                        <button id="startWbClasse" type="submit" name="response" value="0" class="btn text-decoration-none icon-disabled">
+                            <div class="col ms-1">
+                                <img class="float-start" id="startWbImg" src="img/startIconDisabled.png">
+                            </div>
+                            <div class="col text-start d-none d-lg-block">
+                                <h4 class="fw-bold mt-2 ps-5 ms-5"><?= _TABLE3000STARTCOMMANDS ?></h4>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3 col-lg-3 me-0 align-items-center text-center">
+                    <div class="row d-flex align-items-center justify-content-end">
+                        <button id="stopWbClasse" type="submit" name="response" value="2" class="btn text-decoration-none icon-disabled">
+                            <div class="col ms-1">
+                                <img class="float-start" id="stopWbImg" src="img/stopIconDisabled.png">
+                            </div>
+                            <div class="col text-start d-none d-lg-block">
+                                <h4 class="fw-bold mt-2 ps-5 ms-5"><?= _TABLE3000STOPCOMMANDS ?></h4>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+            <div class="row py-3 ms-0 rounded-4 shadow">
+                <div class="row">
+                    <div class="col mt-2 table-responsive ">
+                        <table class="table table-sm table-hover table-borderless">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th><?= _TABLEDATATELEMETRY ?></th>
+                                    <th class="text-end"><?= _TABLEVALUETELEMETRY ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><?= _TABLEPOWERMETERTELEMETRY ?></td>
+                                    <td class="text-end" id="potenzacarichidomestici"> W</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEINSTANTPOWERTELEMETRY ?></td>
+                                    <td class="text-end" id="potenzawallbox"> W</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLERPHASECURRENTRTELEMETRY ?></td>
+                                    <td class="text-end" id="corrente"> A</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLESPHASECURRENTRTELEMETRY ?></td>
+                                    <td class="text-end" id="corrente2"> A</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLETPHASECURRENTRTELEMETRY ?></td>
+                                    <td class="text-end" id="corrente3"> A</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEVOLTAGETELEMETRY ?></td>
+                                    <td class="text-end" id="tensione"> V</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEACTIVEUSERTELEMETRY ?></td>
+                                    <td class="text-end" id="utenteattivo"></td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLECHARGINGTIMETELEMETRY ?></td>
+                                    <td class="text-end" id="worktime"> hh:mm:ss</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLESUPPLIEDENERGYTELEMETRY ?></td>
+                                    <td class="text-end" id="energiacicloricarica"> kWh</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLETEMPERATURETELEMETRY ?></td>
+                                    <td class="text-end" id="temperatura"> °C</td>
+                                </tr>
+                                <tr>
+                                    <td><?= _TABLEECHARGERSTATUSTELEMETRY ?></td>
+                                    <td class="text-end" id="statowallbox"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
@@ -378,7 +494,7 @@ if ($auth == 0) {
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
 
-    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script type="text/javascript" language="javascript" charset="utf-8">
         function messageReceived(text, id, channel) {
@@ -423,16 +539,88 @@ if ($auth == 0) {
                     }
                     if (key == 'statowallbox' && obj[key] == 0) {
                         obj[key] = '<?= _ECHARGERSTATUSREADY ?>';
+                        var statoecharger = '<?= _ECHARGERSTATUSREADY ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-0";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("startWbImg").src = 'img/startIconDisabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("stopWbImg").src = 'img/stopIconDisabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSREADY ?>";
                     } else if (key == 'statowallbox' && obj[key] == 1) {
                         obj[key] = '<?= _ECHARGERSTATUSCONNECTED ?>';
+                        var statoecharger = '<?= _ECHARGERSTATUSCONNECTED ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-1";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none";
+                        document.getElementById("startWbImg").src = 'img/startIconEnabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("stopWbImg").src = 'img/stopIconDisabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSCONNECTED ?>";
                     } else if (key == 'statowallbox' && obj[key] == 2) {
                         obj[key] = '<?= _ECHARGERSTATUSCHARGING ?>';
+                        var statoecharger = '<?= _ECHARGERSTATUSCHARGING ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-2";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("startWbImg").src = 'img/startIconDisabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none";
+                        document.getElementById("stopWbImg").src = 'img/stopIconEnabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSCHARGING ?>";
                     } else if (key == 'statowallbox' && obj[key] == 3) {
                         obj[key] = '<?= _ECHARGERSTATUSLOCKED ?>';
+                        var statoecharger = '<?= _ECHARGERSTATUSLOCKED ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-3";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("startWbImg").src = 'img/startIconDisabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("stopWbImg").src = 'img/stopIconDisabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSLOCKED ?>";
                     } else if (key == 'statowallbox' && obj[key] == 4) {
                         obj[key] = '<?= _ECHARGERSTATUSERROR ?>';
-                    } else if (key == 'statowallbox' && obj[key] > 4) {
+                        var statoecharger = '<?= _ECHARGERSTATUSERROR ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-4";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("startWbImg").src = 'img/startIconDisabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("stopWbImg").src = 'img/stopIconDisabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSERROR ?>";
+                    } else if (key == 'statowallbox' && obj[key] == 5) {
+                        obj[key] = '<?= _ECHARGERSTATUSCONNECTED ?>';
+                        var statoecharger = '<?= _ECHARGERSTATUSCONNECTED ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-5";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none";
+                        document.getElementById("startWbImg").src = 'img/startIconEnabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("stopWbImg").src = 'img/stopIconDisabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSCONNECTED ?>";
+                    } else if (key == 'statowallbox' && obj[key] > 5) {
                         obj[key] = '<?= _ECHARGERSTATUSERROR ?>';
+                        var statoecharger = '<?= _ECHARGERSTATUSERROR ?>';
+                        $.post('set_type.php', {
+                            'echargerstato': statoecharger
+                        });
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-4";
+                        document.getElementById("startWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("startWbImg").src = 'img/startIconDisabled.png';
+                        document.getElementById("stopWbClasse").className = "btn text-decoration-none icon-disabled";
+                        document.getElementById("stopWbImg").src = 'img/stopIconDisabled.png';
+                        document.getElementById("statowallboxbottoni").innerHTML = "<?= _ECHARGERSTATUSERROR ?>";
                     };
                     var el = document.getElementById(key).innerHTML = obj[key];
                     if (el) {
@@ -457,6 +645,36 @@ if ($auth == 0) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         });
+        var URL = 'https://data.madein.it/ping';
+        var settings = {
+            cache: false,
+            dataType: "jsonp",
+            async: true,
+            crossDomain: true,
+            url: URL,
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            statusCode: {
+                200: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/onlineLight.png';
+                },
+                400: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+                0: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+            },
+        };
+        $.ajax(settings).done(function(response) {
+            //					console.log(response);
+        });
+        setTimeout(() => {
+            $('.toast').toast('hide');
+        }, 4000);
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

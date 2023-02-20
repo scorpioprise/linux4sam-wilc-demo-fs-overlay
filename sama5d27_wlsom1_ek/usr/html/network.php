@@ -14,10 +14,19 @@ if ($firstlogin == 1) {
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
+    $logo = 'logo_menu.png';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userruen') {
+    include "inc/l_ru.php";
+    $logo = 'logo_menu_dkc.png';
+} else if (trovaLingua() == 'userenru') {
+    include "inc/l_en-ru.php";
+    $logo = 'logo_menu_dkc.png';
 }
 if (isset($_POST['applyNetwork'])) {
     sleep(2);
@@ -80,7 +89,6 @@ if ($auth == 0) {
     $utente = 'installer';
 } else {
     $utente = 'user';
-    $configuration_menu = "";
 }
 ?>
 <!--# if expr="$internetenabled=false" -->
@@ -104,7 +112,7 @@ if ($auth == 0) {
 <body>
     <header class="navbar sticky-top bg-dkcenergy flex-md-nowrap p-0 shadow">
         <span class="navbar-brand col-md-3 col-lg-2 me-0 px-1">
-            <img src="img/logo_menu.png" width="164" height="50">
+            <img src="img/<?php echo $logo ?>" width="164" height="50">
         </span>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         </button>
@@ -143,7 +151,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
-                                <img src="img/ico_inverter.png" width="25px" class="me-3">
+                                <img src="img/ico_telemetria.png" width="25px" class="me-3">
                                 <?= _MENUTELEMETRY ?>
                             </a>
                         </div>
@@ -166,7 +174,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="transactions.php">
-                                <img src="img/ico_service.png" width="25px" class="me-3">
+                                <img src="img/ico_transazioni.png" width="25px" class="me-3">
                                 <?= _MENUTRANSACTIONS ?>
                             </a>
                         </div>
@@ -181,7 +189,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
-                                <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                                <img src="img/ico_comandi.png" width="25px" class="me-3">
                                 <?= _MENUCOMMANDS ?>
                             </a>
                         </div>
@@ -189,7 +197,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="configurations.php">
-                                <img src="img/ico_portale.png" width="25px" class="me-3">
+                                <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                                 <?= _MENUCONFIGURATIONS ?>
                             </a>
                         </div>
@@ -197,7 +205,7 @@ if ($auth == 0) {
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="errors.php">
-                                <img src="img/ico_error.png" width="25px" class="me-3">
+                                <img src="img/ico_errori.png" width="25px" class="me-3">
                                 <?= _MENUERRORS ?>
                             </a>
                         </div>
@@ -242,7 +250,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
-                            <img src="img/ico_inverter.png" width="25px" class="me-3">
+                            <img src="img/ico_telemetria.png" width="25px" class="me-3">
                             <?= _MENUTELEMETRY ?>
                         </a>
                     </h4>
@@ -276,7 +284,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="transactions.php">
-                            <img src="img/ico_service.png" width="25px" class="me-3">
+                            <img src="img/ico_transazioni.png" width="25px" class="me-3">
                             <?= _MENUTRANSACTIONS ?>
                         </a>
                     </h4>
@@ -302,7 +310,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="commands.php">
-                            <img src="img/ico_notifiche.png" width="25px" class="me-3">
+                            <img src="img/ico_comandi.png" width="25px" class="me-3">
                             <?= _MENUCOMMANDS ?>
                         </a>
                     </h4>
@@ -310,7 +318,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="configurations.php">
-                            <img src="img/ico_portale.png" width="25px" class="me-3">
+                            <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                             <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
@@ -318,7 +326,7 @@ if ($auth == 0) {
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="errors.php">
-                            <img src="img/ico_error.png" width="25px" class="me-3">
+                            <img src="img/ico_errori.png" width="25px" class="me-3">
                             <?= _MENUERRORS ?>
                         </a>
                     </h4>
@@ -336,118 +344,125 @@ if ($auth == 0) {
     </div>
     <div class="smartphone-padding d-none d-md-block"></div>
     <!-- ################################# FINE MENU MOBILE ################################################ -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-4">
-        <div class="container-fluid mt-1 ms-auto">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+        <div class="container-fluid">
             <!-- ################################# INIZIO PAGINA ################################################ -->
-            <div class="row ms-2">
-                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-0">
-                    <div class="d-flex align-items-start">
+            <div class="row">
+                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                    <div class="d-flex align-items-justify">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold text-dkc"><?= _HEADNETWORK ?></h3>
-                        </div>
-                        <div class="col d-flex justify-content-end">
+                            <h3 class="bold text-dkc"><?= _HEADNETWORK . '&nbsp;' ?></h3>
+                            <img id="iconaInternet" src="img/offlineLight.png">
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row py-2 ms-0">
+                <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
+                    <div class="icon-square flex-shrink-0 mt-1 me-3">
+                        <img src="img/ico_network_grande.png">
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
+                    </div>
+                </div>
+            </div>
             <!-- /////////////////////////////////////// PROVISIONING ////////////////////////////////////////////////////////// -->
-            <form name="network" id="network" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="row mt-1 ms-2 rounded shadow-sm py-2 bg-wifi">
-                    <div class="col-lg-4 mt-1">
-                        <h3><?= _PROVISIONINGWIFI ?></h3>
-                        <div class="mb-3">
-                            <label for="ssid" class="form-label"><?= _PROVISIONINGSSIDNAME ?></label>
-                            <input type="text" class="form-control" name="ssid" id="ssid" maxlength="32" value=<!--# echo var="ssid" default="" --> >
-                        </div>
-                        <div class="mb-3">
-                            <label for="pass" class="form-label"><?= _PROVISIONINGPASSWORD ?></label>
-                            <input type="password" class="form-control" name="pass" maxlength="64" value=<!--# echo var="pass" default="" --> >
-                        </div>
-                        <div class="form-check mb-3">
-                            <input type="checkbox" name="wifidhcp" id="wifidhcp" class="wifidhcp form-check-input" maxlength="64" onchange="wifidhcp_checked()" <!--# echo var="wifidhcp" -->>
-                            <label class="form-check-label" for="wifidhcp"><?= _PROVISIONINGWIFIDHCP ?></label>
-                        </div>
-                        <div class="wifistatic_ip mb-3">
+            <div class="row py-3 ms-0 rounded-4 shadow">
+                <form name="network" id="network" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <div class="row ms-0 me-1">
+                        <div class="col-lg-4 mt-1 rounded-4 bg-wifi py-3">
+                            <h3 class="fw-bold"><?= _PROVISIONINGWIFI ?></h3>
                             <div class="mb-3">
-                                <label for="wifiipaddress" class="form-label"><?= _PROVISIONINGWIFISTATICIP ?></label>
-                                <input type="text" class="form-control" name="wifiipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifiipaddress" default="" --> >
+                                <label for="ssid" class="form-label"><?= _PROVISIONINGSSIDNAME ?></label>
+                                <input type="text" class="form-control form-control-sm" name="ssid" id="ssid" maxlength="32" value=<!--# echo var="ssid" default="" --> >
                             </div>
                             <div class="mb-3">
-                                <label for="wifinetmask" class="form-label"><?= _PROVISIONINGWIFINETMASK ?></label>
-                                <input type="text" class="form-control" name="wifinetmask" maxlength="64" pattern="^(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))$" value=<!--# echo var="wifinetmask" default="" --> >
+                                <label for="pass" class="form-label"><?= _PROVISIONINGPASSWORD ?></label>
+                                <input type="password" class="form-control form-control-sm" name="pass" maxlength="64" value=<!--# echo var="pass" default="" --> >
                             </div>
-                            <div class="mb-3">
-                                <label for="wifigateway" class="form-label"><?= _PROVISIONINGWIFIGATEWAY ?></label>
-                                <input type="text" class="form-control" name="wifigateway" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifigateway" default="" --> >
+                            <div class="form-check mb-3">
+                                <input type="checkbox" name="wifidhcp" id="wifidhcp" class="wifidhcp form-check-input" maxlength="64" onchange="wifidhcp_checked()" <!--# echo var="wifidhcp" -->>
+                                <label class="form-check-label" for="wifidhcp"><?= _PROVISIONINGWIFIDHCP ?></label>
                             </div>
-                            <div class="mb-3">
-                                <label for="wifidns" class="form-label"><?= _PROVISIONINGWIFIDNS ?></label>
-                                <input type="text" class="form-control" name="wifidns" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifidns" default="" --> >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="my-2">
-                <div class="row mt-1 ms-2 rounded shadow-sm py-2 bg-lan">
-                    <div class="col-lg-4 mt-1">
-                        <h3><?= _PROVISIONINGNETWORK ?></h3>
-                        <div class="form-check mb-3">
-                            <input type="checkbox" name="dhcp" id="dhcp" class="dhcp form-check-input" maxlength="64" onchange="dhcp_checked()" <!--# echo var="dhcp" -->>
-                            <label class="form-check-label" for="dhcp"><?= _PROVISIONINGNETWORKDHCP ?></label>
-                        </div>
-                        <div class="static_ip mb-3">
-                            <div class="mb-3">
-                                <label for="ipaddress" class="form-label"><?= _PROVISIONINGNETWORKSTATICIP ?></label>
-                                <input type="text" class="form-control" name="ipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="ipaddress" default="" --> >
-                            </div>
-                            <div class="mb-3">
-                                <label for="netmask" class="form-label"><?= _PROVISIONINGNETWORKNETMASK ?></label>
-                                <input type="text" class="form-control" name="netmask" maxlength="64" value=<!--# echo var="netmask" default="" --> >
-                            </div>
-                            <div class="mb-3">
-                                <label for="gateway" class="form-label"><?= _PROVISIONINGNETWORKGATEWAY ?></label>
-                                <input type="text" class="form-control" name="gateway" maxlength="64" value=<!--# echo var="gateway" default="" --> >
-                            </div>
-                            <div class="mb-3">
-                                <label for="dns" class="form-label"><?= _PROVISIONINGNETWORKDNS ?></label>
-                                <input type="text" class="form-control" name="dns" maxlength="64" value=<!--# echo var="dns" default="" --> >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="my-2">
-                <div class="row mt-1 ms-2 py-2">
-                    <div class="col-lg-4 mt-1">
-                        <button class="w-100 btn btn-lg btn-primary my-2" type="submit" name="applyNetwork" id="applyNetwork" value="apply" onclick="checkOne(this.id)"><?= _PROVISIONINGAPPLY ?></button>
-                    </div>
-                </div>
-                <!-- ############################################## CONTINUE WITHOUT NETWORK ############################################## -->
-                <hr class="my-2">
-                <div class="row mt-1 ms-2 py-2">
-                    <div class="col-lg-4 mt-1">
-                        <button class="w-100 btn btn-lg btn-danger my-2" type="button" data-bs-toggle="modal" data-bs-target="#withoutNetwork">
-                            <?= _PROVISIONINGNONETWORK ?>
-                        </button>
-                    </div>
-                    <div class="modal fade" id="withoutNetwork" tabindex="-1" aria-labelledby="withoutNetworkLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="withoutNetworkLabel"><?= _MODALNETWORK ?></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="wifistatic_ip mb-3">
+                                <div class="mb-3">
+                                    <label for="wifiipaddress" class="form-label"><?= _PROVISIONINGWIFISTATICIP ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="wifiipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifiipaddress" default="" --> >
                                 </div>
-                                <div class="modal-body"><?= _MODALWARNING ?></div>
-                                <h6 class="modal-body text-center text-danger"><b><?= _MODALMESSAGEROW1 ?><br><br><?= _MODALMESSAGEROW2 ?><b></h6>
-                                <div class="modal-footer btn-group">
-                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><?= _MODALNO ?></button>
-                                    <button class="btn btn-danger" type="submit" name="applyNoNetwork" id="applyNoNetwork" value="apply"><?= _MODALYES ?></button>
+                                <div class="mb-3">
+                                    <label for="wifinetmask" class="form-label"><?= _PROVISIONINGWIFINETMASK ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="wifinetmask" maxlength="64" pattern="^(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))$" value=<!--# echo var="wifinetmask" default="" --> >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="wifigateway" class="form-label"><?= _PROVISIONINGWIFIGATEWAY ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="wifigateway" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifigateway" default="" --> >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="wifidns" class="form-label"><?= _PROVISIONINGWIFIDNS ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="wifidns" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="wifidns" default="" --> >
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="row ms-0 mt-3 me-1">
+                        <div class="col-lg-4 mt-1 rounded-4 bg-lan py-3">
+                            <h3 class="fw-bold"><?= _PROVISIONINGNETWORK ?></h3>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" name="dhcp" id="dhcp" class="dhcp form-check-input" maxlength="64" onchange="dhcp_checked()" <!--# echo var="dhcp" -->>
+                                <label class="form-check-label" for="dhcp"><?= _PROVISIONINGNETWORKDHCP ?></label>
+                            </div>
+                            <div class="static_ip mb-3">
+                                <div class="mb-3">
+                                    <label for="ipaddress" class="form-label"><?= _PROVISIONINGNETWORKSTATICIP ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="ipaddress" maxlength="64" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value=<!--# echo var="ipaddress" default="" --> >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="netmask" class="form-label"><?= _PROVISIONINGNETWORKNETMASK ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="netmask" maxlength="64" value=<!--# echo var="netmask" default="" --> >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="gateway" class="form-label"><?= _PROVISIONINGNETWORKGATEWAY ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="gateway" maxlength="64" value=<!--# echo var="gateway" default="" --> >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dns" class="form-label"><?= _PROVISIONINGNETWORKDNS ?></label>
+                                    <input type="text" class="form-control form-control-sm" name="dns" maxlength="64" value=<!--# echo var="dns" default="" --> >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4 me-1">
+                        <div class="col-lg-4">
+                            <button class="btn btn-custom rounded-5 w-100" type="submit" name="applyNetwork" id="applyNetwork" value="apply" onclick="checkOne(this.id)"><?= _PROVISIONINGAPPLY ?></button>
+                        </div>
+                        <button class="w-100 btn btn-primary d-none"></button>
+                    </div>
+                    <!-- ############################################## CONTINUE WITHOUT NETWORK ############################################## -->
+                    <div class="row mt-4 me-1">
+                        <div class="col-lg-4">
+                            <button class="btn btn-custom-rosso rounded-5 w-100" type="button" data-bs-toggle="modal" data-bs-target="#withoutNetwork"><?= _PROVISIONINGNONETWORK ?></button>
+                        </div>
+                        <div class="modal fade" id="withoutNetwork" tabindex="-1" aria-labelledby="withoutNetworkLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="withoutNetworkLabel"><?= _MODALNETWORK ?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body"><?= _MODALWARNING ?></div>
+                                    <h6 class="modal-body text-center text-danger"><b><?= _MODALMESSAGEROW1 ?><br><br><?= _MODALMESSAGEROW2 ?></b></h6>
+                                    <div class="modal-footer btn-group">
+                                        <button class="btn btn-custom-grigio" type="button" data-bs-dismiss="modal"><?= _MODALNO ?></button>
+                                        <button class="btn btn-custom-rosso" type="submit" name="applyNoNetwork" id="applyNoNetwork" value="apply"><?= _MODALYES ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <!-- ################################# MODALE PER MISSING DETAILS ################################################ -->
             <div class="modal fade" id="missingDetails" tabindex="-1" aria-labelledby="missingDetails" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -458,7 +473,7 @@ if ($auth == 0) {
                         </div>
                         <div class="modal-body"><?= _MODALMISSINGDATAMESSAGE ?></div>
                         <div class="modal-footer btn-group">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= _MENUCLOSE ?></button>
+                            <button type="button" class="btn btn-custom-grigio" data-bs-dismiss="modal"><?= _MENUCLOSE ?></button>
                         </div>
                     </div>
                 </div>
@@ -483,7 +498,7 @@ if ($auth == 0) {
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script type="text/javascript" language="javascript" charset="utf-8">
         //############################################## PUSHSTREAM ##############################################
@@ -559,6 +574,36 @@ if ($auth == 0) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         });
+        var URL = 'https://data.madein.it/ping';
+        var settings = {
+            cache: false,
+            dataType: "jsonp",
+            async: true,
+            crossDomain: true,
+            url: URL,
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            statusCode: {
+                200: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/onlineLight.png';
+                },
+                400: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+                0: function(response) {
+                    document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                },
+            },
+        };
+        $.ajax(settings).done(function(response) {
+            //					console.log(response);
+        });
+        setTimeout(() => {
+            $('.toast').toast('hide');
+        }, 4000);
     </script>
 </body>
 
