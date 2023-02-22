@@ -8,6 +8,37 @@ $id = $_SESSION["id"];
 $auth = $_SESSION["auth"];
 $firstlogin = $_SESSION["firstlogin"];
 $statoecharger = $_SESSION["echargerstato"];
+$tipoecharger = $_SESSION["echargertipo"];
+switch ($tipoecharger) {
+    case '0':
+    case '2':
+    case '4':
+    case '6':
+    case '8':
+    case '10':
+    case '12':
+    case '14':
+        $fase = '1';
+        $min = 1700;
+        $max = 7400;
+        break;
+    case '1':
+    case '3':
+    case '5':
+    case '7':
+    case '9':
+    case '11':
+    case '13':
+    case '15':
+        $fase = '3';
+        $min = 5100;
+        $max = 22000;
+        break;
+    default:
+        $fase = '0';
+        $min = 1700;
+        $max = 7400;
+}
 if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
@@ -17,18 +48,23 @@ include_once "loader.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'en';
 }
 if (isset($_POST['response'])) {
     $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
@@ -140,7 +176,7 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLECOMMANDS ?></title>
@@ -457,7 +493,7 @@ if ($auth == 0) {
                                         <form class="row g-3 me-1" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                             <div class="col-8 col-sm-6">
                                                 <input type="hidden" name="parameter" value="3003">
-                                                <input class="form-control form-control-sm" type="number" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="">
+                                                <input class="form-control form-control-sm" type="number" min="<?php echo $min ?>" max="<?php echo $max ?>" step="100" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="">
                                             </div>
                                             <div class="col-4 col-sm-6"><button type="submit" name="response" class="btn btn-custom-grigio-mini btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16">
                                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
@@ -548,9 +584,7 @@ if ($auth == 0) {
                                                 <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path>
                                             </svg><span class="d-none d-lg-block"><?= _TABLEHELPCOMMANDS ?></span></button></td>
                                 </tr>
-
                                 <?php echo $commands_menu; ?>
-
                                 <tr>
                                     <td><?= _TABLE3012COMMANDS ?></td>
                                     <td></td>
@@ -562,7 +596,7 @@ if ($auth == 0) {
                                                 <p style="min-width:200px;"></p>
                                             </div>
                                             <div class="col-4 col-sm-6">
-                                                <button class="btn btn-custom-grigio-mini btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#softwareUpdate"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                <button class="btn btn-custom-grigio-mini btn-sm" id="aggiornamentoSw" type="button" data-bs-toggle="modal" data-bs-target="#softwareUpdate"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="d-block d-lg-none bi bi-check-circle-fill" viewBox="0 0 16 16">
                                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
                                                     </svg><span class="d-none d-lg-block"><?= _TABLEAPPLYCOMMANDS ?></span></button>
                                             </div>
@@ -650,7 +684,6 @@ if ($auth == 0) {
                 </div>
             </div>
         </div>
-
     </main>
     <!-- ################################# INIZIO MENU FOOTER MOBILE ################################################ -->
     <footer class="footer d-md-none">
@@ -669,7 +702,6 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.min.js"></script>
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script>
@@ -694,12 +726,15 @@ if ($auth == 0) {
             statusCode: {
                 200: function(response) {
                     document.getElementById("iconaInternet").src = 'img/onlineLight.png';
+                    document.getElementById("aggiornamentoSw").className = "btn btn-custom-grigio-mini btn-sm";
                 },
                 400: function(response) {
                     document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                    document.getElementById("aggiornamentoSw").className = "btn btn-custom-grigio-mini btn-sm disabled";
                 },
                 0: function(response) {
                     document.getElementById("iconaInternet").src = 'img/offlineLight.png';
+                    document.getElementById("aggiornamentoSw").className = "btn btn-custom-grigio-mini btn-sm disabled";
                 },
             },
         };

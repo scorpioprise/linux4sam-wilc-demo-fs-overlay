@@ -45,18 +45,23 @@ include_once "loader.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'en';
 }
 if (isset($_POST['response'])) {
     $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['response']);
@@ -88,13 +93,38 @@ if ($auth == 0) {
 } else {
     $utente = 'user';
 }
+##################### QUERY SQL CARTE #####################
+$jsonDataH    = '[ {';
+$jsonDataB    = '';
+$jsonDataF    = '} ]';
+$link   = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT, DB_SOCKET);
+$sql = "SELECT `card_no`, `name` FROM cards";
+if ($stmt = mysqli_prepare($link, $sql)) {
+    if (mysqli_stmt_execute($stmt)) {
+        $result = $stmt->get_result();
+        $nrows = 0;
+        while ($row = $result->fetch_assoc()) {
+            $nrows++;
+            $jsonDataB .= "numero:'" . $row["card_no"] . "',nome:'" . $row["name"] . "'},{";
+        }
+        if ($nrows == 0) {
+            echo "Missing parameter.";
+        }
+    } else {
+        echo "Something went wrong. Please try again later.";
+    }
+    mysqli_stmt_close($stmt);
+}
+mysqli_close($link);
+$jsonDataB = rtrim($jsonDataB, '{,}');
+$json      = $jsonDataH . $jsonDataB . $jsonDataF;
 ?>
 <!--# if expr="$internetenabled=false" -->
 <!--# include file="session.php" -->
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLETELEMETRY ?></title>
@@ -369,10 +399,6 @@ if ($auth == 0) {
                     <?php echo $response_toast; ?>
                 </div>
             </div>
-
-
-
-
             <form id="statoWbClasse" class="row py-3 ms-0 rounded-4 shadow mt-2 mb-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <input type="hidden" name="parameter" value="3000">
                 <div class="col-6 col-lg-5 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break">
@@ -409,10 +435,6 @@ if ($auth == 0) {
                     </div>
                 </div>
             </form>
-
-
-
-
             <div class="row py-3 ms-0 rounded-4 shadow">
                 <div class="row">
                     <div class="col mt-2 table-responsive ">
@@ -493,11 +515,11 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.min.js"></script>
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script type="text/javascript" language="javascript" charset="utf-8">
         function messageReceived(text, id, channel) {
+            const phpArray = <?php echo $json; ?>;
             if (channel == 'map1') {
                 const obj = JSON.parse(text);
                 for (var key of Object.keys(obj)) {
@@ -524,6 +546,14 @@ if ($auth == 0) {
                     if (key == 'tensione') {
                         const tensionewb = obj[key].toFixed();
                         obj[key] = tensionewb + ' V';
+                    }
+                    if (key == 'utenteattivo') {
+                        const utentewb = obj[key];
+                        for (var i = 0; i < phpArray.length; i++) {
+                            if (phpArray[i].numero == utentewb) {
+                                obj[key] = phpArray[i].nome;
+                            } else obj[key] = '<?= _TABLEACTIVEUSERTELEMETRYNOBODY ?>';
+                        }
                     }
                     if (key == 'worktime') {
                         const tempolavoro = new Date(obj[key] * 1000).toISOString().slice(11, 19);
@@ -567,7 +597,7 @@ if ($auth == 0) {
                         $.post('set_type.php', {
                             'echargerstato': statoecharger
                         });
-                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 shadow mt-2 mb-3 bg1-2";
+                        document.getElementById("statoWbClasse").className = "row py-3 ms-0 rounded-4 mt-2 mb-3 bg1-2";
                         document.getElementById("startWbClasse").className = "btn text-decoration-none icon-disabled";
                         document.getElementById("startWbImg").src = 'img/startIconDisabled.png';
                         document.getElementById("stopWbClasse").className = "btn text-decoration-none";

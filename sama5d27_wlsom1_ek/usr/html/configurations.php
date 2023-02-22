@@ -19,32 +19,41 @@ if (isset($_POST['response'])) {
     if ($_REQUEST['valore'] == 'it_IT') {
         include "inc/config.php";
         include "inc/l_it.php";
+        $lang = 'it';
     } else if ($_REQUEST['valore'] == 'en_EN') {
         include "inc/config.php";
         include "inc/l_en.php";
+        $lang = 'en';
     } else if ($_REQUEST['valore'] == 'user_RU-EN') {
         include "inc/config.php";
         include "inc/l_ru.php";
+        $lang = 'ru';
     } else if ($_REQUEST['valore'] == 'user_EN-RU') {
         include "inc/config.php";
         include "inc/l_en-ru.php";
+        $lang = 'en';
     }
     require_once "inc/config.php";
     if (trovaLingua() == 'it') {
         include "inc/l_it.php";
         $logo = 'logo_menu.png';
+        $lang = 'it';
     } else if (trovaLingua() == 'en') {
         include "inc/l_en.php";
         $logo = 'logo_menu.png';
+        $lang = 'en';
     } else if (trovaLingua() == 'ru') {
         include "inc/l_ru.php";
         $logo = 'logo_menu_dkc.png';
+        $lang = 'ru';
     } else if (trovaLingua() == 'userruen') {
         include "inc/l_ru.php";
         $logo = 'logo_menu_dkc.png';
+        $lang = 'ru';
     } else if (trovaLingua() == 'userenru') {
         include "inc/l_en-ru.php";
         $logo = 'logo_menu_dkc.png';
+        $lang = 'en';
     }
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
@@ -67,18 +76,23 @@ require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'en';
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -97,7 +111,7 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLECONFIGURATIONS ?></title>
@@ -396,9 +410,9 @@ if ($auth == 0) {
                                             </thead>
                                             <tbody>";
                                         }
-                                        if ($row['value'] == 'True') {
+                                        if ($row['value'] == 'True' || $row['value'] == 'true') {
                                             $formvalore = _ENABLED;
-                                        } else if ($row['value'] == 'False') {
+                                        } else if ($row['value'] == 'False' || $row['value'] == 'false') {
                                             $formvalore = _DISABLED;
                                         } else $formvalore = $row['value'];
                                         if ($row['tipo'] == 'bool') {
@@ -412,9 +426,9 @@ if ($auth == 0) {
                                         } elseif ($row['tipo'] == 'uint8_t') {
                                             $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' max= '255' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint16_t') {
-                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' max= '65535' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '100' min= '0' max= '65535' placeholder='' name='valore' required>";
                                         } elseif ($row['tipo'] == 'uint32_t') {
-                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1' min= '0' max= '4294967295' placeholder='' name='valore' required>";
+                                            $formtipo = "<input class='form-control form-control-sm' type='number' step= '1000' min= '0' max= '4294967295' placeholder='' name='valore' required>";
                                         } else {
                                             $formtipo = "<div>Missing parameter</div>";
                                         }
@@ -440,7 +454,9 @@ if ($auth == 0) {
                                             continue;
                                         } else if ($row['name'] == 'activation_timestamp') {
                                             $formnome = _TABLECONF8;
-                                            $type = 'asdfasdfasd';
+                                            if (empty($formvalore)) {
+                                                $formvalore = 1672531200;
+                                            }
                                             $dt = new DateTime("@$formvalore");
                                             $formvalore = ($dt->format('Y-m-d H:i:s'));
                                             $formtipo = "<input class='form-control form-control-sm' type='datetime-local' name='valore' required>";
@@ -598,7 +614,6 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {

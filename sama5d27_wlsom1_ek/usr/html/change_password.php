@@ -14,18 +14,23 @@ require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'dkcenergyportal.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'dkcenergyportal.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'dkc.png';
+    $lang = 'en';
 }
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
@@ -71,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLECHANGEPASSWORD ?></title>

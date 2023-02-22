@@ -19,7 +19,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_it.php";
-    goto changeLanguage;
+    $lang = 'it';
 } else if (isset($_POST['linguaEn'])) {
     $sql = "UPDATE `configuration` SET `value` = 'en_EN' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -35,7 +35,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_en.php";
-    goto changeLanguage;
+    $lang = 'en';
 } else if (isset($_POST['linguaRu'])) {
     $sql = "UPDATE `configuration` SET `value` = 'ru_RU' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -51,6 +51,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_ru.php";
+    $lang = 'ru';
 } else if (isset($_POST['linguaRuEn'])) {
     $sql = "UPDATE `configuration` SET `value` = 'user_RU-EN' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -66,6 +67,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_ru.php";
+    $lang = 'ru';
 } else if (isset($_POST['linguaEnRu'])) {
     $sql = "UPDATE `configuration` SET `value` = 'user_EN-RU' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -81,29 +83,34 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_en-ru.php";
+    $lang = 'en';
 }
-changeLanguage:
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $mostra_lingua = '<button class="btn text-white" name="linguaIt" type="submit">IT</button><div class="vr"></div><button class="btn text-white" name="linguaEn" type="submit">EN</button>';
     $logo = 'dkcenergyportal.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $mostra_lingua = '<button class="btn text-white" name="linguaIt" type="submit">IT</button><div class="vr"></div><button class="btn text-white" name="linguaEn" type="submit">EN</button>';
     $logo = 'dkcenergyportal.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $mostra_lingua = '<button class="btn text-white" name="linguaRuEn" type="submit">RU</button><div class="vr"></div><button class="btn text-white" name="linguaEnRu" type="submit">EN</button>';
     $logo = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $mostra_lingua = '<button class="btn text-white" name="linguaRuEn" type="submit">RU</button><div class="vr"></div><button class="btn text-white" name="linguaEnRu" type="submit">EN</button>';
     $logo = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $mostra_lingua = '<button class="btn text-white" name="linguaRuEn" type="submit">RU</button><div class="vr"></div><button class="btn text-white" name="linguaEnRu" type="submit">EN</button>';
     $logo = 'dkc.png';
+    $lang = 'en';
 }
 $username = $password = "";
 $username_err = $password_err = "";
@@ -158,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLELOGIN ?></title>
@@ -182,7 +189,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
         </div>
         <div class="row justify-content-center mb-2">
-
             <form class="form-signin" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <img class="img-fluid" src="img/<?php echo $logo ?>">
                 <h1 class="h3 my-3 fw-normal text-dkc"><?= _HEADLOGIN ?></h1>

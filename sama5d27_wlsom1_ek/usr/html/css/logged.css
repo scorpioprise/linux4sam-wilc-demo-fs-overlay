@@ -265,13 +265,43 @@ a:link {
 
 .bg1-2 {
     /*charging #EB8242*/
+    /*    box-shadow: 0 .6rem 1rem #0084ffb4 !important; */
+    animation: pulse 2s infinite;
+}
 
-    box-shadow: 0 .6rem 1rem #0084ffb4 !important;
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 .6rem 1rem #0084ff;
+    }
+
+    70% {
+        -webkit-box-shadow: 0 .9rem 1.2rem #0084ff67;
+    }
+
+    100% {
+        -webkit-box-shadow: 0 .6rem 1rem #0084ff;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 .6rem 1rem #0084ff;
+        box-shadow: 0 .6rem 1rem #0084ff;
+    }
+
+    70% {
+        -moz-box-shadow: 0 .9rem 1.2rem #0084ff67;
+        box-shadow: 0 .9rem 1.2rem #0084ff67;
+    }
+
+    100% {
+        -moz-box-shadow: 0 .6rem 1rem #0084ff;
+        box-shadow: 0 .6rem 1rem #0084ff;
+    }
 }
 
 .bg1-3 {
     /*locked #FFABE1*/
-
     box-shadow: 0 .6rem 1rem #fdba0080 !important;
 }
 

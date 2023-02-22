@@ -15,18 +15,46 @@ require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'en';
+}
+##################### DATI IN CLOUD #####################
+if (isset($_POST['refresh'])) {
+    $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
+    if ($response == 'RESPONSE_MESSAGE_FAILED') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_OK') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'SKIP SERIAL') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDNOUPDATE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    } else {
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
+        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+    }
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -44,7 +72,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLESYSTEM ?></title>
@@ -304,12 +332,13 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
                             <h3 class="bold text-dkc"><?= _HEAD . '&nbsp;' ?></h3>
                             <img id="iconaInternet" src="img/offlineLight.png">
                         </div>
+                        <div class="col d-flex justify-content-end align-items-start mt-0">
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- /////////////////////////////////////// INFO ////////////////////////////////////////////////////////// -->
-
-            <div class="row py-2 ms-0">
+            <div class="row pt-2 ms-0">
                 <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
                     <div class="icon-square flex-shrink-0 mt-1 me-3">
                         <img id="iconaTipo" src="img/ico_wb_nodata.png">
@@ -317,6 +346,22 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
                     <div>
                         <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
                     </div>
+                </div>
+                <div class="col d-flex justify-content-end h-50">
+                    <?php echo $response_toast; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex justify-content-end align-items-end">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <div class="d-flex flex-nowrap text-nowrap">
+                            <input type="hidden" name="parameter" value="3013">
+                            <input class="form-control form-control-sm" type="hidden" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
+                            <button class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _TABLEUPDATECONFIGURATIONS ?>" type="submit" name="refresh">
+                                <img src="img/ico_tr_refresh.png">
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="row py-3 ms-0 rounded-4 shadow">
@@ -335,7 +380,14 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
                                     <td class="text-end" id="echargerdate">
                                         <script>
                                             var dataServer = new Date('<!--#  echo var="timestamp" -->' * 1000);
-                                            document.getElementById("echargerdate").innerHTML = dataServer.toISOString();
+                                            var showData =
+                                                dataServer.getFullYear() + "-" +
+                                                ("00" + (dataServer.getMonth() + 1)).slice(-2) + "-" +
+                                                ("00" + dataServer.getDate()).slice(-2) + " " +
+                                                ("00" + (dataServer.getHours())).slice(-2) + ":" +
+                                                ("00" + dataServer.getMinutes()).slice(-2) + ":" +
+                                                ("00" + dataServer.getSeconds()).slice(-2);
+                                            document.getElementById("echargerdate").innerHTML = showData;
                                         </script>
                                     </td>
                                 </tr>
@@ -512,7 +564,6 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
     <!-- ################################# INIZIO MENU FOOTER MOBILE ################################################ -->
@@ -532,7 +583,6 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -571,6 +621,9 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
         $.post('set_type.php', {
             'echargertipo': tipologia
         });
+        setTimeout(() => {
+            $('.toast').toast('hide');
+        }, 4000);
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

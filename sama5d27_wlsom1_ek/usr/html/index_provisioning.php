@@ -14,6 +14,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_it.php";
+    $lang = 'it';
 } else if (isset($_POST['linguaEn'])) {
     $sql = "UPDATE `configuration` SET `value` = 'en_EN' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -29,6 +30,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_en.php";
+    $lang = 'en';
 } else if (isset($_POST['linguaRu'])) {
     $sql = "UPDATE `configuration` SET `value` = 'ru_RU' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -44,6 +46,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_ru.php";
+    $lang = 'ru';
 } else if (isset($_POST['linguaRuEn'])) {
     $sql = "UPDATE `configuration` SET `value` = 'user_RU-EN' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -59,6 +62,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_ru.php";
+    $lang = 'ru';
 } else if (isset($_POST['linguaEnRu'])) {
     $sql = "UPDATE `configuration` SET `value` = 'user_EN-RU' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -74,6 +78,7 @@ if (isset($_POST['linguaIt'])) {
         mysqli_stmt_close($stmt);
     }
     include "inc/l_en-ru.php";
+    $lang = 'en';
 }
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
@@ -81,35 +86,42 @@ if (trovaLingua() == 'it') {
     $mostra_lingua = '<button class="btn" name="linguaIt" type="submit">IT</button><div class="vr"></div><button class="btn" name="linguaEn" type="submit">EN</button>';
     $logo = 'logo_menu.png';
     $logocontinue = 'dkcenergyportal.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $mostra_lingua = '<button class="btn" name="linguaIt" type="submit">IT</button><div class="vr"></div><button class="btn" name="linguaEn" type="submit">EN</button>';
     $logo = 'logo_menu.png';
     $logocontinue = 'dkcenergyportal.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $mostra_lingua = '<button class="btn" name="linguaRuEn" type="submit">RU</button><div class="vr"></div><button class="btn" name="linguaEnRu" type="submit">EN</button>';
     $logo = 'logo_menu_dkc.png';
     $logocontinue = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $mostra_lingua = '<button class="btn" name="linguaRuEn" type="submit">RU</button><div class="vr"></div><button class="btn" name="linguaEnRu" type="submit">EN</button>';
     $logo = 'logo_menu_dkc.png';
     $logocontinue = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $mostra_lingua = '<button class="btn" name="linguaRuEn" type="submit">RU</button><div class="vr"></div><button class="btn" name="linguaEnRu" type="submit">EN</button>';
     $logo = 'logo_menu_dkc.png';
     $logocontinue = 'dkc.png';
+    $lang = 'en';
 }
 if (isset($_POST['applyNetwork'])) {
+    sleep(1);
     $args = '';
     foreach ($_POST as $k => $v) $args = $args . " $k='$v'";
     echo "<!DOCTYPE html><html lang='it'><head><title>" . _TITLENETWORKREBOOT . "</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
 <link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/logged.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
 <link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white bg-dkcenergy'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
-<img src='img/". $logocontinue ."'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
+<img src='img/" . $logocontinue . "'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
 <p class='mt-5'>" . _NETWORKREBOOTINGMESSAGE2 . "</p><p class='text-dkc'>" . _NETWORKREBOOTINGMESSAGE3 . "</p></div></div></div></body></html>";
+    sleep(1);
     $response = exec('issue_command 9008' . $args);
     die;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
@@ -133,11 +145,13 @@ if (isset($_POST['applyNetwork'])) {
     }
 }
 if (isset($_POST['applyNoNetwork'])) {
+    sleep(1);
     echo "<!DOCTYPE html><html lang='it'><head><title>" . _TITLENETWORKREBOOT . "</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
 		<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/logged.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
 		<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white bg-dkcenergy'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
-		<img src='img/". $logocontinue ."'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
+		<img src='img/" . $logocontinue . "'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
 		<p class='mt-5'>" . _NETWORKREBOOTINGMESSAGE4 . "</p><p class='text-muted'>" . _NETWORKREBOOTINGMESSAGE5 . "</p></div></div></div></body></html>";
+    sleep(1);
     $response = exec("issue_command 9008 ssid='' pass='' wifidhcp='' wifiipaddress='' wifinetmask='' wifigateway='' wifidns='' dhcp='' ipaddress='' netmask='' gateway='' dns='' applyNoNetwork='apply'");
     die;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
@@ -166,7 +180,7 @@ if (isset($_POST['applyNoNetwork'])) {
 <!--# include file="login.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLENETWORK ?></title>
@@ -202,7 +216,6 @@ if (isset($_POST['applyNoNetwork'])) {
                 </form>
             </div>
         </div>
-
         <form name="network" id="network" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="row ms-0 me-1">
                 <div class="col-md-6 mt-3 rounded-4 bg-wifi py-4">
@@ -283,7 +296,6 @@ if (isset($_POST['applyNoNetwork'])) {
                     </div>
                 </div>
             </div>
-
             <div class="row mt-4 me-3">
                 <div class="col-md-6">
                     <button class="btn btn-custom rounded-5 w-100" type="submit" name="applyNetwork" id="applyNetwork" value="apply" onclick="checkOne(this.id)"><?= _PROVISIONINGAPPLY ?></button>

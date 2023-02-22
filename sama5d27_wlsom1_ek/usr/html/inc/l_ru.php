@@ -82,6 +82,7 @@ define("_TABLESPHASECURRENTRTELEMETRY", "ТОК ФАЗЫ S");
 define("_TABLETPHASECURRENTRTELEMETRY", "ТОК ФАЗЫ T");
 define("_TABLEVOLTAGETELEMETRY", "НАПРЯЖЕНИЕ");
 define("_TABLEACTIVEUSERTELEMETRY", "АКТИВНЫЙ ПОЛЬЗОВАТЕЛЬ");
+define("_TABLEACTIVEUSERTELEMETRYNOBODY", "НИКТО");
 define("_TABLECHARGINGTIMETELEMETRY", "ВРЕМЯ ЗАРЯДКИ");
 define("_TABLESUPPLIEDENERGYTELEMETRY", "ПОДОВАЕМАЯ ЭНЕРГИЯ");
 define("_TABLETEMPERATURETELEMETRY", "ТЕМПЕРАТУРА");
@@ -185,7 +186,7 @@ define("_HELPFIXEDPOWERCOMMANDS", "Установите режим фиксир�
 define("_HELPRFIDREADERCOMMANDS", "ВКЛЮЧИТЬ / ВЫКЛЮЧИТЬ считыватель rfid-карт");
 define("_HELPOCPPCOMMANDS", "ВКЛЮЧИТЬ / ВЫКЛЮЧИТЬ OCPP");
 define("_HELPMODBUSCOMMANDS", "ВКЛЮЧИТЬ / ВЫКЛЮЧИТЬ MODBUS");
-define("_HELPSWUPDATECOMMANDS", "Обновить ПО EOS Charge");
+define("_HELPSWUPDATECOMMANDS", "Обновить ПО EOS Charge (ТРЕБУЕТСЯ ПОДКЛЮЧЕНИЕ К ИНТЕРНЕТУ");
 define("_HELPSENDCLOUDCOMMANDS", "Обновить облако информацией об EOS Charge ВРУЧНУЮ");
 define("_HELPERRORCOMMANDS", "Восстановить статус EOS Charge");
 define("_HELPREBOOT", "REBOOT = Перезагрузить EOS Charge | SOFT-RESTART = Перезагрузите только основные службы");

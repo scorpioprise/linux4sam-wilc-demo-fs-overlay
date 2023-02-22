@@ -15,18 +15,23 @@ require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
+    $lang = 'en';
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -42,7 +47,7 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLEERRORS ?></title>
@@ -384,7 +389,6 @@ if ($auth == 0) {
                 }
             }
         </script>
-
     </main>
     <!-- ################################# INIZIO MENU FOOTER MOBILE ################################################ -->
     <footer class="footer d-md-none">
@@ -403,7 +407,6 @@ if ($auth == 0) {
         </div>
     </footer>
     <!-- ################################# FINE MENU FOOTER MOBILE ################################################ -->
-
     <script src="js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {

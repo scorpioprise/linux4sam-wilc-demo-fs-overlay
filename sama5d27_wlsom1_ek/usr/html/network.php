@@ -15,28 +15,39 @@ require_once "inc/config.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
+    $logocontinue = 'dkcenergyportal.png';
+    $lang = 'it';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
+    $logocontinue = 'dkcenergyportal.png';
+    $lang = 'en';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $logocontinue = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
+    $logocontinue = 'dkc.png';
+    $lang = 'ru';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
+    $logocontinue = 'dkc.png';
+    $lang = 'en';
 }
 if (isset($_POST['applyNetwork'])) {
-    sleep(2);
+    sleep(1);
     $args = '';
     foreach ($_POST as $k => $v) $args = $args . " $k='$v'";
     echo "<!DOCTYPE html><html lang='it'><head><title>" . _TITLENETWORKREBOOT . "</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
-<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/signin.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
-<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
-<img src='img/dkcenergyportal.png'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
-<p class='mt-5'>" . _NETWORKREBOOTINGMESSAGE2 . "</p><p class='text-dkc'>" . _NETWORKREBOOTINGMESSAGE3 . "</p></div></div></div></body></html>";
+<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/logged.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
+<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white bg-dkcenergy'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
+<img src='img/" . $logocontinue . "'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
+<p class='mt-5'>" . _NETWORKREBOOTINGMESSAGE2 . "</p><p class='text-muted'>" . _NETWORKREBOOTINGMESSAGE5 . "</p></div></div></div></body></html>";
+    sleep(1);
     $response = exec('issue_command 9008' . $args);
     die;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
@@ -57,12 +68,13 @@ if (isset($_POST['applyNetwork'])) {
     }
 }
 if (isset($_POST['applyNoNetwork'])) {
-    sleep(2);
+    sleep(1);
     echo "<!DOCTYPE html><html lang='it'><head><title>" . _TITLENETWORKREBOOT . "</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
-		<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/signin.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
-		<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
-		<img src='img/dkcenergyportal.png'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
+		<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/logged.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
+		<link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white bg-dkcenergy'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>
+		<img src='img/" . $logocontinue . "'><h3 class='display-6 my-5'>" . _NETWORKREBOOTING . "</h3><div class='spinner-border text-danger' role='status'><span class='visually-hidden'>" . _NETWORKREBOOTINGMESSAGE1 . "</span></div>
 		<p class='mt-5'>" . _NETWORKREBOOTINGMESSAGE4 . "</p><p class='text-muted'>" . _NETWORKREBOOTINGMESSAGE5 . "</p></div></div></div></body></html>";
+    sleep(1);
     $response = exec("issue_command 9008 ssid='' pass='' wifidhcp='' wifiipaddress='' wifinetmask='' wifigateway='' wifidns='' dhcp='' ipaddress='' netmask='' gateway='' dns='' applyNoNetwork='apply'");
     die;
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
@@ -96,7 +108,7 @@ if ($auth == 0) {
 <!--# include file="index_provisioning.php" -->
 <!--# else -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang; ?>">
 
 <head>
     <title><?= _TITLENETWORK ?></title>
@@ -362,6 +374,8 @@ if ($auth == 0) {
                 <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
                     <div class="icon-square flex-shrink-0 mt-1 me-3">
                         <img src="img/ico_network_grande.png">
+                        <img class="d-none" src='img/dkc.png'>
+                        <img class="d-none" src='img/dkcenergyportal.png'>
                     </div>
                     <div>
                         <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
