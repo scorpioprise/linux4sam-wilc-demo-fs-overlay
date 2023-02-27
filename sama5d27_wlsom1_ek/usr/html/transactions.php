@@ -350,13 +350,13 @@ if ($auth == 0) {
                                                 continue;
                                             }
                                             $nrows++;
-                                            if ($row['status'] == 0) {
+                                            if ($row['status'] == '0') {
                                                 $row['status'] = _TABLESTATUSREADYTRANSACTIONS;
-                                            } else if ($row['status'] == 1) {
+                                            } else if ($row['status'] == '1') {
                                                 $row['status'] = _TABLESTATUSCONNECTEDTRANSACTIONS;
-                                            } else if ($row['status'] == 2) {
-                                                $row['status'] = -_TABLESTATUSCHARGINGTRNSACTIONS;
-                                            } else if ($row['status'] == 3) {
+                                            } else if ($row['status'] == '2') {
+                                                $row['status'] = _TABLESTATUSCHARGINGTRNSACTIONS;
+                                            } else if ($row['status'] == '3') {
                                                 $row['status'] = _TABLESTATUSLOCKEDTRANSACTIONS;
                                             } else {
                                                 $row['status'] = _TABLESTATUSERRORTRANSACTIONS;

@@ -529,6 +529,7 @@ if ($auth == 0) {
 																						<option value='Europe/London'>(GMT+00:00) London</option>
 																						<option value='Europe/Berlin'>(GMT+01:00) Berlin</option>
 																						<option value='Europe/Helsinki'>(GMT+02:00) Helsinki</option>
+                                                                                        <option value='Europe/Moscow'>(GMT+03:00) Europe/Moscow</option>
 																						<option value='Europe/Istanbul'>(GMT+03:00) Istanbul</option>
 																						<option value='Asia/Dubai'>(GMT+04:00) Dubai</option>
 																						<option value='Asia/Kabul'>(GMT+04:30) Kabul</option>
