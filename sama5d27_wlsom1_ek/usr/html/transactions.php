@@ -177,7 +177,7 @@ if ($auth == 0) {
     <!-- ################################# INIZIO MENU MOBILE ################################################ -->
     <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasFunzioni" aria-labelledby="offcanvasFunzioniLabel" data-bs-toggle="offcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasFunzioniLabel"><img src="img/logo_menu.png" width="130" height="40"></h5>
+            <h5 class="offcanvas-title" id="offcanvasFunzioniLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
@@ -219,7 +219,7 @@ if ($auth == 0) {
     </div>
     <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasStatistiche" aria-labelledby="offcanvasStatisticheLabel" data-bs-toggle="offcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasStatisticheLabel"><img src="img/logo_menu.png" width="130" height="40"></h5>
+            <h5 class="offcanvas-title" id="offcanvasStatisticheLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
@@ -245,7 +245,7 @@ if ($auth == 0) {
     </div>
     <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasConfigurazione" aria-labelledby="offcanvasConfigurazioneLabel" data-bs-toggle="offcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/logo_menu.png" width="130" height="40"></h5>
+            <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">

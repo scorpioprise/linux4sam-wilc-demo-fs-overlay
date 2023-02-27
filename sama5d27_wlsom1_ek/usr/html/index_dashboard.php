@@ -7,6 +7,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $id = $_SESSION["id"];
 $auth = $_SESSION["auth"];
 $firstlogin = $_SESSION["firstlogin"];
+$toast = $_SESSION["toast"];
 if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
@@ -37,24 +38,22 @@ if (trovaLingua() == 'it') {
 if (isset($_POST['refresh'])) {
     $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDNOUPDATE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDNOUPDATE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
+    $_SESSION["toast"] = $response_toast;
+    usleep(1500);
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -65,7 +64,6 @@ if ($auth == 0) {
     $utente = 'user';
 }
 $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
-//$_SESSION["echargertipo"] = '<!--#  echo var="tipologiawallbox" -->';
 ?>
 <!--# if expr="$internetenabled=false" -->
 <!--# include file="session.php" -->
@@ -203,7 +201,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
     <!-- ################################# INIZIO MENU MOBILE ################################################ -->
     <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasFunzioni" aria-labelledby="offcanvasFunzioniLabel" data-bs-toggle="offcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasFunzioniLabel"><img src="img/logo_menu.png" width="130" height="40"></h5>
+            <h5 class="offcanvas-title" id="offcanvasFunzioniLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
@@ -245,7 +243,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
     </div>
     <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasStatistiche" aria-labelledby="offcanvasStatisticheLabel" data-bs-toggle="offcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasStatisticheLabel"><img src="img/logo_menu.png" width="130" height="40"></h5>
+            <h5 class="offcanvas-title" id="offcanvasStatisticheLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
@@ -271,7 +269,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
     </div>
     <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasConfigurazione" aria-labelledby="offcanvasConfigurazioneLabel" data-bs-toggle="offcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/logo_menu.png" width="130" height="40"></h5>
+            <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
         <div class="row ms-1 mt-3 text-white flex-nowrap">
             <div class="col-8">
@@ -348,7 +346,8 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
                     </div>
                 </div>
                 <div class="col d-flex justify-content-end h-50">
-                    <?php echo $response_toast; ?>
+                    <?php echo $toast;
+                    unset($_SESSION["toast"]); ?>
                 </div>
             </div>
             <div class="row">
