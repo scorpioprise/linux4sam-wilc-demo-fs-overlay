@@ -9,6 +9,7 @@ $auth = $_SESSION["auth"];
 $firstlogin = $_SESSION["firstlogin"];
 $statoecharger = $_SESSION["echargerstato"];
 $tipoecharger = $_SESSION["echargertipo"];
+$potechager = $_SESSION["echargerpot"];
 switch ($tipoecharger) {
     case '0':
     case '2':
@@ -98,32 +99,35 @@ if ($stmt = mysqli_prepare($link, $sql)) {
             $nrows++;
             if ($row['name'] == 'meter_power_rating') {
                 $form3003 = $row['value'];
+                if ($form3003 == 0) {
+                    $form3003 = $potechager;
+                }
             } else if ($row['name'] == 'enable_fixed_power_inhibit_mid') {
                 $form3006 = $row['value'];
-                if ($form3006 == 1) {
+                if ($form3006 == 'True' || $form3006 == 'true' || $form3006 == 1) {
                     $form3006 = _ENABLED;
-                } else if ($form3006 == 0) {
+                } else if ($form3006 == 'False' || $form3006 == 'false' || $form3006 == 0) {
                     $form3006 = _DISABLED;
                 } else $form3006 = _NOTAVAILABLE;
             } else if ($row['name'] == 'has_rfid_reader') {
                 $form3007 = $row['value'];
-                if ($form3007 == 1) {
+                if ($form3007 == 'True' || $form3007 == 'true' || $form3007 == 1) {
                     $form3007 = _ENABLED;
-                } else if ($form3007 == 0) {
+                } else if ($form3007 == 'False' || $form3007 == 'false' || $form3007 == 0) {
                     $form3007 = _DISABLED;
                 } else $form3007 = _NOTAVAILABLE;
             } else if ($row['name'] == 'has_ocpp_service') {
                 $form3009 = $row['value'];
-                if ($form3009 == 'True') {
+                if ($form3009 == 'True' || $form3009 == 'true' || $form3009 == 1) {
                     $form3009 = _ENABLED;
-                } else if ($form3009 == 'False') {
+                } else if ($form3009 == 'False' || $form3009 == 'false' || $form3009 == 0) {
                     $form3009 = _DISABLED;
                 } else $form3009 = _NOTAVAILABLE;
             } else if ($row['name'] == 'has_modbus_service') {
                 $form3010 = $row['value'];
-                if ($form3010 == 'True') {
+                if ($form3010 == 'True' || $form3010 == 'true' || $form3010 == 1) {
                     $form3010 = _ENABLED;
-                } else if ($form3010 == 'False') {
+                } else if ($form3010 == 'False' || $form3010 == 'false' || $form3010 == 0) {
                     $form3010 = _DISABLED;
                 } else $form3010 = _NOTAVAILABLE;
             }
@@ -197,8 +201,10 @@ if ($auth == 0) {
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         </button>
         <div class="dropdown me-2">
-            <button type="button" class="btn btn-sm dropdown-toggle" style="background-color:#d91a15; color:#fff;" id="dropdownUser" data-bs-toggle="dropdown" data-toggle="tooltip" data-bs-placement="left" title="<?php echo htmlspecialchars($utente); ?>">
-                <img src="img/ico_user.png" class="me-3">
+            <button type="button" class="btn btn-sm dropdown-toggle" style="background-color:#d91a15; color:#fff;" id="dropdownUser" data-bs-toggle="dropdown">
+                <span data-bs-toggle="tooltip" title="<?php echo htmlspecialchars($utente); ?>" data-bs-placement="left">
+                    <img src="img/ico_user.png" class="me-3">
+                </span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                 <li><a class="dropdown-item" href="index_dashboard.php"><?= _MENUHOME ?></a></li>
@@ -706,7 +712,7 @@ if ($auth == 0) {
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script>
         $(document).ready(function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
