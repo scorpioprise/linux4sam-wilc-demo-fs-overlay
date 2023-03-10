@@ -36,7 +36,7 @@ define("_MENUCONFIGURATIONS", "CONFIGURAZIONI");
 define("_MENUERRORS", "ERROR LOG");
 define("_MENUNETWORK", "RETE");
 define("_MENUCLOSE", "CHIUDI");
-define("_HEAD", "DAHSBOARD DI SISTEMA");
+define("_HEAD", "DASHBOARD DI SISTEMA");
 define("_TABLEDATA", "DATO");
 define("_TABLEVALUE", "VALORE");
 define("_TABLEACTION", "AZIONE");
