@@ -358,7 +358,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="macaddress" -->';
                         <div class="d-flex flex-nowrap text-nowrap">
                             <input type="hidden" name="parameter" value="3013">
                             <input class="form-control form-control-sm" type="hidden" min="0" placeholder="<?= _TABLEINSERTVALUECOMMANDS ?>" name="valore" required="" value="1" readonly>
-                            <button class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _TABLEUPDATECONFIGURATIONS ?>" type="submit" name="refresh">
+                            <button class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _TABLEUPDATECONFIGURATIONS ?>" type="submit" name="refresh">
                                 <img src="img/ico_tr_refresh.png">
                             </button>
                         </div>

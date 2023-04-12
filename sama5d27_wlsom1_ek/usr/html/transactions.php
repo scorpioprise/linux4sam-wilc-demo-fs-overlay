@@ -342,7 +342,7 @@ if ($auth == 0) {
                             <tbody>
                                 <?php
                                 ##################### QUERY SQL TRANSAZIONI #####################
-                                $sql = "SELECT transactions.id, transactions.tempo, cards.card_no, cards.name, cards.status AS cardstatus, transactions.status, transactions.start_time, transactions.end_time, transactions.duration, transactions.delivered_kwh, transactions.error FROM transactions JOIN cards ON transactions.card_no=cards.id ORDER BY transactions.id DESC";
+                                $sql = "SELECT transactions.id, transactions.tempo, cards.card_no, cards.name, cards.status AS cardstatus, transactions.status, transactions.start_time, transactions.end_time, transactions.duration, transactions.delivered_kwh, transactions.error FROM transactions LEFT JOIN cards ON transactions.card_no=cards.id ORDER BY transactions.id DESC";
                                 if ($stmt = mysqli_prepare($link, $sql)) {
                                     if (mysqli_stmt_execute($stmt)) {
                                         $result = $stmt->get_result();

@@ -391,7 +391,7 @@ if ($auth == 0) {
                         <div class="col d-flex justify-content-end align-items-start mt-0">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                 <div class="d-flex flex-nowrap text-nowrap">
-                                    <button class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _ADDBUTTONHELPCARDS ?>" type="submit" name="responseInsert">
+                                    <button class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _ADDBUTTONHELPCARDS ?>" type="submit" name="responseInsert">
                                         <img src="img/ico_tr_addcard.png">
                                         <span class="d-none d-lg-block ms-2 mt-0 mt-lg-1 text-decoration-underline"><?= _ADDBUTTONCARDS ?></span><span class="d-none d-lg-block fw-bold ms-1 mt-1">+</span>
                                     </button>
