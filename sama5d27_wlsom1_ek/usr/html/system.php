@@ -7,43 +7,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $id = $_SESSION["id"];
 $auth = $_SESSION["auth"];
 $firstlogin = $_SESSION["firstlogin"];
-/*
-$tipoecharger = $_SESSION["echargertipo"];
-switch ($tipoecharger) {
-    case '0':
-    case '4':
-    case '8':
-    case '12':
-        $iconaTipo = 'img/ico_inv.png';
-        break;
-    case '1':
-    case '5':
-    case '9':
-    case '13':
-        $iconaTipo = 'img/ico_inv.png';
-        break;
-    case '2':
-    case '6':
-    case '10':
-    case '14':
-        $iconaTipo = 'img/ico_inv.png';
-        break;
-    case '3':
-    case '7':
-    case '11':
-    case '15':
-        $iconaTipo = 'img/ico_inv.png';
-        break;
-    default:
-        $iconaTipo = 'img/ico_inv.png';
-}
-*/
+$toast = $_SESSION["toast"];
+$echargerpot = $_SESSION["echargerpot"];
+$statoecharger = $_SESSION["echargerstato"];
 if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
 }
 require_once "inc/config.php";
-include_once "loader.php";
 if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
@@ -65,30 +36,27 @@ if (trovaLingua() == 'it') {
     $logo = 'logo_menu_dkc.png';
     $lang = 'en';
 }
-if (isset($_POST['response'])) {
+##################### DATI IN CLOUD #####################
+if (isset($_POST['refresh'])) {
     $response = exec('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
-    //echo ('issue_command ' . $_POST['parameter'] . " " . $_POST['valore']);
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDKO . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_OK') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDOK . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_TODO') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDNOTAVAILABLE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'SKIP SERIAL') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-ok fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDSKIPSERIAL . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } elseif ($response == 'RESPONSE_MESSAGE_NOT_APPLICABLE') {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDNOUPDATE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDNOUPDATE . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     } else {
-        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
-        ' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
+        $response_toast = '<div class="toast align-items-center fade show bg-toast-kk fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">' . _TOASTCOMMANDERROR . '</div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>';
     }
+    $_SESSION["toast"] = $response_toast;
+    usleep(1500);
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 }
-$response_toast = '';
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
     $utente = 'admin';
@@ -97,32 +65,6 @@ if ($auth == 0) {
 } else {
     $utente = 'user';
 }
-##################### QUERY SQL CARTE #####################
-//$jsonDataH    = '[ {';
-//$jsonDataB    = '';
-//$jsonDataF    = '} ]';
-//$link   = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT, DB_SOCKET);
-//$sql = "SELECT `card_no`, `name` FROM cards";
-//if ($stmt = mysqli_prepare($link, $sql)) {
-//    if (mysqli_stmt_execute($stmt)) {
-//        $result = $stmt->get_result();
-//        $nrows = 0;
-//        while ($row = $result->fetch_assoc()) {
-//            $nrows++;
-//            $jsonDataB .= "numero:'" . $row["card_no"] . "',nome:'" . $row["name"] . "'},{";
-//        }
-//        if ($nrows == 0) {
-//            echo "Missing parameter.";
-//        }
-//    } else {
-//        echo "Something went wrong. Please try again later.";
-//    }
-//    mysqli_stmt_close($stmt);
-//}
-//mysqli_close($link);
-//$jsonDataB = rtrim($jsonDataB, '{,}');
-//$json      = $jsonDataH . $jsonDataB . $jsonDataF;
-$_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
 ?>
 <!--# if expr="$internetenabled=false" -->
 <!--# include file="session.php" -->
@@ -132,7 +74,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
 <html lang="<?php echo $lang; ?>">
 
 <head>
-    <title><?= _TITLETELEMETRY ?></title>
+    <title><?= _TITLESYSTEM ?></title>
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -156,8 +98,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                 </span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item active"><?= _MENUHOME ?></a></li>
-                <!--<li><a class="dropdown-item" href="change_password.php">CHANGE PASSWORD</a></li>-->
+                <li><a class="dropdown-item" href="telemetry.php"><?= _MENUHOME ?></a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -178,7 +119,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="telemetry.php" class="dkc-selected">
+                            <a href="telemetry.php">
                                 <img src="img/ico_telemetria.png" width="25px" class="me-3">
                                 <?= _MENUTELEMETRY ?>
                             </a>
@@ -194,7 +135,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="system.php">
+                            <a href="system.php" class="dkc-selected">
                                 <img src="img/ico_inverter.png" width="25px" class="me-3">
                                 <?= _MENUINVERTER ?>
                             </a>
@@ -282,7 +223,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="telemetry.php" class="dkc-selected">
+                        <a href="telemetry.php">
                             <img src="img/ico_telemetria.png" width="25px" class="me-3">
                             <?= _MENUTELEMETRY ?>
                         </a>
@@ -298,7 +239,7 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                 </li>
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="system.php">
+                        <a href="system.php" class="dkc-selected">
                             <img src="img/ico_inverter.png" width="25px" class="me-3">
                             <?= _MENUINVERTER ?>
                         </a>
@@ -403,8 +344,10 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                     <div class="d-flex align-items-justify">
                         <div class="col d-flex align-items-start">
                             <img src="img/icon_title.png" width="35px" class="me-2" style="font-size:1.35em;" alt="">
-                            <h3 class="bold text-dkc"><?= _HEADTELEMETRY . '&nbsp;' ?></h3>
+                            <h3 class="bold text-dkc"><?= _HEAD . '&nbsp;' ?></h3>
                             <img id="iconaInternet" src="img/offlineLight.png">
+                        </div>
+                        <div class="col d-flex justify-content-end align-items-start mt-0">
                         </div>
                     </div>
                 </div>
@@ -412,14 +355,27 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
             <div class="row justify-content-between py-2 ms-0">
                 <div class="col-7 col-md-6 col-lg-4 d-flex align-items-center me-lg-1 mb-lg-0 mb-1 text-break rounded-4 bg-grigiochiaro" style="min-height: 80px;">
                     <div class="icon-square flex-shrink-0 mt-1 me-3">
-                        <img src="img/ico_telemetria_grande.png">
+                        <img id="iconaTipo" src="img/ico_inv.png">
                     </div>
                     <div>
                         <h6 class="fw-bold mt-3"><?= _MENUINVERTER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
                     </div>
                 </div>
                 <div class="col d-flex justify-content-end h-50">
-                    <?php echo $response_toast; ?>
+                    <?php echo $toast;
+                    $_SESSION["toast"] = '';
+                    //unset($_SESSION["toast"]);
+                    ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col d-flex justify-content-end align-items-end">
+                    <div class="d-flex flex-nowrap text-nowrap">
+                        <a href="/datasheet.pdf" download class="d-flex btn btn-sm btn-link fw-bold text-black text-decoration-none pt-0" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="<?= _DATASHEET ?>" name="datasheet">
+                            <img src="img/ico_tr_pdf.png">
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -470,7 +426,114 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                 </div>
             </div>
 
+
             <div class="row ms-0 py-2 justify-content-between">
+                <div class="col-12 col-xl-auto rounded-4 shadow bg-object mt-2 mt-lg-0">
+                    <div class="col-12 d-flex align-items-center text-break">
+                        <div class="icon-square flex-shrink-0 mt-3 me-3">
+                            <img src="img/ico_systemdata.png">
+                        </div>
+                        <h6 class="fw-bold mt-3 text-uppercase"><?= _HEADDATA ?></h6>
+                    </div>
+                    <p class="lh-md" style="min-width: 90px;">
+                        <span class="fwb-head"><?= _MACAddr ?>: </span><b><!--# echo var='MACAddr' --></b><br>
+                        <span class="fwb-head"><?= _Manufacturer ?>: </span><b><!--# echo var='Manufacturer' --></b><br>
+                        <span class="fwb-head"><?= _ModbusAddr ?>: </span><b><!--# echo var='ModbusAddr' --></b><br>
+                        <span class="fwb-head"><?= _LANIP ?>: </span><b><!--# echo var='LANIP' --></b><br>
+                        <span class="fwb-head"><?= _WLANIP ?>: </span><b><!--# echo var='WLANIP' --></b><br>
+                        <span class="fwb-head"><?= _DATE ?>: </span><b id="datetime"></b><br>
+                        <script>
+                            var dataServer = new Date("<!--# echo var='DATE' -->" * 1000);
+                            var showData =
+                                dataServer.getFullYear() + "-" +
+                                ("00" + (dataServer.getMonth() + 1)).slice(-2) + "-" +
+                                ("00" + dataServer.getDate()).slice(-2) + " " +
+                                ("00" + (dataServer.getHours())).slice(-2) + ":" +
+                                ("00" + dataServer.getMinutes()).slice(-2) + ":" +
+                                ("00" + dataServer.getSeconds()).slice(-2);
+                            document.getElementById("datetime").innerHTML = showData;
+                        </script>
+                        <span class="fwb-head"><?= _Language ?>: </span><b><!--# echo var='Language' --></b><br>
+                        <span class="fwb-head"><?= _MQTTFreq ?>: </span><b><!--# echo var='MQTTFreq' --> s</b><br>
+                        <span class="fwb-head"><?= _SerialNum ?>: </span><b><!--# echo var='SerialNum' --></b><br>
+                        <span class="fwb-head"><?= _SWVer ?>: </span><b><!--# echo var='SWVer' --></b><br>
+                    </p>
+                </div>
+
+                <div class="col-xl-8 d-xl-none d-block"></div>
+
+                <div class="col-12 col-sm-auto col-xl-3 rounded-4 shadow bg-object mt-2 mt-lg-0">
+                    <div class="col-12 d-flex align-items-center text-break">
+                        <div class="icon-square flex-shrink-0 mt-3 me-3">
+                            <img src="img/ico_dkcinverter.png">
+                        </div>
+                        <h6 class="fw-bold mt-3 text-uppercase"><?= _INVERTER ?></h6>
+                    </div>
+                    <p class="lh-md" style="min-width: 90px;">
+                        <span class="fwb-head"><?= _NominalPower ?>: </span><b><!--# echo var='NominalPower' --> W</b><br>
+                        <span class="fwb-head"><?= _MaxActPower ?>: </span><b><!--# echo var='MaxActPower' --> W</b><br>
+                        <span class="fwb-head"><?= _MaxAppPower ?>: </span><b><!--# echo var='MaxAppPower' --> W</b><br>
+                        <span class="fwb-head"><?= _MaxReaPower ?>: </span><b><!--# echo var='MaxReaPower' --> W</b><br>
+                        <span class="fwb-head"><?= _InverterConfig ?>: </span><b><!--# echo var='InverterConfig' --></b><br>
+                        <span class="fwb-head"><?= _MaxCurr ?>: </span><b><!--# echo var='MaxCurr' --> A</b><br>
+                        <span class="fwb-head"><?= _MaxPF ?>: </span><b><!--# echo var='MaxPF' --></b><br>
+                        <span class="fwb-head"><?= _MinPF ?>: </span><b><!--# echo var='MinPF' --></b><br>
+                        <span class="fwb-head"><?= _MaxNetVolt ?>: </span><b><!--# echo var='MaxNetVolt' --> V</b><br>
+                        <span class="fwb-head"><?= _MinNetVolt ?>: </span><b><!--# echo var='MinNetVolt' --> V</b><br>
+                        <span class="fwb-head"><?= _MaxNetFreq ?>: </span><b><!--# echo var='MaxNetFreq' --> Hz</b><br>
+                        <span class="fwb-head"><?= _MinNetFreq ?>: </span><b><!--# echo var='MinNetFreq' --> Hz</b>
+                    </p>
+                </div>
+                <div class="col-12 col-sm-auto col-xl-3 rounded-4 shadow bg-object mt-2 mt-lg-0">
+                    <div class="col-12 d-flex align-items-center text-break">
+                        <div class="icon-square flex-shrink-0 mt-3 me-3">
+                            <img src="img/ico_solar.png">
+                        </div>
+                        <h6 class="fw-bold mt-3 text-uppercase"><?= _SOLAR ?></h6>
+                    </div>
+                    <p class="lh-md" style="min-width: 90px;">
+                        <span class="fwb-head"><?= _MaxPVPower ?>: </span><b><!--# echo var='MaxPVPower' --> W</b><br>
+                        <span class="fwb-head"><?= _MaxPVVolt ?>: </span><b><!--# echo var='MaxPVVolt' --> V</b><br>
+                        <span class="fwb-head"><?= _MaxPVCurr ?>: </span><b><!--# echo var='MaxPVCurr' --> A</b><br>
+                        <span class="fwb-head"><?= _PVSeriesNum ?>: </span><b><!--# echo var='PVSeriesNum' --></b><br>
+                        <span class="fwb-head"><?= _PVStringNum ?>: </span><b><!--# echo var='PVStringNum' --></b>
+                    </p>
+                </div>
+                <div class="col-12 col-sm-auto col-xl-3 rounded-4 shadow bg-object mt-2 mt-lg-0">
+                    <div class="col-12 d-flex align-items-center text-break">
+                        <div class="icon-square flex-shrink-0 mt-3 me-3">
+                            <img src="img/ico_battery.png">
+                        </div>
+                        <h6 class="fw-bold mt-3 text-uppercase"><?= _STORAGE ?></h6>
+                    </div>
+                    <p class="lh-md" style="min-width: 90px;">
+                        <span class="fwb-head"><?= _BattNominalCappacity ?>: </span><b><!--# echo var='BattNominalCappacity' --> Wh</b><br>
+                        <span class="fwb-head"><?= _BattMaxChargPower ?>: </span><b><!--# echo var='BattMaxChargPower' --> W</b><br>
+                        <span class="fwb-head"><?= _BattMaxDischarPower ?>: </span><b><!--# echo var='BattMaxDischarPower' --> W</b><br>
+                        <span class="fwb-head"><?= _BattType ?>: </span><b><!--# echo var='BattType' --></b><br>
+                        <span class="fwb-head"><?= _BattNumSeries ?>: </span><b><!--# echo var='BattNumSeries' --></b><br>
+                        <span class="fwb-head"><?= _BattStringNum ?>: </span><b><!--# echo var='BattStringNum' --></b><br>
+                        <span class="fwb-head"><?= _CellMaxVolt ?>: </span><b><!--# echo var='CellMaxVolt' --> V</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _CellMaxVoltID ?>: </span><b><!--# echo var='CellMaxVoltID' --></b><br>
+                        <span class="fwb-head"><?= _CellMinVolt ?>: </span><b><!--# echo var='CellMinVolt' --> V</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _CellMinVoltID ?>: </span><b><!--# echo var='CellMinVoltID' --></b><br>
+                        <span class="fwb-head"><?= _CellMaxTemp ?>: </span><b><!--# echo var='CellMaxTemp' --> °C</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _CellMaxTempID ?>: </span><b><!--# echo var='CellMaxTempID' --></b><br>
+                        <span class="fwb-head"><?= _CellMinTemp ?>: </span><b><!--# echo var='CellMinTemp' --> °C</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _CellMinTempID ?>: </span><b><!--# echo var='CellMinTempID' --></b><br>
+                        <span class="fwb-head"><?= _ModMaxVolt ?>: </span><b><!--# echo var='ModMaxVolt' --> V</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _ModMaxVoltID ?>: </span><b><!--# echo var='ModMaxVoltID' --></b><br>
+                        <span class="fwb-head"><?= _ModMinVolt ?>: </span><b><!--# echo var='ModMinVolt' --> V</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _ModMinVoltID ?>: </span><b><!--# echo var='ModMinVoltID' --></b><br>
+                        <span class="fwb-head"><?= _ModMaxTemp ?>: </span><b><!--# echo var='ModMaxTemp' --> °C</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _ModMaxTempID ?>: </span><b><!--# echo var='ModMaxTempID' --></b><br>
+                        <span class="fwb-head"><?= _ModMinTemp ?>: </span><b><!--# echo var='ModMinTemp' --> °C</b><span class="ms-1 vr"></span>
+                        <span class="fwb-head"><?= _ModMinTempID ?>: </span><b><!--# echo var='ModMinTempID' --></b>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row d-none ms-0 py-2 justify-content-between">
                 <div id="flussi" class="col-12 col-xl-2 rounded-4 shadow bg-object" style="max-height: 400px; max-width: 400px;"><svg width="100%" height="100%" viewBox="0 0 400 400">
                         <g width="400" height="400">
                             <!-- 100 da oggetto ad inverter -->
@@ -589,144 +652,12 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                     </p>
                 </div>
             </div>
-            <!-- ######################### comandi ######################### -->
-            <div class="row ms-0 mt-1 py-2 justify-content-between">
-                <div class="row py-3 ms-0 my-2 rounded-4 shadow justify-content-between bg-object">
-                    <div class="col-8 col-lg-6 d-flex align-items-start">
-                        <div class="icon-square flex-shrink-0 mt-3 me-4">
-                            <img src="img/ico_device_setting.png">
-                        </div>
-                        <p class="mt-4 lh-sm"><span class="fw-bold"><?= _3001COMMANDTITLE ?></span><br><?= _3001COMMANDDESCRIPTION ?></p>
-                    </div>
-                    <form class="col-12 col-lg-6 col-xl-5 d-flex align-items-center" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input type="hidden" name="parameter" value="3001">
-                        <div class="w-100 me-2">
-                            <select name="valore" id="WorkProfile" class="form-select form-select-sm" onchange="showSlider(this)" required>
-                                <option value="99"><?= _3001COMMAND ?>
-                                </option>
-                                <option value="0"><?= _3001COMMANDMANUAL ?>
-                                </option>
-                                <option value="1"><?= _3001COMMANDECO ?>
-                                </option>
-                                <option value="2"><?= _3001COMMANDESS ?>
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col mt-2 mt-xl-0">
-                            <button class="d-flex btn btn-sm  btn-link link-dark fwb-head-link text-decoration-underline fw-bold" type="submit" name="response"><?= _3001COMMANDGO ?>
-                                <img class="ms-3 me-2" src="img/goto.png">
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
-            <div id="slider" class="row ms-0 mt-1 py-2 justify-content-between">
-                <div class="row py-3 ms-0 rounded-4 shadow bg-grigiochiaro">
-                    <form class="row row-cols-lg-auto ms-0 g-3 align-items-center justify-content-start" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input type="hidden" name="parameter" value="3003">
-                        <div class="col-12 col-lg-2">
-                            <b><?= _3003COMMAND ?></b>
-                        </div>
-                        <div class="col-1 offset-lg-1 offset-xxl-3 text-end d-none d-sm-block">
-                            -3000
-                        </div>
-                        <div class="col-auto">
-                            <div class="range-wrap">
-                                <div class="range-value" id="rangeV"></div>
-                                <input type="range" class="form-range slider-power" min="-3000" max="3000" step="100" id="setMaxPower" name="valore" value="0" oninput="setMaxPowerOut.value = setMaxPower.value; stopPage(this)" onchange="stopPage(this)">
-                            </div>
-                        </div>
-                        <div class="col-1 text-start ms-2 d-none d-sm-block">
-                            3000
-                        </div>
-                        <div class="d-none col">
-                            <output name="setMaxPowerName" id="setMaxPowerOut"></output>
-                        </div>
-                        <div class="col-12 offset-xl-1">
-                            <button class="btn btn-slider rounded-5" type="submit" id="funzSlider" name="response" onclick="once(this.id); this.form.submit();"><b><?= _3003COMMANDGO ?></b></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="row ms-0 mt-1 py-2 justify-content-between">
-                <div class="col-12 rounded-4 shadow bg-object h-100">
-                    <div class="row py-3 ms-0 my-2">
-                        <div class="col-8 col-lg-6 d-flex align-items-start">
-                            <div class="icon-square flex-shrink-0 mt-3 me-4">
-                                <img src="img/ico_device_setting.png">
-                            </div>
-                            <p class="mt-4 lh-sm"><span class="fw-bold"><?= _3000COMMANDTITLE ?></span><br><?= _3000COMMANDDESCRIPTION ?>
-                            </p>
-                        </div>
-                        <div class="col-4 col-lg-6 d-flex align-items-center justify-content-end">
-                            <form class="d-flex col-auto mt-2 mt-xl-0" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="hidden" name="parameter" value="3000">
-                                <input type="hidden" name="valore" value="2">
-                                <div>
-                                    <button class="d-flex btn btn-sm  btn-link link-dark fwb-head-link text-decoration-underline fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#errorReset"><?= _3000COMMANDGO ?>
-                                        <img class="ms-3 me-3" src="img/goto.png">
-                                    </button>
-                                </div>
-                                <div class="modal fade" id="errorReset" tabindex="-1" aria-labelledby="errorResetLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="errorResetLabel"><?= _MODAL3000 ?></h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body"><?= _MODAL3000ASK ?></div>
-                                            <div class="modal-footer btn-group">
-                                                <button class="btn btn-custom-grigio" type="button" data-bs-dismiss="modal"><?= _MODAL3000NO ?></button>
-                                                <button class="btn btn-custom-rosso" type="submit" name="response" value="apply"><?= _MODAL3000YES ?></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <script>
-                function stopPage() {
-                    utente = false;
-                    setTimeout(() => {
-                        utente = true;
-                    }, 10000)
-                }
-                const
-                    range = document.getElementById('setMaxPower'),
-                    rangeV = document.getElementById('rangeV'),
-                    setValue = () => {
-                        const
-                            newValue = Number((range.value - range.min) * 100 / (range.max - range.min)),
-                            newPosition = 10 - (newValue * 0.2);
-                        rangeV.innerHTML = `<span>${range.value}</span>`;
-                        rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
-                    };
-                document.addEventListener("DOMContentLoaded", setValue);
-                range.addEventListener('input', setValue);
-                var sel = document.getElementById("WorkProfile");
-                var selvalue = sel.value;
-                if ((selvalue == 1) || (selvalue == 2)) {
-                    document.getElementById('slider').style.display = "none";
-                };
-
-                function showSlider(select) {
-                    if (select.value == 0) {
-                        document.getElementById('slider').style.display = "block";
-                    } else {
-                        document.getElementById('slider').style.display = "none";
-                    }
-                };
-            </script>
         </div>
     </main>
     <div id="missing" hidden></div>
     <div id="PowerRef" hidden></div>
+    <div id="WorkProfile" hidden></div>
     <div id="RCurr" hidden></div>
     <div id="SCurr" hidden></div>
     <div id="TCurr" hidden></div>
@@ -758,7 +689,6 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
     <script src="js/pushstream.js" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script type="text/javascript" language="javascript" charset="utf-8">
         function messageReceived(text, id, channel) {
-            //const phpArray = <?php // echo $json; ?>;
             solarPower1 = localStorage.getItem("solarPower1");
             solarPower2 = localStorage.getItem("solarPower2");
             if (typeof solarPower1 !== 'undefined' && solarPower1 !== null) {
@@ -805,20 +735,6 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                 //grigliaPotenza = localStorage.getItem("grigliaPotenza");
             } else {
                 var grigliaPotenza = 0;
-            }
-            //PowerRef = 0;
-            PowerRef = localStorage.getItem("PowerRef");
-            if (typeof PowerRef !== 'undefined' && PowerRef !== null) {
-                //PowerRef = localStorage.getItem("PowerRef");
-            } else {
-                var PowerRef = 0;
-            }
-            //WorkProfile = 0;
-            WorkProfile = localStorage.getItem("WorkProfile");
-            if (typeof WorkProfile !== 'undefined' && WorkProfile !== null) {
-                //WorkProfile = localStorage.getItem("WorkProfile");
-            } else {
-                var WorkProfile = 0;
             }
             //domesticVolt = 0;
             domesticVolt = localStorage.getItem("domesticVolt");
@@ -972,24 +888,10 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
                         obj[key] = PMPower + ' W';
                     } else if (key == 'PowerRef') {
                         const PowerRef = obj[key];
-                        document.getElementById('setMaxPower').setAttribute('value', PowerRef);
-                        document.getElementById("rangeV").innerHTML = PowerRef;
-                        localStorage.setItem("PowerRef", PowerRef);
                         obj[key] = PowerRef + ' ';
                     } else if (key == 'WorkProfile') {
                         const WorkProfile = obj[key];
-                        if (WorkProfile == 0) {
-                            selectProfilo = '<option value="0" selected><?= _3001COMMANDMANUAL ?></option><option value="1"><?= _3001COMMANDECO ?></option><option value="2"><?= _3001COMMANDESS ?></option>';
-                            document.getElementById('slider').style.display = "block";
-                        } else if (WorkProfile == 1) {
-                            selectProfilo = '<option value="0"><?= _3001COMMANDMANUAL ?></option><option value="1" selected><?= _3001COMMANDECO ?></option><option value="2"><?= _3001COMMANDESS ?></option>';
-                            document.getElementById('slider').style.display = "none";
-                        } else if (WorkProfile == 2) {
-                            selectProfilo = '<option value="0"><?= _3001COMMANDMANUAL ?></option><option value="1"><?= _3001COMMANDECO ?></option><option value="2" selected><?= _3001COMMANDESS ?></option>';
-                            document.getElementById('slider').style.display = "none";
-                        }
-                        localStorage.setItem("WorkProfile", WorkProfile);
-                        obj[key] = selectProfilo;
+                        obj[key] = WorkProfile + ' ';
                     } else if (key == 'DomesticPower') {
                         const DomesticPower = obj[key];
                         casaPotenza = DomesticPower;
@@ -1218,30 +1120,6 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
         } else {
             var grigliaPotenza = 0;
         }
-        //PowerRef = 0;
-        PowerRef = localStorage.getItem("PowerRef");
-        if (typeof PowerRef !== 'undefined' && PowerRef !== null) {
-            //PowerRef = localStorage.getItem("PowerRef");
-        } else {
-            var PowerRef = 0;
-        }
-        //WorkProfile = 0;
-        WorkProfile = localStorage.getItem("WorkProfile");
-        if (typeof WorkProfile !== 'undefined' && WorkProfile !== null) {
-            //WorkProfile = localStorage.getItem("WorkProfile");
-        } else {
-            var WorkProfile = 0;
-        }
-        if (WorkProfile == 0) {
-            selectProfilo = '<option value="0" selected><?= _3001COMMANDMANUAL ?></option><option value="1"><?= _3001COMMANDECO ?></option><option value="2"><?= _3001COMMANDESS ?></option>';
-            document.getElementById('slider').style.display = "block";
-        } else if (WorkProfile == 1) {
-            selectProfilo = '<option value="0"><?= _3001COMMANDMANUAL ?></option><option value="1" selected><?= _3001COMMANDECO ?></option><option value="2"><?= _3001COMMANDESS ?></option>';
-            document.getElementById('slider').style.display = "none";
-        } else if (WorkProfile == 2) {
-            selectProfilo = '<option value="0"><?= _3001COMMANDMANUAL ?></option><option value="1"><?= _3001COMMANDECO ?></option><option value="2" selected><?= _3001COMMANDESS ?></option>';
-            document.getElementById('slider').style.display = "none";
-        }
         //domesticVolt = 0;
         domesticVolt = localStorage.getItem("domesticVolt");
         if (typeof domesticVolt !== 'undefined' && domesticVolt !== null) {
@@ -1307,9 +1185,6 @@ $_SESSION["macaddress"] = '<!--#  echo var="MACAddr" -->';
         document.getElementById("batteryStateCharge").innerHTML = batteryStateCharge + '%';
         document.getElementById("batteryPower").innerHTML = batteryPower + ' W';
         document.getElementById("batteryVoltage").innerHTML = batteryVoltage + ' V';
-        document.getElementById("WorkProfile").innerHTML = selectProfilo;
-        document.getElementById('setMaxPower').setAttribute('value', PowerRef);
-        document.getElementById("rangeV").innerHTML = PowerRef;
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

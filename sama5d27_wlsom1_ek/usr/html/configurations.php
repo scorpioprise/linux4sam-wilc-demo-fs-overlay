@@ -11,6 +11,7 @@ if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
 }
+$response_toast = '';
 if (isset($_POST['response'])) {
     if ($_REQUEST['parameter'] == 21) {
         $_REQUEST['valore'] = strtotime($_REQUEST['valore']);
@@ -159,14 +160,6 @@ if ($auth == 0) {
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="index_dashboard.php">
-                                <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                                <?= _MENUECHARGER ?>
-                            </a>
-                        </div>
-                    </li>
-                    <li class="list-group-item bg-dkcenergy" style="border: none">
-                        <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
                             <a href="telemetry.php">
                                 <img src="img/ico_telemetria.png" width="25px" class="me-3">
                                 <?= _MENUTELEMETRY ?>
@@ -174,10 +167,18 @@ if ($auth == 0) {
                         </div>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
+                        <div class="fw-bolder ms-1 item-disabled" style="color:#fff;font-size:12px;">
+                            <a href="topology.php">
+                                <img src="img/ico_topologia.png" width="25px" class="me-3">
+                                <?= _MENUTOPOLOGY ?>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-dkcenergy" style="border: none">
                         <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="cards.php">
-                                <img src="img/ico_card.png" width="25px" class="me-3">
-                                <?= _MENURFIDCARDS ?>
+                            <a href="system.php">
+                                <img src="img/ico_inverter.png" width="25px" class="me-3">
+                                <?= _MENUINVERTER ?>
                             </a>
                         </div>
                     </li>
@@ -189,10 +190,18 @@ if ($auth == 0) {
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
-                        <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="transactions.php">
+                        <div class="fw-bolder ms-1 " style="color:#fff;font-size:12px;">
+                            <a href="analytics.php">
                                 <img src="img/ico_transazioni.png" width="25px" class="me-3">
-                                <?= _MENUTRANSACTIONS ?>
+                                <?= _MENUANALYTICS ?>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-dkcenergy" style="border: none">
+                        <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
+                            <a href="errors.php">
+                                <img src="img/ico_errori.png" width="25px" class="me-3">
+                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -204,10 +213,10 @@ if ($auth == 0) {
                         </h5>
                     </li>
                     <li class="list-group-item bg-dkcenergy" style="border: none">
-                        <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
+                        <div class="fw-bolder ms-1 item-disabled" style="color:#fff;font-size:12px;">
                             <a href="commands.php">
                                 <img src="img/ico_comandi.png" width="25px" class="me-3">
-                                <?= _MENUCOMMANDS ?>
+                                <?= _MENUPOWERMODE ?>
                             </a>
                         </div>
                     </li>
@@ -216,14 +225,6 @@ if ($auth == 0) {
                             <a href="configurations.php" class="dkc-selected">
                                 <img src="img/ico_configurazioni.png" width="25px" class="me-3">
                                 <?= _MENUCONFIGURATIONS ?>
-                            </a>
-                        </div>
-                    </li>
-                    <li class="list-group-item bg-dkcenergy" style="border: none">
-                        <div class="fw-bolder ms-1" style="color:#fff;font-size:12px;">
-                            <a href="errors.php">
-                                <img src="img/ico_errori.png" width="25px" class="me-3">
-                                <?= _MENUERRORS ?>
                             </a>
                         </div>
                     </li>
@@ -241,7 +242,7 @@ if ($auth == 0) {
     </nav>
     <!-- ################################# FINE MENU DESKTOP ################################################ -->
     <!-- ################################# INIZIO MENU MOBILE ################################################ -->
-    <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasFunzioni" aria-labelledby="offcanvasFunzioniLabel" data-bs-toggle="offcanvas">
+    <div class="offcanvas offcanvas-start bg-dkcenergy" tabindex="-1" id="offcanvasFunzioni" aria-labelledby="offcanvasFunzioniLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasFunzioniLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
@@ -249,21 +250,18 @@ if ($auth == 0) {
             <div class="col-8">
                 <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
-            <div class="col-2 text-nowrap" style="font-size:12px">
-                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div class="col-2 text-nowrap">
+                <button class="btn btn-link text-decoration-none text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <b><?= _MENUCLOSE ?> </b>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
         <div class="offcanvas-body">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-dkcenergy">
-                    <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="index_dashboard.php">
-                            <img src="img/ico_wallbox.png" width="25px" class="me-3">
-                            <?= _MENUECHARGER ?>
-                        </a>
-                    </h4>
-                </li>
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
                         <a href="telemetry.php">
@@ -273,17 +271,25 @@ if ($auth == 0) {
                     </h4>
                 </li>
                 <li class="list-group-item bg-dkcenergy">
+                    <h4 class="fw-bolder item-disabled" style="color:#fff;font-size:12px;">
+                        <a href="topology.php">
+                            <img src="img/ico_topologia.png" width="25px" class="me-3">
+                            <?= _MENUTOPOLOGY ?>
+                        </a>
+                    </h4>
+                </li>
+                <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="cards.php">
-                            <img src="img/ico_card.png" width="25px" class="me-3">
-                            <?= _MENURFIDCARDS ?>
+                        <a href="system.php">
+                            <img src="img/ico_inverter.png" width="25px" class="me-3">
+                            <?= _MENUINVERTER ?>
                         </a>
                     </h4>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasStatistiche" aria-labelledby="offcanvasStatisticheLabel" data-bs-toggle="offcanvas">
+    <div class="offcanvas offcanvas-start bg-dkcenergy" tabindex="-1" id="offcanvasStatistiche" aria-labelledby="offcanvasStatisticheLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasStatisticheLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
@@ -291,8 +297,13 @@ if ($auth == 0) {
             <div class="col-8">
                 <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
-            <div class="col-2 text-nowrap" style="font-size:12px">
-                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div class="col-2 text-nowrap">
+                <button class="btn btn-link text-decoration-none text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <b><?= _MENUCLOSE ?> </b>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -300,43 +311,9 @@ if ($auth == 0) {
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dkcenergy">
                     <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="transactions.php">
+                        <a href="analytics.php">
                             <img src="img/ico_transazioni.png" width="25px" class="me-3">
-                            <?= _MENUTRANSACTIONS ?>
-                        </a>
-                    </h4>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasConfigurazione" aria-labelledby="offcanvasConfigurazioneLabel" data-bs-toggle="offcanvas">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
-        </div>
-        <div class="row ms-1 mt-3 text-white flex-nowrap">
-            <div class="col-8">
-                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
-            </div>
-            <div class="col-2 text-nowrap" style="font-size:12px">
-                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-        </div>
-        <hr class="border border-secondary border-1 opacity-75 ms-2">
-        <div class="offcanvas-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-dkcenergy">
-                    <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="commands.php">
-                            <img src="img/ico_comandi.png" width="25px" class="me-3">
-                            <?= _MENUCOMMANDS ?>
-                        </a>
-                    </h4>
-                </li>
-                <li class="list-group-item bg-dkcenergy">
-                    <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
-                        <a href="configurations.php" class="dkc-selected">
-                            <img src="img/ico_configurazioni.png" width="25px" class="me-3">
-                            <?= _MENUCONFIGURATIONS ?>
+                            <?= _MENUANALYTICS ?>
                         </a>
                     </h4>
                 </li>
@@ -345,6 +322,45 @@ if ($auth == 0) {
                         <a href="errors.php">
                             <img src="img/ico_errori.png" width="25px" class="me-3">
                             <?= _MENUERRORS ?>
+                        </a>
+                    </h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start bg-dkcenergy" tabindex="-1" id="offcanvasConfigurazione" aria-labelledby="offcanvasConfigurazioneLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
+        </div>
+        <div class="row ms-1 mt-3 text-white flex-nowrap">
+            <div class="col-8">
+                <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
+            </div>
+            <div class="col-2 text-nowrap">
+                <button class="btn btn-link text-decoration-none text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <b><?= _MENUCLOSE ?> </b>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <hr class="border border-secondary border-1 opacity-75 ms-2">
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dkcenergy">
+                    <h4 class="fw-bolder item-disabled" style="color:#fff;font-size:12px;">
+                        <a href="commands.php">
+                            <img src="img/ico_comandi.png" width="25px" class="me-3">
+                            <?= _MENUPOWERMODE ?>
+                        </a>
+                    </h4>
+                </li>
+                <li class="list-group-item bg-dkcenergy">
+                    <h4 class="fw-bolder" style="color:#fff;font-size:12px;">
+                        <a href="configurations.php" class="dkc-selected">
+                            <img src="img/ico_configurazioni.png" width="25px" class="me-3">
+                            <?= _MENUCONFIGURATIONS ?>
                         </a>
                     </h4>
                 </li>
@@ -381,7 +397,7 @@ if ($auth == 0) {
                         <img src="img/ico_configurazioni_grande.png">
                     </div>
                     <div>
-                        <h6 class="fw-bold mt-3"><?= _MENUECHARGER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
+                        <h6 class="fw-bold mt-3"><?= _MENUINVERTER ?> <span class="text-dkc"><?= $_SESSION["macaddress"] ?></span></h6>
                     </div>
                 </div>
                 <div class="col d-flex justify-content-end h-50">
@@ -552,16 +568,37 @@ if ($auth == 0) {
 																						<option value='Pacific/Auckland'>(GMT+13:00) Auckland</option>
 																						<option value='Pacific/Kiritimati'>(GMT+14:00) Kiritimati</option>
 																						</select>";
+                                        } else if ($row['name'] == 'powermeter_domestic_baudrate') {
+                                            $formnome = _TABLECONF27;
+                                            $formtipo = "<select class='form-select form-select-sm' name='valore' required><option selected disabled value=''>" . _TABLESELCONFIGURATIONS . "</option><option value='110'>110 bps</option><option value='300'>300 bps</option><option value='600'>600 bps</option><option value='1200'>1200 bps</option><option value='2400'>2400 bps</option><option value='4800'>4800 bps</option><option value='9600'>9600 bps</option><option value='14400'>14400 bps</option><option value='19200'>19200 bps</option><option value='38400'>38400 bps</option><option value='57600'>57600 bps</option><option value='115200'>115200 bps</option><option value='128000'>128000 bps</option><option value='256000'>256000 bps</option></select>";
                                         } else if ($row['name'] == 'home_power_total') {
                                             $formnome = _TABLECONF26;
+                                        } else if ($row['name'] == 'storage_power_mode') {
+                                            $formnome = _TABLECONF28;
+                                            $formtipo = "<select class='form-select form-select-sm' name='valore' required><option selected disabled value=''>" . _TABLESELCONFIGURATIONS . "</option><option value='-1'>OFF</option><option value='0'>MANUAL</option><option value='1'>ECO</option><option value='2'>ESS</option><option value='3'>CEI TEST</option></select>";
+                                            if ($formvalore == 0) {
+                                                $formvalore = 'MANUAL';
+                                            } else if ($formvalore == 1) {
+                                                $formvalore = 'ECO';
+                                            } else if ($formvalore == 2) {
+                                                $formvalore = 'ESS';
+                                            } else if ($formvalore == 3) {
+                                                $formvalore = 'CEI TEST';
+                                            } else {
+                                                $formvalore = 'OFF';
+                                            }
                                         } else {
                                             $formnome = _TABLECONFGEN;
                                         }
-                                        if ($nrows == 4) {
+                                        /*if ($nrows == 4) {
                                             echo "<tr class='my-5'><td colspan='5'><h4 class='ms-2 text-dkc fw-bold'>" . _TABLEOCPP . "</h4></td></tr>";
                                             echo "<tr><th>" . _TABLENAMECONFIGURATIONS . "</th><th>" . _TABLEVALUECONFIGURATIONS . "</th><th>" . _TABLEUOMCONFIGURATIONS . "</th>
                                                 <th>" . _TABLEMODIFYCONFIGURATIONS . "</th><th class='d-none'>" . _TABLEHELPCONFIGURATIONS . "</th></tr>";
                                         } else if ($nrows == 5) {
+                                            echo "<tr><td colspan='5'><h4 class='ms-2 text-dkc fw-bold'>" . _TABLEINST . "</h4></td></tr>";
+                                            echo "<tr><th>" . _TABLENAMECONFIGURATIONS . "</th><th>" . _TABLEVALUECONFIGURATIONS . "</th><th>" . _TABLEUOMCONFIGURATIONS . "</th>
+                                            <th>" . _TABLEMODIFYCONFIGURATIONS . "</th><th class='d-none'>" . _TABLEHELPCONFIGURATIONS . "</th></tr>";
+                                        } else */if ($nrows == 4) {
                                             echo "<tr><td colspan='5'><h4 class='ms-2 text-dkc fw-bold'>" . _TABLEINST . "</h4></td></tr>";
                                             echo "<tr><th>" . _TABLENAMECONFIGURATIONS . "</th><th>" . _TABLEVALUECONFIGURATIONS . "</th><th>" . _TABLEUOMCONFIGURATIONS . "</th>
                                             <th>" . _TABLEMODIFYCONFIGURATIONS . "</th><th class='d-none'>" . _TABLEHELPCONFIGURATIONS . "</th></tr>";
