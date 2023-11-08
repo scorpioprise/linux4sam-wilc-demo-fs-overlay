@@ -2,7 +2,7 @@
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'www-data');
 define('DB_PASSWORD', '');
-define('DB_NAME', 'storage');
+define('DB_NAME', 'wallbox');
 define('DB_PORT', '3306');
 define('DB_SOCKET', '/var/lib/mysql/mysql.sock');
 //define('DB_SOCKET', '');
@@ -40,7 +40,7 @@ function trovaLingua()
                     $lingua = "en";
             }
             if ($nrows == 0) {
-                echo "Missing parameter";
+                echo "Missing parameter.";
             }
         } else {
             echo "Something went wrong. Please try again later.";

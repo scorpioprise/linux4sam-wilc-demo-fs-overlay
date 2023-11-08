@@ -1,5 +1,5 @@
 <?php
-//RUSSIAN-to-be-modified
+//RUSSIAN
 //login.php
 define("_TITLELOGIN", "DKC EOS Charge | Логин");
 define("_HEADLOGIN", "DKC EOS Charge Логин");
@@ -25,13 +25,13 @@ define("_TITLESYSTEM", "DKC EOS Charge | ПАНЕЛЬ УПРАВЛЕНИЯ");
 define("_MENUHOME", "ГЛАВНАЯ");
 define("_MENULOGOUT", "ВЫЙТИ");
 define("_MENUOVERVIEW", "ОБЗОР");
-define("_MENUINVERTER", "XXXXXXXXXX");
+define("_MENUECHARGER", "EOS Charge");
 define("_MENUTELEMETRY", "ТЕЛЕМЕТРИЯ");
-define("_MENUTOPOLOGY", "XXXXXXXXXX");
+define("_MENURFIDCARDS", "КАРТЫ RFID");
 define("_MENUSTATISTICS", "СТАТИСТИКА");
-define("_MENUANALYTICS", "XXXXXXXXXX");
+define("_MENUTRANSACTIONS", "ТРАНЗАКЦИИ");
 define("_MENUSETTINGS", "НАСТРОЙКИ");
-define("_MENUPOWERMODE", "XXXXXXXXXX");
+define("_MENUCOMMANDS", "КОМАНДЫ");
 define("_MENUCONFIGURATIONS", "КОНФИГУРАЦИИ");
 define("_MENUERRORS", "ЖУРНАЛ ОШИБОК");
 define("_MENUNETWORK", "СЕТЬ");

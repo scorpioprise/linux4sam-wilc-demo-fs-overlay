@@ -15,7 +15,8 @@ body {
     align-items: center;
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: #410c0c;
+    background-color: #0e1b35;
+		color: #fff;
 }
 
 a,
@@ -82,16 +83,12 @@ a:link {
         font-size: 3.5rem;
     }
 }
-
 .bg-dkcenergy {
-    /*background-color: #0e1b35;*/
-    background-color: #410c0c;
+    background-color: #0e1b35;
 }
-
 .text-dkc {
     color: #d91a15 !important;
 }
-
 .help-block {
     color: #d91a15;
-}
+  }

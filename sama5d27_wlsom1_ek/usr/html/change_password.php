@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_id = $_SESSION["id"];
             if (mysqli_stmt_execute($stmt)) {
                 $_SESSION["firstlogin"] = 0;
-                header("location: telemetry.php");
+                header("location: index_dashboard.php");
                 exit();
             } else {
                 echo "something went wrong...";
