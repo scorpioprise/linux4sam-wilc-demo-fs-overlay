@@ -115,7 +115,12 @@ if (trovaLingua() == 'it') {
 if (isset($_POST['applyNetwork'])) {
     sleep(1);
     $args = '';
-    foreach ($_POST as $k => $v) $args = $args . " $k='$v'";
+    foreach ($_POST as $k => $v) {
+        if ($k == array_key_first($_POST)) {
+            $v = str_replace(' ', '$', $v);
+        }
+        $args = $args . " $k='$v'";
+    }
     echo "<!DOCTYPE html><html lang='it'><head><title>" . _TITLENETWORKREBOOT . "</title><meta charset='utf-8' /><meta content='IE=edge' http-equiv='X-UA-Compatible' /><meta content='width=device-width, initial-scale=1' name='viewport' />
 <link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/logged.css' rel='stylesheet'><link href='favicon.ico' rel='icon' type='image/x-icon' />
 <link href='favicon.png' rel='icon' type='image/png' /></head><body class='text-center text-white bg-dkcenergy'><div class='container-fluid'><div class='row justify-content-center'><div class='col-12 col-md-6 my-5'>

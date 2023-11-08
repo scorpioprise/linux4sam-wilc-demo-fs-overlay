@@ -11,6 +11,7 @@ if ($firstlogin == 1) {
     header("location: change_password.php");
     exit;
 }
+$response_toast = '';
 if (isset($_POST['response'])) {
     if ($_REQUEST['parameter'] == 21) {
         $_REQUEST['valore'] = strtotime($_REQUEST['valore']);
@@ -20,40 +21,49 @@ if (isset($_POST['response'])) {
         include "inc/config.php";
         include "inc/l_it.php";
         $lang = 'it';
+        $url = 'https://data.madein.it/ping';
     } else if ($_REQUEST['valore'] == 'en_EN') {
         include "inc/config.php";
         include "inc/l_en.php";
         $lang = 'en';
+        $url = 'https://data.madein.it/ping';
     } else if ($_REQUEST['valore'] == 'user_RU-EN') {
         include "inc/config.php";
         include "inc/l_ru.php";
         $lang = 'ru';
+        $url = 'https://eoscharge.dkc.ru/ping';
     } else if ($_REQUEST['valore'] == 'user_EN-RU') {
         include "inc/config.php";
         include "inc/l_en-ru.php";
         $lang = 'en';
+        $url = 'https://eoscharge.dkc.ru/ping';
     }
     require_once "inc/config.php";
     if (trovaLingua() == 'it') {
         include "inc/l_it.php";
         $logo = 'logo_menu.png';
         $lang = 'it';
+        $url = 'https://data.madein.it/ping';
     } else if (trovaLingua() == 'en') {
         include "inc/l_en.php";
         $logo = 'logo_menu.png';
         $lang = 'en';
+        $url = 'https://data.madein.it/ping';
     } else if (trovaLingua() == 'ru') {
         include "inc/l_ru.php";
         $logo = 'logo_menu_dkc.png';
         $lang = 'ru';
+        $url = 'https://eoscharge.dkc.ru/ping';
     } else if (trovaLingua() == 'userruen') {
         include "inc/l_ru.php";
         $logo = 'logo_menu_dkc.png';
         $lang = 'ru';
+        $url = 'https://eoscharge.dkc.ru/ping';
     } else if (trovaLingua() == 'userenru') {
         include "inc/l_en-ru.php";
         $logo = 'logo_menu_dkc.png';
         $lang = 'en';
+        $url = 'https://eoscharge.dkc.ru/ping';
     }
     if ($response == 'RESPONSE_MESSAGE_FAILED') {
         $response_toast = '<div class="toast align-items-center fade show bg-toast-ko fw-bold w-auto" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body">
@@ -77,22 +87,27 @@ if (trovaLingua() == 'it') {
     include "inc/l_it.php";
     $logo = 'logo_menu.png';
     $lang = 'it';
+    $url = 'https://data.madein.it/ping';
 } else if (trovaLingua() == 'en') {
     include "inc/l_en.php";
     $logo = 'logo_menu.png';
     $lang = 'en';
+    $url = 'https://data.madein.it/ping';
 } else if (trovaLingua() == 'ru') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
     $lang = 'ru';
+    $url = 'https://eoscharge.dkc.ru/ping';
 } else if (trovaLingua() == 'userruen') {
     include "inc/l_ru.php";
     $logo = 'logo_menu_dkc.png';
     $lang = 'ru';
+    $url = 'https://eoscharge.dkc.ru/ping';
 } else if (trovaLingua() == 'userenru') {
     include "inc/l_en-ru.php";
     $logo = 'logo_menu_dkc.png';
     $lang = 'en';
+    $url = 'https://eoscharge.dkc.ru/ping';
 }
 // 0=admin 1=installer 2=user
 if ($auth == 0) {
@@ -241,7 +256,7 @@ if ($auth == 0) {
     </nav>
     <!-- ################################# FINE MENU DESKTOP ################################################ -->
     <!-- ################################# INIZIO MENU MOBILE ################################################ -->
-    <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasFunzioni" aria-labelledby="offcanvasFunzioniLabel" data-bs-toggle="offcanvas">
+    <div class="offcanvas offcanvas-start bg-dkcenergy" tabindex="-1" id="offcanvasFunzioni" aria-labelledby="offcanvasFunzioniLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasFunzioniLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
@@ -250,7 +265,12 @@ if ($auth == 0) {
                 <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_overview.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUOVERVIEW ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button class="btn btn-link text-decoration-none text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <b><?= _MENUCLOSE ?> </b>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -283,7 +303,7 @@ if ($auth == 0) {
             </ul>
         </div>
     </div>
-    <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasStatistiche" aria-labelledby="offcanvasStatisticheLabel" data-bs-toggle="offcanvas">
+    <div class="offcanvas offcanvas-start bg-dkcenergy" tabindex="-1" id="offcanvasStatistiche" aria-labelledby="offcanvasStatisticheLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasStatisticheLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
@@ -292,7 +312,12 @@ if ($auth == 0) {
                 <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_statistiche.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSTATISTICS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button class="btn btn-link text-decoration-none text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <b><?= _MENUCLOSE ?> </b>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -309,7 +334,7 @@ if ($auth == 0) {
             </ul>
         </div>
     </div>
-    <div class="offcanvas offcanvas-start" style="background-color: #0e1b35" tabindex="-1" id="offcanvasConfigurazione" aria-labelledby="offcanvasConfigurazioneLabel" data-bs-toggle="offcanvas">
+    <div class="offcanvas offcanvas-start bg-dkcenergy" tabindex="-1" id="offcanvasConfigurazione" aria-labelledby="offcanvasConfigurazioneLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasConfigurazioneLabel"><img src="img/<?php echo $logo ?>" width="130" height="40"></h5>
         </div>
@@ -318,7 +343,12 @@ if ($auth == 0) {
                 <h5 class="fw-bolder" style="color:#b0b0b0;"><img src="img/ico_settings.png" width="35px" class="me-2" style="font-size:1.35em;" alt=""><?= _MENUSETTINGS ?></h5>
             </div>
             <div class="col-2 text-nowrap" style="font-size:12px">
-                <b><?= _MENUCLOSE ?> </b><button type="button" class="btn-close btn-close-white text-reset my-1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button class="btn btn-link text-decoration-none text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <b><?= _MENUCLOSE ?> </b>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </button>
             </div>
         </div>
         <hr class="border border-secondary border-1 opacity-75 ms-2">
@@ -469,6 +499,15 @@ if ($auth == 0) {
                                             } else if (trovaLingua() == 'ru' || trovaLingua() == 'userenru' || trovaLingua() == 'userruen') {
                                                 $formtipo = "<select class='form-select form-select-sm' name='valore' required><option selected disabled value=''>" . _TABLESELCONFIGURATIONS . "</option><option value='user_RU-EN'>" . _TABLERUCONFIGURATIONS . "</option><option value='user_EN-RU'>" . _TABLEENCONFIGURATIONS . "</option></select>";
                                             }
+                                            if ($formvalore == 'it_IT') {
+                                                $formvalore = 'ITALIANO';
+                                            } else if ($formvalore == 'en_EN') {
+                                                $formvalore = 'ENGLISH';
+                                            } else if ($formvalore == 'user_RU-EN') {
+                                                $formvalore = 'РУССКИЙ';
+                                            } else if ($formvalore == 'user_EN-RU') {
+                                                $formvalore = 'ENGLISH';
+                                            } else $formvalore = 'n/a';
                                             //$formtipo = "<select class='form-select form-select-sm' name='valore' required><option selected disabled value=''>" . _TABLESELCONFIGURATIONS . "</option><option value='it_IT' >" . _TABLEITCONFIGURATIONS . "</option><option value='en_EN'>" . _TABLEENCONFIGURATIONS . "</option><option value='ru_RU'>" . _TABLERUCONFIGURATIONS . "</option></select>";
                                         } else if ($row['name'] == 'polling_period_realtime_mqtt_data') {
                                             //$formnome = _TABLECONF10;
@@ -625,7 +664,7 @@ if ($auth == 0) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         });
-        var URL = 'https://data.madein.it/ping';
+        var URL = '<?php echo $url ?>';
         var settings = {
             cache: false,
             dataType: "jsonp",

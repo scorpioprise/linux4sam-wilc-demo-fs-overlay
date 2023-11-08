@@ -4,6 +4,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header("location: index_dashboard.php");
     exit;
 }
+$click = 0;
 if (isset($_POST['linguaIt'])) {
     include "inc/config.php";
     $sql = "UPDATE `configuration` SET `value` = 'it_IT' WHERE `name` = 'language'";
@@ -20,6 +21,7 @@ if (isset($_POST['linguaIt'])) {
     }
     include "inc/l_it.php";
     $lang = 'it';
+    $click = 1;
 } else if (isset($_POST['linguaEn'])) {
     $sql = "UPDATE `configuration` SET `value` = 'en_EN' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -36,6 +38,7 @@ if (isset($_POST['linguaIt'])) {
     }
     include "inc/l_en.php";
     $lang = 'en';
+    $click = 2;
 } else if (isset($_POST['linguaRu'])) {
     $sql = "UPDATE `configuration` SET `value` = 'ru_RU' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -52,6 +55,7 @@ if (isset($_POST['linguaIt'])) {
     }
     include "inc/l_ru.php";
     $lang = 'ru';
+    $click = 3;
 } else if (isset($_POST['linguaRuEn'])) {
     $sql = "UPDATE `configuration` SET `value` = 'user_RU-EN' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -68,6 +72,7 @@ if (isset($_POST['linguaIt'])) {
     }
     include "inc/l_ru.php";
     $lang = 'ru';
+    $click = 4;
 } else if (isset($_POST['linguaEnRu'])) {
     $sql = "UPDATE `configuration` SET `value` = 'user_EN-RU' WHERE `name` = 'language'";
     include "inc/config.php";
@@ -84,6 +89,7 @@ if (isset($_POST['linguaIt'])) {
     }
     include "inc/l_en-ru.php";
     $lang = 'en';
+    $click = 5;
 }
 require_once "inc/config.php";
 if (trovaLingua() == 'it') {
@@ -112,17 +118,25 @@ if (trovaLingua() == 'it') {
     $logo = 'dkc.png';
     $lang = 'en';
 }
+/*if (isset($_POST['username'])) {
+    $username = $password = "";
+} else {
+    $username = $password = "";
+}*/
 $username = $password = "";
 $username_err = $password_err = "";
 $auth = "";
 $firstlogin = "";
+$toast = "";
+$echargerpot = '';
+$echargerstato = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty(trim($_POST["username"]))) {
+    if (empty(trim(isset($_POST["username"])))) {
         $username_err = '';
     } else {
         $username = trim($_POST["username"]);
     }
-    if (empty(trim($_POST["password"]))) {
+    if (empty(trim(isset($_POST["password"])))) {
         $password_err = '';
     } else {
         $password = trim($_POST["password"]);
@@ -138,6 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     mysqli_stmt_bind_result($stmt2, $id, $username, $hashed_password, $auth, $firstlogin);
                     if (mysqli_stmt_fetch($stmt2)) {
                         if (password_verify($password, $hashed_password)) {
+                            session_destroy();
                             session_start();
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
@@ -146,13 +161,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["auth"] = $auth;
                             $_SESSION["firstlogin"] = $firstlogin;
                             $_SESSION["change"] = $password;
+                            $_SESSION["toast"] = $toast;
+                            $_SESSION["echargerpot"] = $echargerpot;
+                            $_SESSION["echargerstato"] = $echargerstato;
                             header("location: index_dashboard.php");
                         } else {
                             $password_err = "<div class='alert alert-warning' role='alert'>" . _FORMMESSAGE3 . "</div>";
                         }
                     }
                 } else {
-                    $username_err = "<div class='alert alert-warning' role='alert'>" . _FORMMESSAGE3 . "</div>";
+                    if ($click != 0) {
+                        $click = 0;
+                    } else {
+                        $username_err = "<div class='alert alert-warning' role='alert'>" . _FORMMESSAGE3 . "</div>";
+                    }
                 }
             } else {
                 echo "Something went wrong. Please try again later.";
